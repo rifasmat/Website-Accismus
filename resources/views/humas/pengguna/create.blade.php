@@ -15,12 +15,6 @@
     <h2>Tambah Pengguna Accismus</h2>
 </div>
 
-@if(session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
-
 <form action="{{ route('humas.pengguna.store') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group mt-3">
@@ -49,7 +43,7 @@
         <input type="number" class="form-control" name="wa" id="wa" autocomplete="off" placeholder="Masukan nomer whatsapp .." value="{{ old('wa') }}">
     </div>
     <div class="form-group mt-3">
-        <label for="discord"><b>Nama / ID Discord</b></label>
+        <label for="discord"><b>Discord</b></label>
         <input type="text" class="form-control" name="discord" id="discord" autocomplete="off" placeholder="Masukan Id Discord .." value="{{ old('discord') }}">
         @error('discord')
         <p style="color: red;">{{ $message }}</p>
@@ -79,15 +73,15 @@
     </div>
     <div class="form-group mt-3">
         <label><b>Foto</b></label>
-        <input type="file" name="foto" id="uploadFoto" onchange="previewImage()">
+        <input type="file" class="form-control" name="foto" id="uploadFoto" onchange="previewImage()">
         <img src="#" alt="Preview Foto" id="previewFoto" style="max-width: 150px; display: none;">
         @error('foto')
         <p style="color: red;">{{ $message }}</p>
         @enderror
     </div>
     <div class="form-group mt-3">
-        <a href="{{ route('humas.pengguna.list') }}" class="btn btn-danger btn-sm">&nbsp Kembali</a>
-        <input type="submit" class="btn btn-sm btn-primary" value="Tambah Pengguna">
+        <a href="{{ route('humas.pengguna.list') }}" class="btn btn-danger btn-sm">&nbsp; Kembali</a>
+        <button id="tambahPenggunaBtn" class="btn btn-sm btn-primary">Tambah Pengguna</button>
     </div>
 </form>
 @endsection

@@ -6,21 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Informasi extends Model
+class About extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'informasi_uuid';
+    protected $primaryKey = 'about_uuid';
     protected $keyType = 'string';
     public $incrementing = false;
 
     protected $fillable = [
-        'informasi_judul',
-        'informasi_subjudul',
-        'informasi_rf',
-        'informasi_instagram',
-        'informasi_discord',
-        'informasi_wa',
+        'about_judul',
+        'about_text',
+        'about_foto',
     ];
 
     protected static function boot()
@@ -28,8 +25,8 @@ class Informasi extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->informasi_uuid)) {
-                $model->informasi_uuid = (string) Str::uuid();
+            if (empty($model->about_uuid)) {
+                $model->about_uuid = (string) Str::uuid();
             }
         });
     }

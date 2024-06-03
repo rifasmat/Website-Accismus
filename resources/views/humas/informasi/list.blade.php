@@ -2,46 +2,68 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Informasi Accismus</h1>
+    <h1>Informasi Website Accismus</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('humas.dashboard.list') }}">Home</a></li>
             <li class="breadcrumb-item active">Informasi</li>
         </ol>
     </nav>
-</div><!-- End Page Title -->
+</div>
 
-<section class="section dashboard">
-    <div class="row">
-        <div class="mb-3 mt-2">
-            <label for="judul" class="form-label">Judul Website</label>
-            <input type="text" name="judul" class="form-control">
+<div class="text-center mb2">
+    <h2>Informasi Website Accismus</h2>
+</div>
+<div class="container">
+    <form action="{{ route('humas.informasi.update', $informasi->informasi_uuid) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="form-group mt-3">
+            <label for="judul"><b>Judul Website</b></label>
+            <input type="text" class="form-control" name="judul" id="judul" autocomplete="off" value="{{ old('judul', $informasi->informasi_judul) }}">
+            @error('judul')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="mb-3">
-            <label for="subjudul" class="form-label">Sub Judul Website</label>
-            <input type="text" name="subjudul" class="form-control">
+        <div class="form-group mt-3">
+            <label for="subjudul"><b>Sub Judul Website</b></label>
+            <input type="text" class="form-control" name="subjudul" id="subjudul" autocomplete="off" value="{{ old('subjudul', $informasi->informasi_subjudul) }}">
+            @error('subjudul')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="mb-3">
-            <label for="rf" class="form-label">Informasi RF</label>
-            <input type="text" name="rf" class="form-control">
+        <div class="form-group mt-3">
+            <label for="rf"><b>Sekarang Berada Di RF</b></label>
+            <input type="text" class="form-control" name="rf" id="rf" autocomplete="off" value="{{ old('rf', $informasi->informasi_rf) }}">
+            @error('rf')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="mb-3">
-            <label for="instagram" class="form-label">Informasi Instagram</label>
-            <input type="text" name="instagram" class="form-control">
+        <div class="form-group mt-3">
+            <label for="instagram"><b>Instagram</b></label>
+            <input type="text" class="form-control" name="instagram" id="instagram" autocomplete="off" value="{{ old('instagram', $informasi->informasi_instagram) }}">
+            @error('instagram')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="mb-3">
-            <label for="discord" class="form-label">Informasi Discord</label>
-            <input type="text" name="discord" class="form-control">
+        <div class="form-group mt-3">
+            <label for="discord"><b>Discord</b></label>
+            <input type="text" class="form-control" name="discord" id="discord" autocomplete="off" value="{{ old('discord', $informasi->informasi_discord) }}">
+            @error('discord')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="mb-3">
-            <label for="wa" class="form-label">Informasi Whatsapp</label>
-            <input type="text" name="wa" class="form-control">
+        <div class="form-group mt-3">
+            <label for="wa"><b>Nomer Whatsapp</b></label>
+            <input type="text" class="form-control" name="wa" id="wa" autocomplete="off" value="{{ old('wa', $informasi->informasi_wa) }}">
+            @error('wa')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
         </div>
-        <div>
-            <a href="{{ route('humas.dashboard.list') }}"><button type="submit" class="btn btn-danger">Kembali</button></a>
-            <button type="submit" class="btn btn-primary">Update</button>
+        <div class="form-group mt-3">
+            <a href="{{ route('humas.informasi.list') }}" class="btn btn-danger btn-sm">&nbsp; Kembali</a>
+            <button id="editInformasiBtn" class="btn btn-sm btn-primary">Update</button>
         </div>
-    </div>
-</section>
-
+    </form>
+</div>
 @endsection

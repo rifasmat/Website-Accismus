@@ -28,6 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('assets/backend/css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/backend/css/custom.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -207,6 +208,18 @@
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/backend/js/main.js') }}"></script>
   <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+  <script src="{{ asset('assets/backend/js/sweet-alert.js') }}"></script>
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Tools Text Area -->
+  <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
+  <!-- Menampilan tools text -->
+  <script>
+    CKEDITOR.replace('text');
+  </script>
 
 </body>
 

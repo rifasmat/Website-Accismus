@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Humas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class HumasPenggunaController extends Controller
 {
     public function index()
     {
-        return view('humas.pengguna.list');
+        $user = User::all();
+        return view('humas.pengguna.list', compact('user'));
     }
 
     public function create()
@@ -20,15 +24,14 @@ class HumasPenggunaController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi data dengan pesan kustom
         $request->validate([
             'nama' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,user_username',
             'email' => 'required|string|email|max:255|unique:users,user_email',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:5',
             'wa' => 'nullable|string|max:20',
             'discord' => 'nullable|string|max:255',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'role' => 'required|string|max:255',
         ], [
             'nama.required' => 'Nama pengguna tidak boleh kosong.',
@@ -38,10 +41,9 @@ class HumasPenggunaController extends Controller
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah digunakan, silahkan menggunakan email yang lain.',
             'password.required' => 'Password tidak boleh kosong.',
-            'password.min' => 'Password harus minimal 8 karakter.',
-            'wa.max' => 'Nomor WhatsApp maksimal 8 angka.',
+            'password.min' => 'Password harus minimal 5 karakter.',
+            'wa.max' => 'Nomor WhatsApp maksimal 20 angka.',
             'discord.max' => 'Nama/Id Discord maksimal 255 karakter.',
-            'foto.required' => 'Foto pengguna harus diisi.',
             'foto.image' => 'File harus berupa gambar.',
             'foto.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
             'foto.max' => 'Ukuran gambar maksimal 2MB.',
@@ -50,22 +52,136 @@ class HumasPenggunaController extends Controller
 
         // Upload foto jika ada
         $fotoPath = null;
-        if ($request->hasFile('user_foto')) {
-            $fotoPath = $request->file('user_foto')->store('user_fotos', 'public');
+        if ($request->hasFile('foto')) {
+            // Generate nama file unik
+            $fileName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
+            // Simpan file ke direktori 'pengguna'
+            $fotoPath = $request->file('foto')->storeAs('pengguna', $fileName, 'public');
+        } else {
+            // Menggunakan foto default jika tidak ada foto yang diupload
+            $fileName = Str::random(20) . '.png';
+            // Copy file default ke direktori 'pengguna' dengan nama yang di-generate secara acak
+            Storage::disk('public')->copy('pengguna/default.png', 'pengguna/' . $fileName);
+            $fotoPath = 'pengguna/' . $fileName;
         }
 
         // Buat pengguna baru
         User::create([
-            'user_nama' => $request->user_nama,
-            'user_username' => $request->user_username,
-            'user_email' => $request->user_email,
+            'user_nama' => $request->nama,
+            'user_username' => $request->username,
+            'user_email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_wa' => $request->user_wa,
-            'user_discord' => $request->user_discord,
+            'user_wa' => $request->wa,
+            'user_discord' => $request->discord,
             'user_foto' => $fotoPath,
-            'user_role' => $request->user_role,
+            'user_role' => $request->role,
         ]);
 
-        return redirect()->route('humas.pengguna.create')->with('success', 'User created successfully.');
+        return redirect()->route('humas.pengguna.list');
+    }
+
+    public function edit($uuid)
+    {
+        // Ambil data berdasarkan uuid
+        $user = User::where('uuid', $uuid)->firstOrFail();
+
+        // Arahkan dan kirimkan datanya ke view
+        return view('humas.pengguna.edit', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Ambil data pengguna berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Validasi data
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,user_username,' . $id,
+            'email' => 'required|string|email|max:255|unique:users,user_email,' . $id,
+            'password' => 'nullable|string|min:5',
+            'wa' => 'nullable|string|max:20',
+            'discord' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'role' => 'required|string|max:255',
+        ], [
+            'nama.required' => 'Nama pengguna tidak boleh kosong.',
+            'username.required' => 'Username tidak boleh kosong.',
+            'username.unique' => 'Username sudah digunakan, silahkan menggunakan username yang lain.',
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah digunakan, silahkan menggunakan email yang lain.',
+            'password.min' => 'Password harus minimal 5 karakter.',
+            'wa.max' => 'Nomor WhatsApp maksimal 20 angka.',
+            'discord.max' => 'Nama/Id Discord maksimal 255 karakter.',
+            'foto.image' => 'File harus berupa gambar.',
+            'foto.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+            'foto.max' => 'Ukuran gambar maksimal 2MB.',
+            'role.required' => 'Role pengguna harus diisi.',
+        ]);
+
+        // Simpan data role pengguna sebelumnya
+        $oldRole = $user->user_role;
+
+        // Update data pengguna
+        $user->user_nama = $request->nama;
+        $user->user_username = $request->username;
+        $user->user_email = $request->email;
+        $user->user_wa = $request->wa;
+        $user->user_discord = $request->discord;
+
+        // Periksa apakah pengguna mengubah role
+        if ($request->filled('role') && $request->role !== $user->user_role) {
+            $user->user_role = $request->role;
+        }
+
+        // Jika ada password baru, update password
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // Jika ada foto baru, update foto
+        if ($request->hasFile('foto')) {
+            // Generate nama file unik
+            $fileName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
+            // Simpan file ke direktori 'pengguna'
+            $fotoPath = $request->file('foto')->storeAs('pengguna', $fileName, 'public');
+            // Hapus foto lama jika ada
+            Storage::disk('public')->delete($user->user_foto);
+            // Update path foto
+            $user->user_foto = $fotoPath;
+        }
+
+        // Simpan perubahan
+        $user->save();
+
+        return redirect()->route('humas.pengguna.list');
+    }
+
+    public function konfirmasi($uuid)
+    {
+        $user = User::all();
+
+        // Ambil data berdasarkan uuid
+        $user = User::where('uuid', $uuid)->firstOrFail();
+
+        // Arahkan dan kirimkan datanya ke view
+        return view('humas.pengguna.konfirmasi', compact('user'));
+    }
+
+    public function destroy($uuid)
+    {
+        // Ambil data pengguna berdasarkan UUID
+        $user = User::where('uuid', $uuid)->firstOrFail();
+
+        // Hapus foto pengguna dari storage jika ada
+        if ($user->user_foto) {
+            Storage::disk('public')->delete($user->user_foto);
+        }
+
+        // Hapus data pengguna dari database
+        $user->delete();
+
+        return redirect()->route('humas.pengguna.list')->with('success', 'Pengguna Berhasil Dihapus.');
     }
 }

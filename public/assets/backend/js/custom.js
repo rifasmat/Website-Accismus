@@ -15,7 +15,7 @@ document.getElementById("whatsapp-icon").addEventListener("click", function() {
   });
 
 
-// menampilkan foto pada tambah pengguna
+// menampilkan foto pada pengguna
 function previewImage() {
         const input = document.getElementById('uploadFoto');
         const preview = document.getElementById('previewFoto');
@@ -34,3 +34,19 @@ function previewImage() {
             preview.src = '#';
         }
     }
+  
+// menampilkan foto about dan benefit pada saat pengguna mau menggantinya
+function previewImage() {
+  const file = document.getElementById('foto').files[0];
+  const preview = document.getElementById('fotoPreview');
+
+  if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+          preview.src = e.target.result;
+      }
+
+      reader.readAsDataURL(file);
+  }
+}

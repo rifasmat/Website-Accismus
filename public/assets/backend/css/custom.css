@@ -1,0 +1,7 @@
+  /* CSS untuk memposisikan teks di tengah atas bawah samping kanan pada list pengguna */
+  td {
+    vertical-align: middle;
+    /* Posisikan teks di tengah vertikal */
+    text-align: center;
+    /* Posisikan teks di tengah horizontal */
+}

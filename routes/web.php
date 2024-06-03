@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Humas\HumasDashboardController;
 use App\Http\Controllers\Humas\HumasInformasiController;
+use App\Http\Controllers\Humas\HumasBenefitController;
 use App\Http\Controllers\Humas\HumasAboutController;
 use App\Http\Controllers\Humas\HumasPenggunaController;
 
@@ -41,19 +42,27 @@ Route::get('/home/register', 'App\Http\Controllers\Home\HomeController@register'
 // Untuk proses registrasi
 Route::post('/home/register', 'App\Http\Controllers\Home\HomeController@registerProcess')->name('register.process');
 
-// Humas
+// humas
 Route::group(['middleware' => 'auth.humas'], function () {
-    // Humas Dashboard
+    // humas dashboard
     Route::get('/humas/dashboard/list', [HumasDashboardController::class, 'index'])->name('humas.dashboard.list');
 
-    // Humas Informasi
-    Route::get('/humas/informasi/list', [HumasInformasiController::class, 'index'])->name('humas.informasi.list');
+    // humas informasi
+    Route::get('/humas/informasi', [HumasInformasiController::class, 'index'])->name('humas.informasi.list');
+    Route::put('/humas/informasi/{uuid}', [HumasInformasiController::class, 'update'])->name('humas.informasi.update');
 
-    // Humas About
-    Route::get('/humas/about/list', [HumasAboutController::class, 'index'])->name('humas.about.list');
+    // humas about
+    Route::get('/humas/about', [HumasAboutController::class, 'index'])->name('humas.about.list');
+    Route::put('/humas/about/{uuid}', [HumasAboutController::class, 'update'])->name('humas.about.update');
 
-    // Humas Pengguna tanpa show
-    Route::resource('/humas/pengguna', HumasPenggunaController::class)->except(['show'])->names([
+    // humas benefit
+    Route::get('/humas/benefit', [HumasBenefitController::class, 'index'])->name('humas.benefit.list');
+    Route::put('/humas/benefit/{uuid}', [HumasBenefitController::class, 'update'])->name('humas.benefit.update');
+
+    // humas pengguna tanpa show
+    Route::resource('/humas/pengguna', HumasPenggunaController::class)->except(['show'])->parameters([
+        'pengguna' => 'uuid',
+    ])->names([
         'index' => 'humas.pengguna.list',
         'create' => 'humas.pengguna.create',
         'store' => 'humas.pengguna.store',
@@ -61,4 +70,6 @@ Route::group(['middleware' => 'auth.humas'], function () {
         'update' => 'humas.pengguna.update',
         'destroy' => 'humas.pengguna.destroy',
     ]);
+    // humas pengguna rute untuk konfirmasi penghapusan pengguna
+    Route::get('/humas/pengguna/{uuid}/konfirmasi', [HumasPenggunaController::class, 'konfirmasi'])->name('humas.pengguna.konfirmasi');
 });

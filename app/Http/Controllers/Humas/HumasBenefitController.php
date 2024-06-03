@@ -4,17 +4,17 @@ namespace App\Http\Controllers\Humas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\About;
+use App\Models\Benefit;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class HumasAboutController extends Controller
+class HumasBenefitController extends Controller
 {
     public function index()
     {
-        $about = About::first();
-        if ($about) {
-            return view('humas.about.list', compact('about'));
+        $benefit = Benefit::first();
+        if ($benefit) {
+            return view('humas.benefit.list', compact('benefit'));
         }
     }
 
@@ -32,27 +32,27 @@ class HumasAboutController extends Controller
             'foto.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
-        $about = About::where('about_uuid', $uuid)->first();
-        if ($about) {
+        $benefit = Benefit::where('benefit_uuid', $uuid)->first();
+        if ($benefit) {
             $data = [
-                'about_judul' => $request->judul,
-                'about_text' => $request->text,
+                'benefit_judul' => $request->judul,
+                'benefit_text' => $request->text,
             ];
 
             if ($request->hasFile('foto')) {
                 // Hapus foto lama jika ada
-                if ($about->about_foto) {
-                    Storage::delete('public/' . $about->about_foto);
+                if ($benefit->benefit_foto) {
+                    Storage::delete('public/' . $benefit->benefit_foto);
                 }
 
                 // Simpan foto baru
-                $path = $request->file('foto')->store('public/about');
-                $data['about_foto'] = 'about/' . basename($path);
+                $path = $request->file('foto')->store('public/benefit');
+                $data['benefit_foto'] = 'benefit/' . basename($path);
             }
 
-            $about->update($data);
+            $benefit->update($data);
         }
 
-        return redirect()->route('humas.about.list');
+        return redirect()->route('humas.benefit.list');
     }
 }
