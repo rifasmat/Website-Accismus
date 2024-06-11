@@ -10,7 +10,7 @@
         </ol>
     </nav>
 </div>
-<div class="text-center mb-2">
+<div class="text-center mb-3">
     <h2>Konfirmasi Delete Pengguna Accismus</h2>
 </div>
 

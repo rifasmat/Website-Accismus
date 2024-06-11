@@ -35,15 +35,20 @@ class HumasInformasiController extends Controller
             'wa.required' => 'Nomer Whatsapp tidak boleh kosong',
         ]);
 
+        // Add prefixes to the URLs
+        $instagramLink = 'https://www.instagram.com/' . ltrim($request->instagram, '/');
+        $discordLink = 'https://discord.gg/' . ltrim($request->discord, '/');
+        $waLink = 'https://wa.me/' . ltrim($request->wa, '/');
+
         $informasi = Informasi::where('informasi_uuid', $uuid)->first();
         if ($informasi) {
             $informasi->update([
                 'informasi_judul' => $request->judul,
                 'informasi_subjudul' => $request->subjudul,
                 'informasi_rf' => $request->rf,
-                'informasi_instagram' => $request->instagram,
-                'informasi_discord' => $request->discord,
-                'informasi_wa' => $request->wa,
+                'informasi_instagram' => $instagramLink,
+                'informasi_discord' => $discordLink,
+                'informasi_wa' => $waLink,
             ]);
         }
 

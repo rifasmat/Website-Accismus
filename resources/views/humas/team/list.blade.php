@@ -9,30 +9,22 @@
 @endif
 
 <div class="pagetitle">
-    <h1>Pengguna Accismus</h1>
+    <h1>Team Accismus</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('humas.dashboard.list') }}">Home</a></li>
-            <li class="breadcrumb-item active">Pengguna</li>
+            <li class="breadcrumb-item active">Team</li>
         </ol>
     </nav>
 </div>
 
 <div class="text-center mb-2">
-    <h2>Daftar Pengguna Accismus</h2>
-</div>
-
-<div class="box-header d-flex justify-content-end mb-3">
-    <div class="btn-group">
-        <a href="{{ route('humas.pengguna.create') }}" class="btn btn-secondary">
-            &nbsp; Tambah Data Pengguna
-        </a>
-    </div>
+    <h2>Daftar Team Accismus</h2>
 </div>
 
 <div class="container">
     <!-- Search -->
-    <form action="{{ route('humas.pengguna.search') }}" method="GET" class="form-inline mt-3">
+    <form action="{{ route('humas.team.search') }}" method="GET" class="form-inline mt-3">
         <div class="input-group">
             <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
             <div class="input-group-append">
@@ -42,7 +34,7 @@
     </form>
 
     @if($users->isEmpty())
-    <div class="alert alert-info mt-3">Pengguna tidak ditemukan.</div>
+    <div class="alert alert-info mt-3 text-center">Data Team Belum Ada</div>
     @else
     <table class="table">
         <thead class="text-center">
@@ -69,17 +61,13 @@
                 <td>{{ $user->user_discord }}</td>
                 <td>{{ $user->user_role }}</td>
                 <td>
-                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Pengguna" class="img-thumbnail" style="width: 100px; height: 100px;">
+                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Team" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
                     @if($user->uuid !== Auth::user()->uuid)
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{{ route('humas.pengguna.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
+                        <a href="{{ route('humas.team.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
                     </div>
-                    <form method="GET" action="{{ route('humas.pengguna.konfirmasi', $user->uuid) }}" style="display:inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                    </form>
                     @endif
                 </td>
             </tr>

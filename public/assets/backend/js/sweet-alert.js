@@ -1,3 +1,29 @@
+// pada halaman edit team di dashboard
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('editTeamBtn').addEventListener('click', function () {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Data Team Berhasil Di Edit',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+});
+
+// pada halaman edit member di dashboard
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('editMemberBtn').addEventListener('click', function () {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Data Member Berhasil Di Edit',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+});
+
 // pada halaman tambah pengguna di dashboard
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('tambahPenggunaBtn').addEventListener('click', function () {

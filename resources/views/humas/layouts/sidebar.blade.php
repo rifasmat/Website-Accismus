@@ -34,7 +34,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="{{ route('humas.team.list') }}">
         <i class="bi bi-person-workspace"></i>
         <span>Team</span>
       </a>
@@ -89,14 +89,14 @@
     <hr>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="{{ route('humas.request-member.list') }}">
         <i class="bi bi-person-check"></i>
         <span>Request Member</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="{{ route('humas.member.list') }}">
         <i class="bi bi-person-vcard"></i>
         <span>Member</span>
       </a>

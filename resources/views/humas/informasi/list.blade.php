@@ -41,25 +41,26 @@
         </div>
         <div class="form-group mt-3">
             <label for="instagram"><b>Instagram</b></label>
-            <input type="text" class="form-control" name="instagram" id="instagram" autocomplete="off" value="{{ old('instagram', $informasi->informasi_instagram) }}">
+            <input type="text" class="form-control" name="instagram" id="instagram" autocomplete="off" value="{{ old('instagram', str_replace('https://www.instagram.com/', '', $informasi->informasi_instagram)) }}">
             @error('instagram')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="discord"><b>Discord</b></label>
-            <input type="text" class="form-control" name="discord" id="discord" autocomplete="off" value="{{ old('discord', $informasi->informasi_discord) }}">
+            <input type="text" class="form-control" name="discord" id="discord" autocomplete="off" value="{{ old('discord', str_replace('https://discord.gg/', '', $informasi->informasi_discord)) }}">
             @error('discord')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="wa"><b>Nomer Whatsapp</b></label>
-            <input type="text" class="form-control" name="wa" id="wa" autocomplete="off" value="{{ old('wa', $informasi->informasi_wa) }}">
+            <input type="text" class="form-control" name="wa" id="wa" autocomplete="off" value="{{ old('wa', str_replace('https://wa.me/', '', $informasi->informasi_wa)) }}">
             @error('wa')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
+
         <div class="form-group mt-3">
             <a href="{{ route('humas.informasi.list') }}" class="btn btn-danger btn-sm">&nbsp; Kembali</a>
             <button id="editInformasiBtn" class="btn btn-sm btn-primary">Update</button>

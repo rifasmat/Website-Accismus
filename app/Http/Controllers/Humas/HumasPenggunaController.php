@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Humas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -13,8 +14,8 @@ class HumasPenggunaController extends Controller
 {
     public function index()
     {
-        $user = User::all();
-        return view('humas.pengguna.list', compact('user'));
+        $users = User::paginate(10); // Menampilkan 10 pengguna per halaman
+        return view('humas.pengguna.list', compact('users'));
     }
 
     public function create()
@@ -183,5 +184,71 @@ class HumasPenggunaController extends Controller
         $user->delete();
 
         return redirect()->route('humas.pengguna.list')->with('success', 'Pengguna Berhasil Dihapus.');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $users = User::where('user_nama', 'LIKE', "%{$search}%")
+            ->orWhere('user_username', 'LIKE', "%{$search}%")
+            ->orWhere('user_email', 'LIKE', "%{$search}%")
+            ->get();
+
+        return view('humas.pengguna.search', compact('users'));
+    }
+
+    public function profil()
+    {
+        $user = Auth::user(); // Mengambil data pengguna yang sedang login dari session
+        return view('humas.pengguna.profil', compact('user'));
+    }
+
+    public function updateProfil(Request $request)
+    {
+        // Mengambil pengguna yang sedang login
+        $user = Auth::user();
+
+        // Validasi data
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,user_username,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:users,user_email,' . $user->id,
+            'wa' => 'nullable|string|max:20',
+            'discord' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'nama.required' => 'Nama pengguna tidak boleh kosong.',
+            'username.required' => 'Username tidak boleh kosong.',
+            'username.unique' => 'Username sudah digunakan, silahkan menggunakan username yang lain.',
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah digunakan, silahkan menggunakan email yang lain.',
+            'wa.max' => 'Nomor WhatsApp maksimal 20 angka.',
+            'discord.max' => 'Nama/Id Discord maksimal 255 karakter.',
+            'foto.image' => 'File harus berupa gambar.',
+            'foto.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+            'foto.max' => 'Ukuran gambar maksimal 2MB.',
+        ]);
+
+        // Update data pengguna
+        $userData = [
+            'user_nama' => $request->nama,
+            'user_username' => $request->username,
+            'user_email' => $request->email,
+            'user_wa' => $request->wa,
+            'user_discord' => $request->discord,
+        ];
+
+        // Jika ada foto baru, tambahkan ke data yang akan disimpan
+        if ($request->hasFile('foto')) {
+            $path = $request->file('foto')->store('public/fotos');
+            $userData['user_foto'] = $path;
+        }
+
+        // Simpan perubahan
+        $user->update($userData);
+
+        return redirect()->route('humas.pengguna.profil')->with('success', 'Profil berhasil diperbarui.');
     }
 }
