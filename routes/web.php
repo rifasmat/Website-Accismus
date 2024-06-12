@@ -77,6 +77,27 @@ Route::group(['middleware' => 'auth.humas'], function () {
     // humas team route search
     Route::get('/humas/team/search', [HumasTeamController::class, 'search'])->name('humas.team.search');
 
+    // humas request member
+    Route::get('/humas/request-member', [HumasRequestController::class, 'index'])->name('humas.request-member.list');
+    // humas request-member route search
+    Route::get('/humas/request-member/search', [HumasRequestController::class, 'search'])->name('humas.request-member.search');
+    // humas request-member route change-status
+    Route::patch('/humas/request-member/{uuid}/change-status', [HumasRequestController::class, 'changeStatus'])->name('humas.request-member.changeStatus');
+
+    // humas member tanpa show, create, store, destroy
+    Route::resource('/humas/member', HumasMemberController::class)
+        ->except(['show', 'create', 'store', 'destroy'])
+        ->parameters(['member' => 'uuid'])
+        ->names([
+            'index' => 'humas.member.list',
+            'edit' => 'humas.member.edit',
+            'update' => 'humas.member.update',
+        ]);
+    // humas member route search
+    Route::get('/humas/member/search', [HumasMemberController::class, 'search'])->name('humas.member.search');
+    // humas member route change-status
+    Route::patch('/humas/member/{uuid}/change-status', [HumasMemberController::class, 'changeStatus'])->name('humas.member.changeStatus');
+
     // humas pengguna tanpa show
     Route::resource('/humas/pengguna', HumasPenggunaController::class)
         ->except(['show'])
@@ -98,24 +119,9 @@ Route::group(['middleware' => 'auth.humas'], function () {
     // humas pengguna route search
     Route::get('/humas/pengguna/search', [HumasPenggunaController::class, 'search'])->name('humas.pengguna.search');
 
-    // humas request member
-    Route::get('/humas/request-member', [HumasRequestController::class, 'index'])->name('humas.request-member.list');
-    // humas request-member route search
-    Route::get('/humas/request-member/search', [HumasRequestController::class, 'search'])->name('humas.request-member.search');
-    // humas request-member route change-status
-    Route::patch('/humas/request-member/{uuid}/change-status', [HumasRequestController::class, 'changeStatus'])->name('humas.request-member.changeStatus');
-
-    // humas member tanpa show, create, store, destroy
-    Route::resource('/humas/member', HumasMemberController::class)
-        ->except(['show', 'create', 'store', 'destroy'])
-        ->parameters(['member' => 'uuid'])
-        ->names([
-            'index' => 'humas.member.list',
-            'edit' => 'humas.member.edit',
-            'update' => 'humas.member.update',
-        ]);
-    // humas member route search
-    Route::get('/humas/member/search', [HumasMemberController::class, 'search'])->name('humas.member.search');
-    // humas member route change-status
-    Route::patch('/humas/member/{uuid}/change-status', [HumasMemberController::class, 'changeStatus'])->name('humas.member.changeStatus');
+    // humas profil
+    // Route untuk menampilkan profil pengguna yang sedang login
+    Route::get('/humas/profil/list', [HumasPenggunaController::class, 'profil'])->name('humas.profil.list');
+    // Route untuk memperbarui profil pengguna
+    Route::put('/humas/profil/profil/{uuid}', [HumasPenggunaController::class, 'updateProfil'])->name('humas.profil.update');
 });

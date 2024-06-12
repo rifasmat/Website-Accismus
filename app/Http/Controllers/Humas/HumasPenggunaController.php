@@ -200,16 +200,14 @@ class HumasPenggunaController extends Controller
 
     public function profil()
     {
-        $user = Auth::user(); // Mengambil data pengguna yang sedang login dari session
-        return view('humas.pengguna.profil', compact('user'));
+        $user = Auth::user(); // menmgambil data pengguna yang sedang login
+        return view('humas.profil.list', compact('user'));
     }
 
-    public function updateProfil(Request $request)
+    public function updateProfil(Request $request, $uuid)
     {
-        // Mengambil pengguna yang sedang login
-        $user = Auth::user();
+        $user = User::where('uuid', $uuid)->firstOrFail();
 
-        // Validasi data
         $request->validate([
             'nama' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,user_username,' . $user->id,
@@ -231,24 +229,21 @@ class HumasPenggunaController extends Controller
             'foto.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
-        // Update data pengguna
-        $userData = [
-            'user_nama' => $request->nama,
-            'user_username' => $request->username,
-            'user_email' => $request->email,
-            'user_wa' => $request->wa,
-            'user_discord' => $request->discord,
-        ];
+        $user->user_nama = $request->nama;
+        $user->user_username = $request->username;
+        $user->user_email = $request->email;
+        $user->user_wa = $request->wa;
+        $user->user_discord = $request->discord;
 
-        // Jika ada foto baru, tambahkan ke data yang akan disimpan
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('public/fotos');
-            $userData['user_foto'] = $path;
+            $fileName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
+            $fotoPath = $request->file('foto')->storeAs('pengguna', $fileName, 'public');
+            Storage::disk('public')->delete($user->user_foto);
+            $user->user_foto = $fotoPath;
         }
 
-        // Simpan perubahan
-        $user->update($userData);
+        $user->save();
 
-        return redirect()->route('humas.pengguna.profil')->with('success', 'Profil berhasil diperbarui.');
+        return redirect()->route('humas.profil.list')->with('success', 'Profil berhasil diperbarui.');
     }
 }

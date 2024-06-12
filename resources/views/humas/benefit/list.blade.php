@@ -25,12 +25,10 @@
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
-
-        <div class="form-group">
-            <label for="text" class="font-weight-bold">Text</label>
+        <div class="form-group mt-4">
             <textarea id="text" class="form-control" name="text" rows="10">{{ old('text', $benefit->benefit_text) }}</textarea>
             @error('text')
-            <div class="alert alert-danger mt-2">
+            <div class="alert alert-danger">
                 {{ $message }}
             </div>
             @enderror

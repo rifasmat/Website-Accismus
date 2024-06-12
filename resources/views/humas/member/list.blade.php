@@ -29,15 +29,17 @@
 </div>
 
 <div class="container">
-    <!-- Search -->
-    <form action="{{ route('humas.member.search') }}" method="GET" class="form-inline mt-3">
-        <div class="input-group">
-            <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Search</button>
+    <div class="mb-2">
+        <!-- Search -->
+        <form action="{{ route('humas.member.search') }}" method="GET" class="form-inline mt-3">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 
     @if($users->isEmpty())
     <div class="alert alert-info mt-3 text-center">Data Member Belum Ada.</div>
