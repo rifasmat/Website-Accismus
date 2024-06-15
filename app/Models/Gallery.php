@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Benefit extends Model
+class Gallery extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'benefit_id';
-    protected $keyType = 'string';
-    public $incrementing = false;
+    protected $primaryKey = 'gallery_id';
+    protected $keyType = 'int';
+    public $incrementing = true;
 
     protected $fillable = [
-        'benefit_uuid',
-        'benefit_judul',
-        'benefit_text',
-        'benefit_foto',
+        'galleries_uuid',
+        'galleries_judul',
+        'galleries_rf',
+        'galleries_foto',
     ];
 
     protected static function boot()
@@ -26,8 +26,8 @@ class Benefit extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->benefit_uuid)) {
-                $model->benefit_uuid = (string) Str::uuid();
+            if (empty($model->galleries_uuid)) {
+                $model->galleries_uuid = (string) Str::uuid();
             }
         });
     }

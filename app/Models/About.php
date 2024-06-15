@@ -10,11 +10,12 @@ class About extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'about_uuid';
+    protected $primaryKey = 'about_id';
     protected $keyType = 'string';
     public $incrementing = false;
 
     protected $fillable = [
+        'about_uuid',
         'about_judul',
         'about_text',
         'about_foto',

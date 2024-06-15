@@ -25,7 +25,7 @@
 <div class="box-header d-flex justify-content-end mb-3">
     <div class="btn-group">
         <a href="{{ route('humas.pengguna.create') }}" class="btn btn-secondary">
-            &nbsp; Tambah Data Pengguna
+            <i class="bi bi-plus"></i>&nbsp;Tambah Data Pengguna
         </a>
     </div>
 </div>

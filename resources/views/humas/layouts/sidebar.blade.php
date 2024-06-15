@@ -41,7 +41,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="{{ route('humas.gallery.list') }}">
         <i class="bi bi-image"></i>
         <span>Gallery</span>
       </a>

@@ -205,9 +205,10 @@
 
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/backend/js/main.js') }}"></script>
-  <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
   <script src="{{ asset('assets/backend/js/sweet-alert.js') }}"></script>
 
+  <!-- Custom Javascript -->
+  <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
   <!-- SweetAlert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

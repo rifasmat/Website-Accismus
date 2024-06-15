@@ -6,6 +6,7 @@ use App\Http\Controllers\Humas\HumasInformasiController;
 use App\Http\Controllers\Humas\HumasBenefitController;
 use App\Http\Controllers\Humas\HumasTeamController;
 use App\Http\Controllers\Humas\HumasAboutController;
+use App\Http\Controllers\Humas\HumasGalleryController;
 use App\Http\Controllers\Humas\HumasMemberController;
 use App\Http\Controllers\Humas\HumasPenggunaController;
 use App\Http\Controllers\Humas\HumasRequestController;
@@ -76,6 +77,23 @@ Route::group(['middleware' => 'auth.humas'], function () {
         ]);
     // humas team route search
     Route::get('/humas/team/search', [HumasTeamController::class, 'search'])->name('humas.team.search');
+
+    // humas gallery tanpa show
+    Route::resource('/humas/gallery', HumasGalleryController::class)
+        ->except(['show'])
+        ->parameters(['gallery' => 'gallery_uuid'])
+        ->names([
+            'index' => 'humas.gallery.list',
+            'create' => 'humas.gallery.create',
+            'store' => 'humas.gallery.store',
+            'edit' => 'humas.gallery.edit',
+            'update' => 'humas.gallery.update',
+            'destroy' => 'humas.gallery.destroy',
+        ]);
+    // humas gallery route search
+    Route::get('/humas/gallery/search', [HumasGalleryController::class, 'search'])->name('humas.gallery.search');
+    // humas gallery konfirmasi
+    Route::get('/humas/gallery/{uuid}/konfirmasi', [HumasGalleryController::class, 'konfirmasi'])->name('humas.gallery.konfirmasi');
 
     // humas request member
     Route::get('/humas/request-member', [HumasRequestController::class, 'index'])->name('humas.request-member.list');

@@ -11,6 +11,32 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// pada halaman tambah pengguna di dashboard
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('tambahGalleryBTN').addEventListener('click', function () {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Foto Berhasil Ditambahkan',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+});
+
+// pada halaman edit gallery di dashboard
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('editGalleryBtn').addEventListener('click', function () {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Foto Berhasil Di Ubah',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+});
+
 // pada halaman edit member di dashboard
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('editMemberBtn').addEventListener('click', function () {
