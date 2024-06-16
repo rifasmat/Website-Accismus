@@ -6,19 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class About extends Model
+class Broadcast extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'about_id';
+    protected $primaryKey = 'broadcast_id';
     protected $keyType = 'int';
     public $incrementing = false;
 
     protected $fillable = [
-        'about_uuid',
-        'about_judul',
-        'about_text',
-        'about_foto',
+        'broadcast_uuid',
+        'broadcast_sentby',
+        'broadcast_pengirim_email',
+        'broadcast_subject',
+        'broadcast_penerima',
+        'broadcast_pesan',
+        'broadcast_tanggal',
+        'broadcast_status',
     ];
 
     protected static function boot()
@@ -26,8 +30,8 @@ class About extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->about_uuid)) {
-                $model->about_uuid = (string) Str::uuid();
+            if (empty($model->broadcast_uuid)) {
+                $model->broadcast_uuid = (string) Str::uuid();
             }
         });
     }

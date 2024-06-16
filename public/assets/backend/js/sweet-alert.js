@@ -115,3 +115,51 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// Pada halaman send broadcast email
+document.getElementById('sendBroadcast').addEventListener('click', function() {
+    // Tampilkan Sweet Alert dengan loading
+    Swal.fire({
+        title: "Send Broadcasts To All Members",
+        html: "Broadcast Is In Progress, Please Wait ...",
+        timerProgressBar: true,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+            // Kirim request ke server untuk proses pengiriman email
+            fetch('{{ route("humas.broadcast.store") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    subject: document.getElementById('subject').value,
+                    text: document.getElementById('text').value
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Mengatur timer berdasarkan waktu yang diberikan oleh server
+                let processTime = data.process_time * 1000; // Waktu proses dalam milidetik
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Broadcast Successful!',
+                    timer: processTime,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                    willClose: () => {
+                        document.getElementById('broadcastForm').submit();
+                    }
+                });
+            })
+        }
+    });
+});

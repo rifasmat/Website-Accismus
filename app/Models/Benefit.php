@@ -11,7 +11,7 @@ class Benefit extends Model
     use HasFactory;
 
     protected $primaryKey = 'benefit_id';
-    protected $keyType = 'string';
+    protected $keyType = 'int';
     public $incrementing = false;
 
     protected $fillable = [

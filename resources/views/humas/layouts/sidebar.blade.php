@@ -50,34 +50,34 @@
     <hr>
 
     <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse">
+        <i class="bi bi-envelope-paper"></i><span>Broadcast Email</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{ route('humas.broadcast.history') }}">
+            <i class="bi bi-envelope-open"></i><span>History Email</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('humas.broadcast.create') }}">
+            <i class="bi bi-envelope-arrow-up"></i><span>Send Email</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('humas.broadcast.email') }}">
+            <i class="bi bi-inboxes"></i><span>Daftar Email</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link collapsed" href="#">
         <i class="bi bi-textarea-resize"></i>
         <span>Form Request</span>
       </a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-envelope-paper"></i><span>Broadcast Email</span><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="tables-general.html">
-            <i class="bi bi-envelope-arrow-up"></i><span>Send Email</span>
-          </a>
-        </li>
-        <li>
-          <a href="tables-data.html">
-            <i class="bi bi-envelope-open"></i><span>History Email</span>
-          </a>
-        </li>
-        <li>
-          <a href="tables-data.html">
-            <i class="bi bi-inboxes"></i><span>Daftar Email</span>
-          </a>
-        </li>
-      </ul>
-    </li><!-- End Tables Nav -->
 
     <hr>
 

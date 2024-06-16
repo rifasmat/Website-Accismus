@@ -6,6 +6,7 @@ use App\Http\Controllers\Humas\HumasInformasiController;
 use App\Http\Controllers\Humas\HumasBenefitController;
 use App\Http\Controllers\Humas\HumasTeamController;
 use App\Http\Controllers\Humas\HumasAboutController;
+use App\Http\Controllers\Humas\HumasBroadcastController;
 use App\Http\Controllers\Humas\HumasGalleryController;
 use App\Http\Controllers\Humas\HumasMemberController;
 use App\Http\Controllers\Humas\HumasPenggunaController;
@@ -94,6 +95,22 @@ Route::group(['middleware' => 'auth.humas'], function () {
     Route::get('/humas/gallery/search', [HumasGalleryController::class, 'search'])->name('humas.gallery.search');
     // humas gallery konfirmasi
     Route::get('/humas/gallery/{uuid}/konfirmasi', [HumasGalleryController::class, 'konfirmasi'])->name('humas.gallery.konfirmasi');
+
+    // humas broadcast tanpa show, edit, destroy, update
+    Route::resource('/humas/broadcast', HumasBroadcastController::class)
+        ->except(['show', 'edit', 'destroy', 'update'])
+        ->parameters(['broadcast' => 'broadcast_uuid'])
+        ->names([
+            'index' => 'humas.broadcast.history',
+            'create' => 'humas.broadcast.create',
+            'store' => 'humas.broadcast.store',
+        ]);
+    // humas broadcast email terdaftar
+    Route::get('/humas/broadcast/email', [HumasBroadcastController::class, 'email'])->name('humas.broadcast.email');
+    // humas broadcast route search history broadcast
+    Route::get('/humas/broadcast/search', [HumasBroadcastController::class, 'search'])->name('humas.broadcast.search');
+    // humas broadcast route search daftar email
+    Route::get('/humas/broadcast/searchmail', [HumasBroadcastController::class, 'searchMail'])->name('humas.broadcast.searchmail');
 
     // humas request member
     Route::get('/humas/request-member', [HumasRequestController::class, 'index'])->name('humas.request-member.list');

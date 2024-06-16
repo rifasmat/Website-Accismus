@@ -60,7 +60,6 @@
         <label for="role"><b>Pengguna Role</b></label>
         <select id="role" name="role" class="form-control">
             <option value="">- Pilih Role -</option>
-            <option value="GuildLeader" {{ old('role') == 'GuildLeader' ? 'selected' : '' }}>GuildLeader</option>
             <option value="Humas" {{ old('role') == 'Humas' ? 'selected' : '' }}>Humas</option>
             <option value="Senate" {{ old('role') == 'Senate' ? 'selected' : '' }}>Senate</option>
             <option value="Moderator" {{ old('role') == 'Moderator' ? 'selected' : '' }}>Moderator</option>
@@ -74,7 +73,7 @@
     <div class="form-group mt-3">
         <label><b>Foto</b></label>
         <input type="file" class="form-control" name="foto" id="uploadFoto" onchange="previewImage()">
-        <img src="#" alt="Preview Foto" id="previewFoto" style="max-width: 150px; display: none;">
+        <img alt="Preview Foto" id="previewFoto" style="max-width: 150px; display: none;">
         @error('foto')
         <p style="color: red;">{{ $message }}</p>
         @enderror

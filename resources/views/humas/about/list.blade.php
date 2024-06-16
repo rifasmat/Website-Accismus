@@ -25,7 +25,6 @@
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
-
         <div class="form-group mt-4">
             <textarea id="text" class="form-control" name="text" rows="10">{{ old('text', $about->about_text) }}</textarea>
             @error('text')

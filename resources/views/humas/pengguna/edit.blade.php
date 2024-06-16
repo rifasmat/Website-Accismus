@@ -57,7 +57,7 @@
             <label for="role"><b>Role</b></label>
             <select class="form-control" name="role" id="role">
                 @php
-                $roles = ['GuildLeader', 'Humas', 'Senate', 'Moderator', 'Member', 'Guest'];
+                $roles = ['Humas', 'Senate', 'Moderator', 'Member', 'Guest'];
                 $userRole = $user->user_role;
                 @endphp
                 <option value="{{ $userRole }}">{{ $userRole }}</option>

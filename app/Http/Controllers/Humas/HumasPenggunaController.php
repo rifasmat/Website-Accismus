@@ -12,9 +12,10 @@ use Illuminate\Support\Str;
 
 class HumasPenggunaController extends Controller
 {
+
     public function index()
     {
-        $users = User::paginate(10); // Menampilkan 10 pengguna per halaman
+        $users = User::orderBy('created_at', 'desc')->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
         return view('humas.pengguna.list', compact('users'));
     }
 
