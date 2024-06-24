@@ -1,0 +1,54 @@
+@extends('senate.layouts.template')
+
+@section('content')
+<div class="pagetitle">
+    <h1>History RF Accismus</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('senate.dashboard.list') }}">Home</a></li>
+            <li class="breadcrumb-item active">History RF</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="text-center mb2">
+    <h2>Edit History RF Accismus</h2>
+</div>
+<div class="container">
+    <form action="{{ route('senate.history-rf.update', $history->history_uuid) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="form-group mt-3">
+            <label for="rf"><b>Nama RF</b></label>
+            <input type="text" class="form-control" name="rf" id="rf" autocomplete="off" value="{{ old('rf', $history->history_rf) }}">
+            @error('rf')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="form-group mt-3">
+            <label for="tahun"><b>Tahun</b></label>
+            <input type="text" class="form-control" name="tahun" id="tahun" autocomplete="off" value="{{ old('tahun', $history->history_tahun) }}" maxlength="4">
+            @error('tahun')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <div class="input-group" style="display: flex; align-items: center;">
+                <input type="file" class="form-control" id="foto" name="foto" style="flex: 1;" onchange="previewImage()">
+                <input type="hidden" name="foto_old" value="{{ $history->history_foto }}">
+                <img id="fotoPreview" src="{{ Storage::url($history->history_foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 150px; margin-left: 10px;">
+            </div>
+            @error('foto')
+            <div class="alert alert-danger mt-2">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+
+        <div class="form-group mt-3">
+            <a href="{{ route('senate.history-rf.list') }}" class="btn btn-danger btn-sm">&nbsp; Kembali</a>
+            <button id="editHistoryRFBtn" class="btn btn-sm btn-primary">Edit Data</button>
+        </div>
+    </form>
+</div>
+@endsection

@@ -37,7 +37,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="{{ route('guildleader.dashboard.list') }}" class="logo d-flex align-items-center">
+      <a href="{{ route('senate.dashboard.list') }}" class="logo d-flex align-items-center">
         <span class="d-none d-lg-block ">Accismus Community</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -47,11 +47,10 @@
       <ul class="d-flex align-items-center">
 
         <!-- Home Icon -->
-        <a class="nav-link nav-icon" href="{{ route('guildleader.home') }}">
+        <a class="nav-link nav-icon" href="{{ route('senate.home') }}">
           <i class="bi bi-house-door"></i>
         </a>
         <!-- End Home Icon -->
-
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -144,7 +143,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="{{ route('guildleader.profil.list') }}">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('senate.profil.list') }}">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
@@ -154,7 +153,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="{{ route('guildleader.profil.list') }}">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('senate.profil.list') }}">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -182,7 +181,7 @@
 
   </header><!-- End Header -->
 
-  @include('guildleader.layouts.sidebar')
+  @include('senate.layouts.sidebar')
 
   <main id="main" class="main">
 

@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 // Guild Leader
+use App\Http\Controllers\GuildLeader\GuildLeaderHomeController;
 use App\Http\Controllers\GuildLeader\GuildLeaderDashboardController;
 use App\Http\Controllers\GuildLeader\GuildLeaderInformasiController;
 use App\Http\Controllers\GuildLeader\GuildLeaderBenefitController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\GuildLeader\GuildLeaderPenggunaController;
 use App\Http\Controllers\GuildLeader\GuildLeaderRequestController;
 
 // Humas
+use App\Http\Controllers\Humas\HumasHomeController;
 use App\Http\Controllers\Humas\HumasDashboardController;
 use App\Http\Controllers\Humas\HumasInformasiController;
 use App\Http\Controllers\Humas\HumasBenefitController;
@@ -26,6 +29,20 @@ use App\Http\Controllers\Humas\HumasGalleryController;
 use App\Http\Controllers\Humas\HumasMemberController;
 use App\Http\Controllers\Humas\HumasPenggunaController;
 use App\Http\Controllers\Humas\HumasRequestController;
+
+// Senate
+use App\Http\Controllers\Senate\SenateHomeController;
+use App\Http\Controllers\Senate\SenateDashboardController;
+use App\Http\Controllers\Senate\SenateInformasiController;
+use App\Http\Controllers\Senate\SenateBenefitController;
+use App\Http\Controllers\Senate\SenateHistoryController;
+use App\Http\Controllers\Senate\SenateTeamController;
+use App\Http\Controllers\Senate\SenateAboutController;
+use App\Http\Controllers\Senate\SenateGalleryController;
+use App\Http\Controllers\Senate\SenateMemberController;
+use App\Http\Controllers\Senate\SenatePenggunaController;
+use App\Http\Controllers\Senate\SenateRequestController;
+
 use App\Http\Controllers\Home\HomeController;
 
 /*
@@ -59,25 +76,31 @@ Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
 
 // GUild Leader
 Route::group(['middleware' => 'auth.guildleader'], function () {
-    // humas dashboard
+    // guild leader Home
+    Route::get('/guildleader/home', [GuildLeaderHomeController::class, 'index'])->name('guildleader.home');
+
+    // guild leader dashboard
     Route::get('/guildleader/dashboard/list', [GuildLeaderDashboardController::class, 'index'])->name('guildleader.dashboard.list');
 
-    // guildleader informasi
+    // guild leader dashboard
+    Route::get('/guildleader/dashboard/list', [GuildLeaderDashboardController::class, 'index'])->name('guildleader.dashboard.list');
+
+    // guild leader informasi
     Route::get('/guildleader/informasi', [GuildLeaderInformasiController::class, 'index'])->name('guildleader.informasi.list');
-    // guildleader informasi update edit
+    // guild leader informasi update edit
     Route::put('/guildleader/informasi/{uuid}', [GuildLeaderInformasiController::class, 'update'])->name('guildleader.informasi.update');
 
-    // guildleader about
+    // guild leader about
     Route::get('/guildleader/about', [GuildLeaderAboutController::class, 'index'])->name('guildleader.about.list');
-    // guildleader about update edit
+    // guil dleader about update edit
     Route::put('/guildleader/about/{uuid}', [GuildLeaderAboutController::class, 'update'])->name('guildleader.about.update');
 
-    // guildleader benefit
+    // guild leader benefit
     Route::get('/guildleader/benefit', [GuildLeaderBenefitController::class, 'index'])->name('guildleader.benefit.list');
     // guildleader benefit update edit
     Route::put('/guildleader/benefit/{uuid}', [GuildLeaderBenefitController::class, 'update'])->name('guildleader.benefit.update');
 
-    // guildleader history tanpa show
+    // guild leader history tanpa show
     Route::resource('/guildleader/history-rf', GuildLeaderHistoryController::class)
         ->except(['show'])
         ->parameters(['history' => 'history_uuid'])
@@ -90,12 +113,12 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
             'destroy' => 'guildleader.history-rf.destroy',
         ]);
 
-    // guildleader history route search
+    // guild leader history route search
     Route::get('/guildleader/history-rf/search', [GuildLeaderHistoryController::class, 'search'])->name('guildleader.history-rf.search');
-    // guildleader history konfirmasi
+    // guild leader history konfirmasi
     Route::get('/guildleader/history-rf/{uuid}/konfirmasi', [GuildLeaderHistoryController::class, 'konfirmasi'])->name('guildleader.history-rf.konfirmasi');
 
-    // guildleader team tanpa show, create, store, destroy
+    // guild leader team tanpa show, create, store, destroy
     Route::resource('/guildleader/team', GuildLeaderTeamController::class)
         ->except(['show', 'create', 'store', 'destroy'])
         ->parameters(['team' => 'uuid'])
@@ -105,10 +128,10 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
             'update' => 'guildleader.team.update',
         ]);
 
-    // guildleader team route search
+    // guild leader team route search
     Route::get('/guildleader/team/search', [GuildLeaderTeamController::class, 'search'])->name('guildleader.team.search');
 
-    // guildleader gallery tanpa show
+    // guild leader gallery tanpa show
     Route::resource('/guildleader/gallery', GuildLeaderGalleryController::class)
         ->except(['show'])
         ->parameters(['gallery' => 'gallery_uuid'])
@@ -120,12 +143,12 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
             'update' => 'guildleader.gallery.update',
             'destroy' => 'guildleader.gallery.destroy',
         ]);
-    // guildleader gallery route search
+    // guild leader gallery route search
     Route::get('/guildleader/gallery/search', [GuildLeaderGalleryController::class, 'search'])->name('guildleader.gallery.search');
     // guildleader gallery konfirmasi
     Route::get('/guildleader/gallery/{uuid}/konfirmasi', [GuildLeaderGalleryController::class, 'konfirmasi'])->name('guildleader.gallery.konfirmasi');
 
-    // guildleader broadcast tanpa show, edit, destroy, update
+    // guild leader broadcast tanpa show, edit, destroy, update
     Route::resource('/guildleader/broadcast', GuildLeaderBroadcastController::class)
         ->except(['show', 'edit', 'destroy', 'update'])
         ->parameters(['broadcast' => 'broadcast_uuid'])
@@ -134,21 +157,21 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
             'create' => 'guildleader.broadcast.create',
             'store' => 'guildleader.broadcast.store',
         ]);
-    // guildleader broadcast email terdaftar
+    // guild leader broadcast email terdaftar
     Route::get('/guildleader/broadcast/email', [GuildLeaderBroadcastController::class, 'email'])->name('guildleader.broadcast.email');
-    // guildleader broadcast route search history broadcast
+    // guild leader broadcast route search history broadcast
     Route::get('/guildleader/broadcast/search', [GuildLeaderBroadcastController::class, 'search'])->name('guildleader.broadcast.search');
-    // guildleader broadcast route search daftar email
+    // guild leader broadcast route search daftar email
     Route::get('/guildleader/broadcast/searchmail', [GuildLeaderBroadcastController::class, 'searchMail'])->name('guildleader.broadcast.searchmail');
 
-    // guildleader request member
+    // guild leader request member
     Route::get('/guildleader/request-member', [GuildLeaderRequestController::class, 'index'])->name('guildleader.request-member.list');
-    // guildleader request-member route search
+    // guild leader request-member route search
     Route::get('/guildleader/request-member/search', [GuildLeaderRequestController::class, 'search'])->name('guildleader.request-member.search');
-    // guildleader request-member route change-status
+    // guild leader request-member route change-status
     Route::patch('/guildleader/request-member/{uuid}/change-status', [GuildLeaderRequestController::class, 'changeStatus'])->name('guildleader.request-member.changeStatus');
 
-    // guildleader member tanpa show, create, store, destroy
+    // guild leader member tanpa show, create, store, destroy
     Route::resource('/guildleader/member', GuildLeaderMemberController::class)
         ->except(['show', 'create', 'store', 'destroy'])
         ->parameters(['member' => 'uuid'])
@@ -157,12 +180,12 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
             'edit' => 'guildleader.member.edit',
             'update' => 'guildleader.member.update',
         ]);
-    // guildleader member route search
+    // guild leader member route search
     Route::get('/guildleader/member/search', [GuildLeaderMemberController::class, 'search'])->name('guildleader.member.search');
-    // guildleader member route change-status
+    // guild leader member route change-status
     Route::patch('/guildleader/member/{uuid}/change-status', [GuildLeaderMemberController::class, 'changeStatus'])->name('guildleader.member.changeStatus');
 
-    // guildleader pengguna tanpa show
+    // guild leader pengguna tanpa show
     Route::resource('/guildleader/pengguna', GuildLeaderPenggunaController::class)
         ->except(['show'])
         ->parameters(['pengguna' => 'uuid'])
@@ -174,16 +197,16 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
             'update' => 'guildleader.pengguna.update',
             'destroy' => 'guildleader.pengguna.destroy',
         ]);
-    // guildleader pengguna rute untuk konfirmasi penghapusan pengguna
+    // guild leader pengguna rute untuk konfirmasi penghapusan pengguna
     Route::get('/guildleader/pengguna/{uuid}/konfirmasi', [GuildLeaderPenggunaController::class, 'konfirmasi'])->name('guildleader.pengguna.konfirmasi');
     // Rute untuk menampilkan profil pengguna
     Route::get('/guildleader/pengguna/profil', [GuildLeaderPenggunaController::class, 'profil'])->name('guildleader.pengguna.profil');
     // Rute untuk memperbarui profil pengguna
     Route::post('/guildleader/pengguna/updateprofil', [GuildLeaderPenggunaController::class, 'updateProfil'])->name('guildleader.pengguna.updateprofil');
-    // guildleader pengguna route search
+    // guild leader pengguna route search
     Route::get('/guildleader/pengguna/search', [GuildLeaderPenggunaController::class, 'search'])->name('guildleader.pengguna.search');
 
-    // guildleader profil
+    // guild leader profil
     // Route untuk menampilkan profil pengguna yang sedang login
     Route::get('/guildleader/profil/list', [GuildLeaderPenggunaController::class, 'profil'])->name('guildleader.profil.list');
     // Route untuk memperbarui profil pengguna
@@ -193,6 +216,9 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
 
 // Humas
 Route::group(['middleware' => 'auth.humas'], function () {
+    // humas Home
+    Route::get('/humas/home', [HumasHomeController::class, 'index'])->name('humas.home');
+
     // humas dashboard
     Route::get('/humas/dashboard/list', [HumasDashboardController::class, 'index'])->name('humas.dashboard.list');
 
@@ -322,4 +348,124 @@ Route::group(['middleware' => 'auth.humas'], function () {
     Route::get('/humas/profil/list', [HumasPenggunaController::class, 'profil'])->name('humas.profil.list');
     // Route untuk memperbarui profil pengguna
     Route::put('/humas/profil/profil/{uuid}', [HumasPenggunaController::class, 'updateProfil'])->name('humas.profil.update');
+});
+
+// Senate
+Route::group(['middleware' => 'auth.senate'], function () {
+    // senate Home
+    Route::get('/senate/home', [SenateHomeController::class, 'index'])->name('senate.home');
+
+    // senate dashboard
+    Route::get('/senate/dashboard/list', [SenateDashboardController::class, 'index'])->name('senate.dashboard.list');
+
+    // senate informasi
+    Route::get('/senate/informasi', [SenateInformasiController::class, 'index'])->name('senate.informasi.list');
+    // senate informasi update edit
+    Route::put('/senate/informasi/{uuid}', [SenateInformasiController::class, 'update'])->name('senate.informasi.update');
+
+    // senate about
+    Route::get('/senate/about', [SenateAboutController::class, 'index'])->name('senate.about.list');
+    // senate about update edit
+    Route::put('/senate/about/{uuid}', [SenateAboutController::class, 'update'])->name('senate.about.update');
+
+    // senate benefit
+    Route::get('/senate/benefit', [SenateBenefitController::class, 'index'])->name('senate.benefit.list');
+    // senate benefit update edit
+    Route::put('/senate/benefit/{uuid}', [SenateBenefitController::class, 'update'])->name('senate.benefit.update');
+
+    // senate history tanpa show
+    Route::resource('/senate/history-rf', SenateHistoryController::class)
+        ->except(['show'])
+        ->parameters(['history' => 'history_uuid'])
+        ->names([
+            'index' => 'senate.history-rf.list',
+            'create' => 'senate.history-rf.create',
+            'store' => 'senate.history-rf.store',
+            'edit' => 'senate.history-rf.edit',
+            'update' => 'senate.history-rf.update',
+            'destroy' => 'senate.history-rf.destroy',
+        ]);
+
+    // senate history route search
+    Route::get('/senate/history-rf/search', [SenateHistoryController::class, 'search'])->name('senate.history-rf.search');
+    // senate history konfirmasi
+    Route::get('/senate/history-rf/{uuid}/konfirmasi', [SenateHistoryController::class, 'konfirmasi'])->name('senate.history-rf.konfirmasi');
+
+    // senate team tanpa show, create, store, destroy
+    Route::resource('/senate/team', SenateTeamController::class)
+        ->except(['show', 'create', 'store', 'destroy'])
+        ->parameters(['team' => 'uuid'])
+        ->names([
+            'index' => 'senate.team.list',
+            'edit' => 'senate.team.edit',
+            'update' => 'senate.team.update',
+        ]);
+
+    // senate team route search
+    Route::get('/senate/team/search', [SenateTeamController::class, 'search'])->name('senate.team.search');
+
+    // senate gallery tanpa show
+    Route::resource('/senate/gallery', SenateGalleryController::class)
+        ->except(['show'])
+        ->parameters(['gallery' => 'gallery_uuid'])
+        ->names([
+            'index' => 'senate.gallery.list',
+            'create' => 'senate.gallery.create',
+            'store' => 'senate.gallery.store',
+            'edit' => 'senate.gallery.edit',
+            'update' => 'senate.gallery.update',
+            'destroy' => 'senate.gallery.destroy',
+        ]);
+    // senate gallery route search
+    Route::get('/senate/gallery/search', [SenateGalleryController::class, 'search'])->name('senate.gallery.search');
+    // senate gallery konfirmasi
+    Route::get('/senate/gallery/{uuid}/konfirmasi', [SenateGalleryController::class, 'konfirmasi'])->name('senate.gallery.konfirmasi');
+
+    // senate request member
+    Route::get('/senate/request-member', [SenateRequestController::class, 'index'])->name('senate.request-member.list');
+    // senate request-member route search
+    Route::get('/senate/request-member/search', [SenateRequestController::class, 'search'])->name('senate.request-member.search');
+    // senate request-member route change-status
+    Route::patch('/senate/request-member/{uuid}/change-status', [SenateRequestController::class, 'changeStatus'])->name('senate.request-member.changeStatus');
+
+    // senate member tanpa show, create, store, destroy
+    Route::resource('/senate/member', SenateMemberController::class)
+        ->except(['show', 'create', 'store', 'destroy'])
+        ->parameters(['member' => 'uuid'])
+        ->names([
+            'index' => 'senate.member.list',
+            'edit' => 'senate.member.edit',
+            'update' => 'senate.member.update',
+        ]);
+    // senate member route search
+    Route::get('/senate/member/search', [SenateMemberController::class, 'search'])->name('senate.member.search');
+    // senate member route change-status
+    Route::patch('/senate/member/{uuid}/change-status', [SenateMemberController::class, 'changeStatus'])->name('senate.member.changeStatus');
+
+    // senate pengguna tanpa show
+    Route::resource('/senate/pengguna', SenatePenggunaController::class)
+        ->except(['show'])
+        ->parameters(['pengguna' => 'uuid'])
+        ->names([
+            'index' => 'senate.pengguna.list',
+            'create' => 'senate.pengguna.create',
+            'store' => 'senate.pengguna.store',
+            'edit' => 'senate.pengguna.edit',
+            'update' => 'senate.pengguna.update',
+            'destroy' => 'senate.pengguna.destroy',
+        ]);
+    // senate pengguna rute untuk konfirmasi penghapusan pengguna
+    Route::get('/senate/pengguna/{uuid}/konfirmasi', [SenatePenggunaController::class, 'konfirmasi'])->name('senate.pengguna.konfirmasi');
+    // Rute untuk menampilkan profil pengguna
+    Route::get('/senate/pengguna/profil', [SenatePenggunaController::class, 'profil'])->name('senate.pengguna.profil');
+    // Rute untuk memperbarui profil pengguna
+    Route::post('/senate/pengguna/updateprofil', [SenatePenggunaController::class, 'updateProfil'])->name('senate.pengguna.updateprofil');
+    // senate pengguna route search
+    Route::get('/senate/pengguna/search', [SenatePenggunaController::class, 'search'])->name('senate.pengguna.search');
+
+    // senate profil
+    // Route untuk menampilkan profil pengguna yang sedang login
+    Route::get('/senate/profil/list', [SenatePenggunaController::class, 'profil'])->name('senate.profil.list');
+    // Route untuk memperbarui profil pengguna
+    Route::put('/senate/profil/profil/{uuid}', [SenatePenggunaController::class, 'updateProfil'])->name('senate.profil.update');
 });

@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <!-- End Daftar Email -->
+    <!-- End Broadcast Email -->
 
     <!-- Total Pengguna -->
     <div class="col-lg-4 col-md-6">

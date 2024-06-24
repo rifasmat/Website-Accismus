@@ -49,7 +49,7 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="{{ route('login') }}" class="get-started-btn scrollto">Login</a>
+      <a href="{{ route('guildleader.dashboard.list') }}" class="get-started-btn scrollto">Dashboard</a>
 
     </div>
   </header>
