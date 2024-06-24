@@ -74,7 +74,7 @@
                     <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Pengguna" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
-                    @if($user->uuid !== Auth::user()->uuid && Auth::user()->role !== 'Guild Leader')
+                    @if($user->user_role !== 'Guild Leader' && $user->uuid !== Auth::user()->uuid)
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a href="{{ route('humas.pengguna.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
                     </div>

@@ -56,7 +56,7 @@
                     <h5 class="card-title text-center pb-0 fs-4">Login </h5>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="POST" action="{{ route('processlogin') }}" novalidate>
+                  <form class="row g-3 needs-validation" method="POST" action="{{ route('processLogin') }}" novalidate>
                     @csrf
                     <div class="col-12">
                       <label for="yourusernameemail" class="form-label">Username/Email</label>

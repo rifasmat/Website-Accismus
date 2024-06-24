@@ -47,7 +47,7 @@
         </div>
         <div class="form-group mt-3">
             <a href="{{ route('humas.about.list') }}" class="btn btn-danger btn-sm">&nbsp; Kembali</a>
-            <button id="editaboutBtn" class="btn btn-sm btn-primary">Update</button>
+            <button id="editAboutBtn" class="btn btn-sm btn-primary">Update</button>
         </div>
     </form>
 </div>

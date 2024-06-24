@@ -1,3 +1,16 @@
+// pada halaman update about di dashboard
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('editAboutBtn').addEventListener('click', function () {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Data About Berhasil Di Update',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+});
+
 // pada halaman edit team di dashboard
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('editTeamBtn').addEventListener('click', function () {
@@ -11,13 +24,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// pada halaman tambah pengguna di dashboard
+// pada halaman tambah gallery di dashboard
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('tambahGalleryBTN').addEventListener('click', function () {
         Swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Foto Berhasil Ditambahkan',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+});
+
+
+// pada halaman edit gallery di dashboard
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('tambahGalleryBtn').addEventListener('click', function () {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Data Gallery Berhasil Di Tambahkan',
             showConfirmButton: false,
             timer: 1500
         });
@@ -83,19 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
             position: 'center',
             icon: 'success',
             title: 'Informasi Website Berhasil Di Update',
-            showConfirmButton: false,
-            timer: 1500
-        });
-    });
-});
-
-// pada halaman update about di dashboard
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('editAboutBtn').addEventListener('click', function () {
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'About Website Berhasil Di Update',
             showConfirmButton: false,
             timer: 1500
         });

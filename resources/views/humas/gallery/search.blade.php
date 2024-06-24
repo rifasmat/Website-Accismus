@@ -24,23 +24,23 @@
         </div>
     </form>
 
-    @if(isset($galleries))
-    @if($galleries->isEmpty())
+    @if(isset($gallery))
+    @if($gallery->isEmpty())
     <div class="alert alert-danger mt-3 text-center">Foto tidak ditemukan.</div>
     @else
     <div class="row mt-5 justify-content-center">
-        @foreach($galleries as $gallery)
+        @foreach($gallery as $photo)
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
-                <img src="{{ Storage::url($gallery->galleries_foto) }}" alt="Foto gallery" style="width: 100%; height: 250px;">
+                <img src="{{ Storage::url($photo->gallery_foto) }}" alt="Foto gallery" style="width: 100%; height: 250px;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $gallery->galleries_judul }}</h5>
-                    <p class="card-text">{{ $gallery->galleries_rf }}</p>
+                    <h5 class="card-title">{{ $photo->gallery_judul }}</h5>
+                    <p class="card-text">{{ $photo->gallery_rf }}</p>
                     <div class="d-flex justify-content-center">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="{{ route('humas.gallery.edit', $gallery->galleries_uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
+                            <a href="{{ route('humas.gallery.edit', $photo->gallery_uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
 
-                            <form method="GET" action="{{ route('humas.gallery.konfirmasi', $gallery->galleries_uuid) }}" style="display:inline;">
+                            <form method="GET" action="{{ route('humas.gallery.konfirmasi', $photo->gallery_uuid) }}" style="display:inline;">
                                 @csrf
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                             </form>

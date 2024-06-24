@@ -19,14 +19,14 @@
     @csrf
     <div class="form-group mt-3">
         <label for="judul"><b>Judul Foto</b></label>
-        <input type="text" class="form-control" name="judul" id="judul" autocomplete="off" placeholder="Masukan judul .." value="{{ old('judul') }}">
+        <input type="text" class="form-control" name="judul" id="judul" autocomplete="off" placeholder="Masukan Judul .." value="{{ old('judul') }}">
         @error('judul')
         <p style="color: red;">{{ $message }}</p>
         @enderror
     </div>
     <div class="form-group mt-3">
         <label for="rf"><b>Nama RF</b></label>
-        <input type="text" class="form-control" name="rf" id="rf" autocomplete="off" placeholder="Masukan rf .." value="{{ old('rf') }}">
+        <input type="text" class="form-control" name="rf" id="rf" autocomplete="off" placeholder="Masukan Nama RF .." value="{{ old('rf') }}">
         @error('rf')
         <p style="color: red;">{{ $message }}</p>
         @enderror

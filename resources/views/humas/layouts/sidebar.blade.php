@@ -34,6 +34,13 @@
     </li>
 
     <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('humas.history-rf.list') }}">
+        <i class="bi bi-aspect-ratio"></i>
+        <span>History RF</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('humas.team.list') }}">
         <i class="bi bi-person-workspace"></i>
         <span>Team</span>
@@ -70,13 +77,6 @@
           </a>
         </li>
       </ul>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
-        <i class="bi bi-textarea-resize"></i>
-        <span>Form Request</span>
-      </a>
     </li>
 
     <hr>

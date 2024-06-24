@@ -41,7 +41,7 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
-                <a href="{{ asset('index.html') }}" class="logo d-flex align-items-center w-auto">
+                <a href="{{ asset('/') }}" class="logo d-flex align-items-center w-auto">
                   <img src="{{ asset('assets/home/img/logo.png') }}" alt="">
                   <span class="d-none d-lg-block">Accismus Community</span>
                 </a>
@@ -54,20 +54,30 @@
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
                   </div>
-                  <form action="{{ route('register') }}" method="POST" class="row g-3 needs-validation" enctype="multipart/form-data">
+                  <form action="{{ route('processRegister') }}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="col-12">
                       <label for="nama" class="form-label">Nama</label>
                       <input type="text" name="nama" class="form-control" id="nama" required>
+                      @error('nama')
+                      <p style="color: red;">{{ $message }}</p>
+                      @enderror
                     </div>
 
                     <div class="col-12">
                       <label for="username" class="form-label">Username</label>
                       <input type="text" name="username" class="form-control" id="username" required>
+                      @error('username')
+                      <p style="color: red;">{{ $message }}</p>
+                      @enderror
                     </div>
 
                     <div class="col-12">
                       <label for="email" class="form-label">Email</label>
                       <input type="email" name="email" class="form-control" id="email" required>
+                      @error('email')
+                      <p style="color: red;">{{ $message }}</p>
+                      @enderror
                     </div>
 
                     <div class="col-12">
@@ -78,16 +88,23 @@
                     <div class="col-12">
                       <label for="discord" class="form-label">Nama Discord</label>
                       <input type="text" name="discord" class="form-control" id="discord">
+                      @error('discord')
+                      <p style="color: red;">{{ $message }}</p>
+                      @enderror
                     </div>
 
                     <div class="col-12">
                       <label for="password" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="password" required>
+                      @error('password')
+                      <p style="color: red;">{{ $message }}</p>
+                      @enderror
                     </div>
 
                     <div class="form-group">
                       <label for="photo">Upload Photo</label>
-                      <input type="file" class="form-control" id="photo" name="photo">
+                      <input type="file" class="form-control" name="foto" id="uploadFoto" onchange="previewImage()">
+                      <img alt="Preview Foto" id="previewFoto" style="max-width: 150px; display: none;">
                       @error('photo')
                       <div class="alert alert-danger">{{ $message }}</div>
                       @enderror

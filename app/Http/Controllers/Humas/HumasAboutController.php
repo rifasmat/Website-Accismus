@@ -32,11 +32,16 @@ class HumasAboutController extends Controller
             'foto.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
+        // Ambil teks dari form dan bersihkan dari tag HTML
+        $cleanText = strip_tags($request->text);
+        $cleanText = html_entity_decode($cleanText); // Dekode entitas HTML seperti &nbsp; menjadi karakter yang sesuai
+        $cleanText = htmlspecialchars_decode($cleanText); // Dekode entitas HTML tambahan seperti &amp; menjadi karakter yang sesuai
+
         $about = About::where('about_uuid', $uuid)->first();
         if ($about) {
             $data = [
                 'about_judul' => $request->judul,
-                'about_text' => $request->text,
+                'about_text' => $cleanText,  // Sanitasi teks pesan
             ];
 
             if ($request->hasFile('foto')) {

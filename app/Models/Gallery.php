@@ -15,10 +15,10 @@ class Gallery extends Model
     public $incrementing = true;
 
     protected $fillable = [
-        'galleries_uuid',
-        'galleries_judul',
-        'galleries_rf',
-        'galleries_foto',
+        'gallery_uuid',
+        'gallery_judul',
+        'gallery_rf',
+        'gallery_foto',
     ];
 
     protected static function boot()
@@ -26,8 +26,8 @@ class Gallery extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->galleries_uuid)) {
-                $model->galleries_uuid = (string) Str::uuid();
+            if (empty($model->gallery_uuid)) {
+                $model->gallery_uuid = (string) Str::uuid();
             }
         });
     }

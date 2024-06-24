@@ -18,17 +18,17 @@
     <div class="row mt-5 justify-content-center">
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
-                <img src="{{ Storage::url($galleries->galleries_foto) }}" alt="Foto gallery" style="width: 100%; height: 250px;">
+                <img src="{{ Storage::url($gallery->gallery_foto) }}" alt="Foto gallery" style="width: 100%; height: 250px;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $galleries->galleries_judul }}</h5>
-                    <p class="card-text">{{ $galleries->galleries_rf }}</p>
+                    <h5 class="card-title">{{ $gallery->gallery_judul }}</h5>
+                    <p class="card-text">{{ $gallery->gallery_rf }}</p>
                 </div>
             </div>
         </div>
     </div>
     <div>
         <a href="{{ route('humas.gallery.list') }}" class="btn btn-secondary btn-sm">Batal</a>
-        <form method="POST" action="{{ route('humas.gallery.destroy', $galleries->galleries_uuid) }}" style="display:inline;">
+        <form method="POST" action="{{ route('humas.gallery.destroy', $gallery->gallery_uuid) }}" style="display:inline;">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger btn-sm">Ya, Hapus</button>

@@ -12,8 +12,8 @@ class HumasGalleryController extends Controller
 {
     public function index()
     {
-        $galleries = Gallery::orderBy('created_at', 'desc')->paginate(9); // Menampilkan 9 gallery per halaman dengan urutan terbaru
-        return view('humas.gallery.list', compact('galleries'));
+        $gallery = Gallery::orderBy('created_at', 'desc')->paginate(9); // Menampilkan 9 gallery per halaman dengan urutan terbaru
+        return view('humas.gallery.list', compact('gallery'));
     }
 
 
@@ -26,11 +26,11 @@ class HumasGalleryController extends Controller
     {
         $search = $request->input('search');
 
-        $galleries = Gallery::where('galleries_judul', 'LIKE', "%{$search}%")
-            ->orWhere('galleries_rf', 'LIKE', "%{$search}%")
+        $gallery = Gallery::where('gallery_judul', 'LIKE', "%{$search}%")
+            ->orWhere('gallery_rf', 'LIKE', "%{$search}%")
             ->get();
 
-        return view('humas.gallery.search', compact('galleries'));
+        return view('humas.gallery.search', compact('gallery'));
     }
 
     public function store(Request $request)
@@ -58,10 +58,10 @@ class HumasGalleryController extends Controller
 
         // Buat gallery baru
         Gallery::create([
-            'galleries_judul' => $request->judul,
-            'galleries_rf' => $request->rf,
-            'galleries_foto' => $fotoPath,
-            'galleries_uuid' => (string) Str::uuid(),
+            'gallery_judul' => $request->judul,
+            'gallery_rf' => $request->rf,
+            'gallery_foto' => $fotoPath,
+            'gallery_uuid' => (string) Str::uuid(),
         ]);
 
         return redirect()->route('humas.gallery.list');
@@ -70,7 +70,7 @@ class HumasGalleryController extends Controller
     public function edit($uuid)
     {
         // Ambil data berdasarkan uuid
-        $gallery = Gallery::where('galleries_uuid', $uuid)->firstOrFail();
+        $gallery = Gallery::where('gallery_uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
         return view('humas.gallery.edit', compact('gallery'));
@@ -79,7 +79,7 @@ class HumasGalleryController extends Controller
     public function update(Request $request, $id)
     {
         // Ambil data gallery berdasarkan UUID
-        $galleries = Gallery::where('galleries_uuid', $id)->firstOrFail();
+        $gallery = Gallery::where('gallery_uuid', $id)->firstOrFail();
 
         // Validasi data
         $request->validate([
@@ -95,50 +95,50 @@ class HumasGalleryController extends Controller
         ]);
 
         // Update data pengguna
-        $galleries->galleries_judul = $request->judul;
-        $galleries->galleries_rf = $request->rf;
+        $gallery->gallery_judul = $request->judul;
+        $gallery->gallery_rf = $request->rf;
 
         // Jika ada foto baru, update foto
         if ($request->hasFile('foto')) {
             // Generate nama file unik
             $fileName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
             // Simpan file ke direktori 'pengguna'
-            $fotoPath = $request->file('foto')->storeAs('Gallery', $fileName, 'public');
+            $fotoPath = $request->file('foto')->storeAs('gallery', $fileName, 'public');
             // Hapus foto lama jika ada
-            Storage::disk('public')->delete($galleries->galleries_foto);
+            Storage::disk('public')->delete($gallery->gallery_foto);
             // Update path foto
-            $galleries->galleries_foto = $fotoPath;
+            $gallery->gallery_foto = $fotoPath;
         }
 
         // Simpan perubahan
-        $galleries->save();
+        $gallery->save();
 
         return redirect()->route('humas.gallery.list');
     }
 
     public function konfirmasi($uuid)
     {
-        $galleries = Gallery::all();
+        $gallery = Gallery::all();
 
         // Ambil data berdasarkan uuid
-        $galleries = Gallery::where('galleries_uuid', $uuid)->firstOrFail();
+        $gallery = Gallery::where('gallery_uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
-        return view('humas.gallery.konfirmasi', compact('galleries'));
+        return view('humas.gallery.konfirmasi', compact('gallery'));
     }
 
     public function destroy($uuid)
     {
         // Ambil data gallery berdasarkan UUID
-        $galleries = Gallery::where('galleries_uuid', $uuid)->firstOrFail();
+        $gallery = Gallery::where('gallery_uuid', $uuid)->firstOrFail();
 
         // Hapus foto gallery dari storage jika ada
-        if ($galleries->galleries_foto) {
-            Storage::disk('public')->delete($galleries->galleries_foto);
+        if ($gallery->gallery_foto) {
+            Storage::disk('public')->delete($gallery->gallery_foto);
         }
 
         // Hapus data gallery dari database
-        $galleries->delete();
+        $gallery->delete();
 
         return redirect()->route('humas.gallery.list')->with('success', 'Foto Berhasil Dihapus.');
     }

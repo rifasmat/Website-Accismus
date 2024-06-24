@@ -65,7 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'auth.humas' => \App\Http\Middleware\RedirectIfNotHumas::class,
         'auth.guildleader' => \App\Http\Middleware\RedirectIfNotGuildLeader::class,
-        'auth.guildleader' => \App\Http\Middleware\RedirectIfNotSenate::class,
+        'auth.senate' => \App\Http\Middleware\RedirectIfNotSenate::class,
         'auth.moderator' => \App\Http\Middleware\RedirectIfNotModerator::class,
         'auth.member' => \App\Http\Middleware\RedirectIfNotMember::class,
         'auth.guest' => \App\Http\Middleware\RedirectIfNotGuest::class,

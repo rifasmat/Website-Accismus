@@ -32,11 +32,16 @@ class HumasBenefitController extends Controller
             'foto.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
+        // Ambil teks dari form dan bersihkan dari tag HTML
+        $cleanText = strip_tags($request->text);
+        $cleanText = html_entity_decode($cleanText); // Dekode entitas HTML seperti &nbsp; menjadi karakter yang sesuai
+        $cleanText = htmlspecialchars_decode($cleanText); // Dekode entitas HTML tambahan seperti &amp; menjadi karakter yang sesuai
+
         $benefit = Benefit::where('benefit_uuid', $uuid)->first();
         if ($benefit) {
             $data = [
                 'benefit_judul' => $request->judul,
-                'benefit_text' => $request->text,
+                'benefit_text' => $cleanText, // Sanitasi teks pesan
             ];
 
             if ($request->hasFile('foto')) {
