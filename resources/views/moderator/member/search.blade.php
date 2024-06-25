@@ -1,4 +1,4 @@
-@extends('senate.layouts.template')
+@extends('moderator.layouts.template')
 
 @section('content')
 
@@ -9,17 +9,17 @@
 @endif
 
 <div class="text-center mb-2">
-    <h2>Pencarian Daftar Email Accismus</h2>
+    <h2>Pencarian Member Accismus</h2>
 </div>
 
 <div class="container">
     <!-- Search -->
-    <form action="{{ route('senate.broadcast.searchmail') }}" method="GET" class="form-inline mt-3">
+    <form action="{{ route('moderator.member.search') }}" method="GET" class="form-inline mt-3">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+            <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Search</button>
-                <a href="{{ route('senate.broadcast.email') }}">
+                <a href="{{ route('moderator.member.list') }}">
                     <button type="button" class="btn btn-danger">Kembali</button>
                 </a>
             </div>
@@ -28,7 +28,7 @@
 
     @if(isset($users))
     @if($users->isEmpty())
-    <div class="alert alert-danger mt-3 text-center">Email tidak ditemukan.</div>
+    <div class="alert alert-danger mt-3 text-center">Member tidak ditemukan.</div>
     @else
     <table class="table mt-3">
         <thead class="text-center">
@@ -39,7 +39,9 @@
                 <th scope="col">Email</th>
                 <th scope="col">Whatsapp</th>
                 <th scope="col">Discord</th>
+                <th scope="col">Role</th>
                 <th scope="col">Foto</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -51,8 +53,17 @@
                 <td>{{ $user->user_email }}</td>
                 <td>{{ $user->user_wa }}</td>
                 <td>{{ $user->user_discord }}</td>
+                <td>{{ $user->user_role }}</td>
                 <td>
-                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Pengguna" class="img-thumbnail" style="width: 100px; height: 100px;">
+                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Member" class="img-thumbnail" style="width: 100px; height: 100px;">
+                </td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="{{ route('moderator.member.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
+                        <form method="GET" action="{{ route('moderator.member.konfirmasi', $user->uuid) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             @endforeach

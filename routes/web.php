@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Home Controller
+use App\Http\Controllers\Home\HomeController;
+
 // Guild Leader
 use App\Http\Controllers\GuildLeader\GuildLeaderHomeController;
 use App\Http\Controllers\GuildLeader\GuildLeaderDashboardController;
@@ -43,7 +46,18 @@ use App\Http\Controllers\Senate\SenateMemberController;
 use App\Http\Controllers\Senate\SenatePenggunaController;
 use App\Http\Controllers\Senate\SenateRequestController;
 
-use App\Http\Controllers\Home\HomeController;
+// Moderator
+use App\Http\Controllers\Moderator\ModeratorHomeController;
+use App\Http\Controllers\Moderator\ModeratorDashboardController;
+use App\Http\Controllers\Moderator\ModeratorInformasiController;
+use App\Http\Controllers\Moderator\ModeratorBenefitController;
+use App\Http\Controllers\Moderator\ModeratorHistoryController;
+use App\Http\Controllers\Moderator\ModeratorTeamController;
+use App\Http\Controllers\Moderator\ModeratorAboutController;
+use App\Http\Controllers\Moderator\ModeratorGalleryController;
+use App\Http\Controllers\Moderator\ModeratorMemberController;
+use App\Http\Controllers\Moderator\ModeratorRequestController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -468,4 +482,64 @@ Route::group(['middleware' => 'auth.senate'], function () {
     Route::get('/senate/profil/list', [SenatePenggunaController::class, 'profil'])->name('senate.profil.list');
     // Route untuk memperbarui profil pengguna
     Route::put('/senate/profil/profil/{uuid}', [SenatePenggunaController::class, 'updateProfil'])->name('senate.profil.update');
+});
+
+// Moderator
+Route::group(['middleware' => 'auth.moderator'], function () {
+    // moderator Home
+    Route::get('/moderator/home', [ModeratorHomeController::class, 'index'])->name('moderator.home');
+
+    // moderator dashboard
+    Route::get('/moderator/dashboard/list', [ModeratorDashboardController::class, 'index'])->name('moderator.dashboard.list');
+
+    // moderator informasi
+    Route::get('/moderator/informasi', [ModeratorInformasiController::class, 'index'])->name('moderator.informasi.list');
+
+    // moderator about
+    Route::get('/moderator/about', [ModeratorAboutController::class, 'index'])->name('moderator.about.list');
+
+    // moderator benefit
+    Route::get('/moderator/benefit', [ModeratorBenefitController::class, 'index'])->name('moderator.benefit.list');
+
+    // moderator history rf
+    Route::get('/moderator/history-rf', [ModeratorHistoryController::class, 'index'])->name('moderator.history-rf.list');
+    // moderator history route search
+    Route::get('/moderator/history-rf/search', [ModeratorHistoryController::class, 'search'])->name('moderator.history-rf.search');
+
+    // moderator team 
+    Route::get('/moderator/team', [ModeratorTeamController::class, 'index'])->name('moderator.team.list');
+    // moderator team route search
+    Route::get('/moderator/team/search', [ModeratorTeamController::class, 'search'])->name('moderator.team.search');
+
+    // moderator gallery 
+    Route::get('/moderator/gallery', [ModeratorGalleryController::class, 'index'])->name('moderator.gallery.list');
+    // moderator gallery route search
+    Route::get('/moderator/gallery/search', [ModeratorGalleryController::class, 'search'])->name('moderator.gallery.search');
+
+    // moderator request member
+    Route::get('/moderator/request-member', [ModeratorRequestController::class, 'index'])->name('moderator.request-member.list');
+    // moderator request-member route search
+    Route::get('/moderator/request-member/search', [ModeratorRequestController::class, 'search'])->name('moderator.request-member.search');
+    // moderator request-member route change-status
+    Route::patch('/moderator/request-member/{uuid}/change-status', [ModeratorRequestController::class, 'changeStatus'])->name('moderator.request-member.changeStatus');
+
+    // moderator member tanpa show, create, store, destroy
+    Route::resource('/moderator/member', ModeratorMemberController::class)
+        ->except(['show', 'create', 'store', 'destroy'])
+        ->parameters(['member' => 'uuid'])
+        ->names([
+            'index' => 'moderator.member.list',
+            'edit' => 'moderator.member.edit',
+            'update' => 'moderator.member.update',
+        ]);
+    // moderator member route search
+    Route::get('/moderator/member/search', [ModeratorMemberController::class, 'search'])->name('moderator.member.search');
+    // moderator member route change-status
+    Route::patch('/moderator/member/{uuid}/change-status', [ModeratorMemberController::class, 'changeStatus'])->name('moderator.member.changeStatus');
+
+    // moderator profil
+    // Route untuk menampilkan profil pengguna yang sedang login
+    Route::get('/moderator/profil/list', [ModeratorPenggunaController::class, 'profil'])->name('moderator.profil.list');
+    // Route untuk memperbarui profil pengguna
+    Route::put('/moderator/profil/profil/{uuid}', [ModeratorPenggunaController::class, 'updateProfil'])->name('moderator.profil.update');
 });

@@ -16,8 +16,6 @@ class HumasRequestController extends Controller
         return view('humas.request-member.list', compact('users'));
     }
 
-
-
     public function search(Request $request)
     {
         $search = $request->input('search');

@@ -16,8 +16,6 @@ class GuildLeaderRequestController extends Controller
         return view('guildleader.request-member.list', compact('users'));
     }
 
-
-
     public function search(Request $request)
     {
         $search = $request->input('search');

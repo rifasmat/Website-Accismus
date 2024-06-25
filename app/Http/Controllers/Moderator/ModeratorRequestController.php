@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Senate;
+namespace App\Http\Controllers\Moderator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 
-class SenateRequestController extends Controller
+class ModeratorRequestController extends Controller
 {
     public function index()
     {
         $users = User::where('user_role', 'Guest')->paginate(10);
 
-        return view('senate.request-member.list', compact('users'));
+        return view('moderator.request-member.list', compact('users'));
     }
 
     public function search(Request $request)
@@ -29,7 +29,7 @@ class SenateRequestController extends Controller
             })
             ->get();
 
-        return view('senate.request-member.search', compact('users'));
+        return view('moderator.request-member.search', compact('users'));
     }
 
     public function changeStatus($uuid)
@@ -38,7 +38,7 @@ class SenateRequestController extends Controller
         $user->user_role = 'Member';
         $user->save();
 
-        return redirect()->route('senate.member.list')
+        return redirect()->route('moderator.member.list')
             ->with('changeStatus', "{$user->user_nama} Sudah Menjadi Member.");
     }
 }
