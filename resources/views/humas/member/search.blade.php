@@ -58,12 +58,15 @@
                     <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Member" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{{ route('humas.member.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
-                        <form method="GET" action="{{ route('humas.member.konfirmasi', $user->uuid) }}" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
-                    </div>
+                    @if($user->uuid !== Auth::user()->uuid && !in_array($user->user_role, ['Administrator', 'Guild Leader']))
+                    <form action="{{ route('humas.member.changeStatus', $user->uuid) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-danger btn-sm mr-1">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

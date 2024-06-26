@@ -15,12 +15,6 @@ class ModeratorHistoryController extends Controller
         return view('moderator.history-rf.list', compact('history'));
     }
 
-
-    public function create()
-    {
-        return view('moderator.history-rf.create');
-    }
-
     public function search(Request $request)
     {
         $search = $request->input('search');

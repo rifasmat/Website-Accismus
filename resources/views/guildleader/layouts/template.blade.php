@@ -51,7 +51,6 @@
           <i class="bi bi-house-door"></i>
         </a>
         <!-- End Home Icon -->
-
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -133,11 +132,13 @@
             <img src="{{ Storage::url(Auth::user()->user_foto) }}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->user_nama }}</span>
           </a><!-- End Profile Iamge Icon -->
-
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>{{ Auth::user()->user_nama }}</h6>
-              <span>{{ Auth::user()->user_role }}</span>
+            <li class="dropdown-header d-flex align-items-center">
+              <img src="{{ Storage::url(Auth::user()->user_foto) }}" alt="Profile" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 10px;">
+              <div>
+                <h6>{{ Auth::user()->user_nama }}</h6>
+                <span>{{ Auth::user()->user_role }}</span>
+              </div>
             </li>
             <li>
               <hr class="dropdown-divider">

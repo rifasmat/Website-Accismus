@@ -57,7 +57,19 @@ use App\Http\Controllers\Moderator\ModeratorAboutController;
 use App\Http\Controllers\Moderator\ModeratorGalleryController;
 use App\Http\Controllers\Moderator\ModeratorMemberController;
 use App\Http\Controllers\Moderator\ModeratorRequestController;
+use App\Http\Controllers\Moderator\ModeratorPenggunaController;
 
+// Member
+use App\Http\Controllers\Member\MemberHomeController;
+use App\Http\Controllers\Member\MemberDashboardController;
+use App\Http\Controllers\Member\MemberInformasiController;
+use App\Http\Controllers\Member\MemberBenefitController;
+use App\Http\Controllers\Member\MemberHistoryController;
+use App\Http\Controllers\Member\MemberTeamController;
+use App\Http\Controllers\Member\MemberAboutController;
+use App\Http\Controllers\Member\MemberGalleryController;
+use App\Http\Controllers\Member\MemberMemberController;
+use App\Http\Controllers\Member\MemberPenggunaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -542,4 +554,57 @@ Route::group(['middleware' => 'auth.moderator'], function () {
     Route::get('/moderator/profil/list', [ModeratorPenggunaController::class, 'profil'])->name('moderator.profil.list');
     // Route untuk memperbarui profil pengguna
     Route::put('/moderator/profil/profil/{uuid}', [ModeratorPenggunaController::class, 'updateProfil'])->name('moderator.profil.update');
+});
+
+// Member
+Route::group(['middleware' => 'auth.member'], function () {
+    // member Home
+    Route::get('/member/home', [MemberHomeController::class, 'index'])->name('member.home');
+
+    // member dashboard
+    Route::get('/member/dashboard/list', [MemberDashboardController::class, 'index'])->name('member.dashboard.list');
+
+    // member informasi
+    Route::get('/member/informasi', [MemberInformasiController::class, 'index'])->name('member.informasi.list');
+
+    // member about
+    Route::get('/member/about', [MemberAboutController::class, 'index'])->name('member.about.list');
+
+    // member benefit
+    Route::get('/member/benefit', [MemberBenefitController::class, 'index'])->name('member.benefit.list');
+
+    // member history rf
+    Route::get('/member/history-rf', [MemberHistoryController::class, 'index'])->name('member.history-rf.list');
+    // member history route search
+    Route::get('/member/history-rf/search', [MemberHistoryController::class, 'search'])->name('member.history-rf.search');
+
+    // member team 
+    Route::get('/member/team', [MemberTeamController::class, 'index'])->name('member.team.list');
+    // member team route search
+    Route::get('/member/team/search', [MemberTeamController::class, 'search'])->name('member.team.search');
+
+    // member gallery 
+    Route::get('/member/gallery', [MemberGalleryController::class, 'index'])->name('member.gallery.list');
+    // member gallery route search
+    Route::get('/member/gallery/search', [MemberGalleryController::class, 'search'])->name('member.gallery.search');
+
+    // member member tanpa show, create, store, destroy
+    Route::resource('/member/member', MemberMemberController::class)
+        ->except(['show', 'create', 'store', 'destroy'])
+        ->parameters(['member' => 'uuid'])
+        ->names([
+            'index' => 'member.member.list',
+            'edit' => 'member.member.edit',
+            'update' => 'member.member.update',
+        ]);
+    // member member route search
+    Route::get('/member/member/search', [MemberMemberController::class, 'search'])->name('member.member.search');
+    // member member route change-status
+    Route::patch('/member/member/{uuid}/change-status', [MemberMemberController::class, 'changeStatus'])->name('member.member.changeStatus');
+
+    // member profil
+    // Route untuk menampilkan profil pengguna yang sedang login
+    Route::get('/member/profil/list', [MemberPenggunaController::class, 'profil'])->name('member.profil.list');
+    // Route untuk memperbarui profil pengguna
+    Route::put('/member/profil/profil/{uuid}', [MemberPenggunaController::class, 'updateProfil'])->name('member.profil.update');
 });

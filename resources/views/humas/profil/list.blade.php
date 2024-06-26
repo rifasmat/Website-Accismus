@@ -63,6 +63,14 @@
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
+        <div class="form-group mt-3">
+            <label for="password"><b>password</b></label>
+            <input type="password" class="form-control" name="password" id="password" autocomplete="off">
+            <p class="text-muted">Kosongkan password apabila tidak ingin diganti.</p>
+            @error('password')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
+        </div>
         <div class="mb-3">
             <div class="input-group" style="display: flex; align-items: center;">
                 <input type="file" class="form-control" id="foto" name="foto" style="flex: 1;" onchange="previewImage()">

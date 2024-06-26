@@ -1,21 +1,21 @@
-@extends('moderator.layouts.template')
+@extends('administrator.layouts.template')
 
 @section('content')
 <div class="pagetitle">
-    <h1>Member Accismus</h1>
+    <h1>Team Accismus</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('moderator.dashboard.list') }}">Home</a></li>
-            <li class="breadcrumb-item active">Member</li>
+            <li class="breadcrumb-item"><a href="{{ route('administrator.dashboard.list') }}">Home</a></li>
+            <li class="breadcrumb-item active">Team</li>
         </ol>
     </nav>
 </div>
 
 <div class="text-center mb2">
-    <h2>Edit Member Accismus</h2>
+    <h2>Edit Team Accismus</h2>
 </div>
 <div class="container">
-    <form action="{{ route('moderator.member.update', $user->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('administrator.team.update', $user->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group mt-3">
@@ -57,7 +57,7 @@
             <label for="role"><b>Role</b></label>
             <select class="form-control" name="role" id="role">
                 @php
-                $roles = ['moderator', 'Moderator', 'Member', 'Guest'];
+                $roles = ['GuildLeader', 'Humas', 'Senate', 'Moderator', 'Member', 'Guest'];
                 $userRole = $user->user_role;
                 @endphp
                 <option value="{{ $userRole }}">{{ $userRole }}</option>
@@ -93,8 +93,8 @@
         </div>
 
         <div class="form-group mt-3">
-            <a href="{{ route('moderator.member.list') }}" class="btn btn-danger btn-sm">&nbsp; Kembali</a>
-            <button id="editMemberBtn" class="btn btn-sm btn-primary">Edit Member</button>
+            <a href="{{ route('administrator.team.list') }}" class="btn btn-danger btn-sm">&nbsp; Kembali</a>
+            <button id="editTeamBtn" class="btn btn-sm btn-primary">Edit Team</button>
         </div>
     </form>
 </div>

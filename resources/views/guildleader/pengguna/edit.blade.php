@@ -15,7 +15,7 @@
     <h2>Edit Pengguna Accismus</h2>
 </div>
 <div class="container">
-    <form action="{{ route('guildleader.pengguna.update', $user->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('guildleader.pengguna.update', $user->uuid) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group mt-3">
@@ -57,7 +57,7 @@
             <label for="role"><b>Role</b></label>
             <select class="form-control" name="role" id="role">
                 @php
-                $roles = ['Guild Leader', 'Humas', 'Senate', 'Moderator', 'Member', 'Guest'];
+                $roles = ['Guild Leader', Humas', 'Senate', 'Moderator', 'Member', 'Guest'];
                 $userRole = $user->user_role;
                 @endphp
                 <option value="{{ $userRole }}">{{ $userRole }}</option>

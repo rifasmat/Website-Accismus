@@ -72,7 +72,7 @@
                     <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Member" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
-                    @if($user->uuid !== Auth::user()->uuid)
+                    @if($user->uuid !== Auth::user()->uuid && !in_array($user->user_role, ['Administrator', 'Guild Leader']))
                     <form action="{{ route('humas.member.changeStatus', $user->uuid) }}" method="POST" class="d-inline">
                         @csrf
                         @method('PATCH')

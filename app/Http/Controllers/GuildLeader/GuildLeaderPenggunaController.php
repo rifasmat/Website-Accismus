@@ -91,21 +91,20 @@ class GuildLeaderPenggunaController extends Controller
         return view('guildleader.pengguna.edit', compact('user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        // Ambil data pengguna berdasarkan ID
-        $user = User::findOrFail($id);
+        // Ambil data pengguna berdasarkan user_uuid
+        $user = User::where('uuid', $uuid)->firstOrFail();
 
-        // Validasi data
+        // Validasi input
         $request->validate([
             'nama' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,user_username,' . $id,
-            'email' => 'required|string|email|max:255|unique:users,user_email,' . $id,
-            'password' => 'nullable|string|min:5',
+            'username' => 'required|string|max:255|unique:users,user_username,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:users,user_email,' . $user->id,
             'wa' => 'nullable|string|max:20',
             'discord' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:5',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'role' => 'required|string|max:255',
         ], [
             'nama.required' => 'Nama pengguna tidak boleh kosong.',
             'username.required' => 'Username tidak boleh kosong.',
@@ -113,17 +112,12 @@ class GuildLeaderPenggunaController extends Controller
             'email.required' => 'Email tidak boleh kosong.',
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah digunakan, silahkan menggunakan email yang lain.',
-            'password.min' => 'Password harus minimal 5 karakter.',
             'wa.max' => 'Nomor WhatsApp maksimal 20 angka.',
             'discord.max' => 'Nama/Id Discord maksimal 255 karakter.',
             'foto.image' => 'File harus berupa gambar.',
             'foto.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
             'foto.max' => 'Ukuran gambar maksimal 2MB.',
-            'role.required' => 'Role pengguna harus diisi.',
         ]);
-
-        // Simpan data role pengguna sebelumnya
-        $oldRole = $user->user_role;
 
         // Update data pengguna
         $user->user_nama = $request->nama;
@@ -132,32 +126,24 @@ class GuildLeaderPenggunaController extends Controller
         $user->user_wa = $request->wa;
         $user->user_discord = $request->discord;
 
-        // Periksa apakah pengguna mengubah role
-        if ($request->filled('role') && $request->role !== $user->user_role) {
-            $user->user_role = $request->role;
-        }
-
         // Jika ada password baru, update password
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
 
-        // Jika ada foto baru, update foto
+        // Jika ada file foto yang diupload, simpan file baru dan hapus file lama
         if ($request->hasFile('foto')) {
-            // Generate nama file unik
             $fileName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
-            // Simpan file ke direktori 'pengguna'
             $fotoPath = $request->file('foto')->storeAs('pengguna', $fileName, 'public');
-            // Hapus foto lama jika ada
             Storage::disk('public')->delete($user->user_foto);
-            // Update path foto
             $user->user_foto = $fotoPath;
         }
 
-        // Simpan perubahan
+        // Simpan perubahan data pengguna
         $user->save();
 
-        return redirect()->route('guildleader.pengguna.list');
+        // Redirect ke halaman pengguna dengan pesan sukses
+        return redirect()->route('guildleader.pengguna.list')->with('success', 'Pengguna berhasil diperbarui.');
     }
 
     public function konfirmasi($uuid)
@@ -207,14 +193,17 @@ class GuildLeaderPenggunaController extends Controller
 
     public function updateProfil(Request $request, $uuid)
     {
+        // Ambil data pengguna berdasarkan user_uuid
         $user = User::where('uuid', $uuid)->firstOrFail();
 
+        // Validasi input
         $request->validate([
             'nama' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,user_username,' . $user->id,
             'email' => 'required|string|email|max:255|unique:users,user_email,' . $user->id,
             'wa' => 'nullable|string|max:20',
             'discord' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:5',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'nama.required' => 'Nama pengguna tidak boleh kosong.',
@@ -230,12 +219,19 @@ class GuildLeaderPenggunaController extends Controller
             'foto.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
+        // Update data pengguna
         $user->user_nama = $request->nama;
         $user->user_username = $request->username;
         $user->user_email = $request->email;
         $user->user_wa = $request->wa;
         $user->user_discord = $request->discord;
 
+        // Jika ada password baru, update password
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // Jika ada file foto yang diupload, simpan file baru dan hapus file lama
         if ($request->hasFile('foto')) {
             $fileName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
             $fotoPath = $request->file('foto')->storeAs('pengguna', $fileName, 'public');
@@ -243,8 +239,10 @@ class GuildLeaderPenggunaController extends Controller
             $user->user_foto = $fotoPath;
         }
 
+        // Simpan perubahan data pengguna
         $user->save();
 
+        // Redirect ke halaman profil dengan pesan sukses
         return redirect()->route('guildleader.profil.list')->with('success', 'Profil berhasil diperbarui.');
     }
 }

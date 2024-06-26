@@ -1,21 +1,31 @@
-@extends('humas.layouts.template')
+@extends('member.layouts.template')
 
 @section('content')
 <div class="pagetitle">
-    <h1>Member Accismus</h1>
+    <h1>Profil Pengguna</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('humas.dashboard.list') }}">Home</a></li>
-            <li class="breadcrumb-item active">Member</li>
+            <li class="breadcrumb-item"><a href="{{ route('member.dashboard.list') }}">Home</a></li>
+            <li class="breadcrumb-item active">Profil</li>
         </ol>
     </nav>
 </div>
 
-<div class="text-center mb2">
-    <h2>Edit Member Accismus</h2>
-</div>
 <div class="container">
-    <form action="{{ route('humas.member.update', $user->id) }}" method="post" enctype="multipart/form-data">
+    @if(session('success'))
+    <div class="alert alert-success text-center">
+        {{ session('success') }}
+    </div>
+    @endif
+    <div class="text-center mb-2">
+        <h2>Profil</h2>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <img id="fotoPreview" src="{{ Storage::url($user->user_foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 300px;">
+    </div>
+
+    <form action="{{ route('member.profil.update', $user->uuid) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group mt-3">
@@ -34,13 +44,13 @@
         </div>
         <div class="form-group mt-3">
             <label for="email"><b>Email</b></label>
-            <input type="text" class="form-control" name="email" id="email" autocomplete="off" value="{{ old('email', $user->user_email) }}">
+            <input type="email" class="form-control" name="email" id="email" autocomplete="off" value="{{ old('email', $user->user_email) }}">
             @error('email')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group mt-3">
-            <label for="wa"><b>Nomer Whatsapp</b></label>
+            <label for="wa"><b>Nomor WhatsApp</b></label>
             <input type="text" class="form-control" name="wa" id="wa" autocomplete="off" value="{{ old('wa', $user->user_wa) }}">
             @error('wa')
             <p style="color: red;">{{ $message }}</p>
@@ -50,24 +60,6 @@
             <label for="discord"><b>Discord</b></label>
             <input type="text" class="form-control" name="discord" id="discord" autocomplete="off" value="{{ old('discord', $user->user_discord) }}">
             @error('discord')
-            <p style="color: red;">{{ $message }}</p>
-            @enderror
-        </div>
-        <div class="form-group mt-3">
-            <label for="role"><b>Role</b></label>
-            <select class="form-control" name="role" id="role">
-                @php
-                $roles = ['GuildLeader', 'Humas', 'Senate', 'Moderator', 'Member', 'Guest'];
-                $userRole = $user->user_role;
-                @endphp
-                <option value="{{ $userRole }}">{{ $userRole }}</option>
-                @foreach($roles as $role)
-                @if($role != $userRole)
-                <option value="{{ $role }}">{{ $role }}</option>
-                @endif
-                @endforeach
-            </select>
-            @error('role')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
@@ -91,10 +83,8 @@
             </div>
             @enderror
         </div>
-
         <div class="form-group mt-3">
-            <a href="{{ route('humas.member.list') }}" class="btn btn-danger btn-sm">&nbsp; Kembali</a>
-            <button id="editMemberBtn" class="btn btn-sm btn-primary">Edit Member</button>
+            <button id="editProfilBtn" class="btn btn-sm btn-primary">Update Profil</button>
         </div>
     </form>
 </div>

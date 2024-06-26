@@ -15,7 +15,7 @@
     <h2>Edit Pengguna Accismus</h2>
 </div>
 <div class="container">
-    <form action="{{ route('humas.pengguna.update', $user->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('humas.pengguna.update', $user->uuid) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group mt-3">
