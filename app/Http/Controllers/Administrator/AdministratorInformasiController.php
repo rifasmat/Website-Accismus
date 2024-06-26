@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Informasi;
 use Illuminate\Support\Str;
 
-class HumasInformasiController extends Controller
+class AdministratorInformasiController extends Controller
 {
     public function index()
     {
         $informasi = Informasi::first();
         if ($informasi) {
-            return view('humas.informasi.list', compact('informasi'));
+            return view('administrator.informasi.list', compact('informasi'));
         }
     }
 
@@ -52,6 +52,6 @@ class HumasInformasiController extends Controller
             ]);
         }
 
-        return redirect()->route('humas.informasi.list');
+        return redirect()->route('administrator.informasi.list');
     }
 }

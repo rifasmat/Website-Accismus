@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,18 +8,18 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Gallery;
 use Illuminate\Support\Str;
 
-class HumasGalleryController extends Controller
+class AdministratorGalleryController extends Controller
 {
     public function index()
     {
         $gallery = Gallery::orderBy('created_at', 'desc')->paginate(9); // Menampilkan 9 gallery per halaman dengan urutan terbaru
-        return view('humas.gallery.list', compact('gallery'));
+        return view('administrator.gallery.list', compact('gallery'));
     }
 
 
     public function create()
     {
-        return view('humas.gallery.create');
+        return view('administrator.gallery.create');
     }
 
     public function search(Request $request)
@@ -30,7 +30,7 @@ class HumasGalleryController extends Controller
             ->orWhere('gallery_rf', 'LIKE', "%{$search}%")
             ->get();
 
-        return view('humas.gallery.search', compact('gallery'));
+        return view('administrator.gallery.search', compact('gallery'));
     }
 
     public function store(Request $request)
@@ -64,7 +64,7 @@ class HumasGalleryController extends Controller
             'gallery_uuid' => (string) Str::uuid(),
         ]);
 
-        return redirect()->route('humas.gallery.list');
+        return redirect()->route('administrator.gallery.list');
     }
 
     public function edit($uuid)
@@ -73,7 +73,7 @@ class HumasGalleryController extends Controller
         $gallery = Gallery::where('gallery_uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
-        return view('humas.gallery.edit', compact('gallery'));
+        return view('administrator.gallery.edit', compact('gallery'));
     }
 
     public function update(Request $request, $id)
@@ -113,7 +113,7 @@ class HumasGalleryController extends Controller
         // Simpan perubahan
         $gallery->save();
 
-        return redirect()->route('humas.gallery.list');
+        return redirect()->route('administrator.gallery.list');
     }
 
     public function konfirmasi($uuid)
@@ -124,7 +124,7 @@ class HumasGalleryController extends Controller
         $gallery = Gallery::where('gallery_uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
-        return view('humas.gallery.konfirmasi', compact('gallery'));
+        return view('administrator.gallery.konfirmasi', compact('gallery'));
     }
 
     public function destroy($uuid)
@@ -140,6 +140,6 @@ class HumasGalleryController extends Controller
         // Hapus data gallery dari database
         $gallery->delete();
 
-        return redirect()->route('humas.gallery.list')->with('success', 'Foto Berhasil Dihapus.');
+        return redirect()->route('administrator.gallery.list')->with('success', 'Foto Berhasil Dihapus.');
     }
 }

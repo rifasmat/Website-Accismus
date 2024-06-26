@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class HumasMemberController extends Controller
+class AdministratorMemberController extends Controller
 {
     public function index()
     {
@@ -15,7 +15,7 @@ class HumasMemberController extends Controller
             ->orderByRaw("FIELD(user_role, 'Member', 'Moderator', 'Senate', 'Humas', 'Guild Leader')")
             ->paginate(10);
 
-        return view('humas.member.list', compact('users'));
+        return view('administrator.member.list', compact('users'));
     }
 
     public function search(Request $request)
@@ -31,7 +31,7 @@ class HumasMemberController extends Controller
             })
             ->get();
 
-        return view('humas.member.search', compact('users'));
+        return view('administrator.member.search', compact('users'));
     }
 
     public function changeStatus($uuid)
@@ -40,7 +40,7 @@ class HumasMemberController extends Controller
         $user->user_role = 'Guest';
         $user->save();
 
-        return redirect()->route('humas.request-member.list')
+        return redirect()->route('administrator.request-member.list')
             ->with('changeStatus', "{$user->user_nama} Sudah Kembali Menjadi Guest.");
     }
 }

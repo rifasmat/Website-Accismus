@@ -5,6 +5,20 @@ use Illuminate\Support\Facades\Route;
 // Home Controller
 use App\Http\Controllers\Home\HomeController;
 
+// Administrator
+use App\Http\Controllers\Administrator\AdministratorHomeController;
+use App\Http\Controllers\Administrator\AdministratorDashboardController;
+use App\Http\Controllers\Administrator\AdministratorInformasiController;
+use App\Http\Controllers\Administrator\AdministratorBenefitController;
+use App\Http\Controllers\Administrator\AdministratorHistoryController;
+use App\Http\Controllers\Administrator\AdministratorTeamController;
+use App\Http\Controllers\Administrator\AdministratorAboutController;
+use App\Http\Controllers\Administrator\AdministratorBroadcastController;
+use App\Http\Controllers\Administrator\AdministratorGalleryController;
+use App\Http\Controllers\Administrator\AdministratorMemberController;
+use App\Http\Controllers\Administrator\AdministratorPenggunaController;
+use App\Http\Controllers\Administrator\AdministratorRequestController;
+
 // Guild Leader
 use App\Http\Controllers\GuildLeader\GuildLeaderHomeController;
 use App\Http\Controllers\GuildLeader\GuildLeaderDashboardController;
@@ -99,6 +113,142 @@ Route::post('/home/processRegister', [HomeController::class, 'processRegister'])
 
 // Logout
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
+
+// Administrator
+Route::group(['middleware' => 'auth.administrator'], function () {
+    // administrator Home
+    Route::get('/administrator/home', [AdministratorHomeController::class, 'index'])->name('administrator.home');
+
+    // administrator dashboard
+    Route::get('/administrator/dashboard/list', [AdministratorDashboardController::class, 'index'])->name('administrator.dashboard.list');
+
+    // administrator informasi
+    Route::get('/administrator/informasi', [AdministratorInformasiController::class, 'index'])->name('administrator.informasi.list');
+    // administrator informasi update edit
+    Route::put('/administrator/informasi/{uuid}', [AdministratorInformasiController::class, 'update'])->name('administrator.informasi.update');
+
+    // administrator about
+    Route::get('/administrator/about', [AdministratorAboutController::class, 'index'])->name('administrator.about.list');
+    // administrator about update edit
+    Route::put('/administrator/about/{uuid}', [AdministratorAboutController::class, 'update'])->name('administrator.about.update');
+
+    // administrator benefit
+    Route::get('/administrator/benefit', [AdministratorBenefitController::class, 'index'])->name('administrator.benefit.list');
+    // administrator benefit update edit
+    Route::put('/administrator/benefit/{uuid}', [AdministratorBenefitController::class, 'update'])->name('administrator.benefit.update');
+
+    // administrator history tanpa show
+    Route::resource('/administrator/history-rf', AdministratorHistoryController::class)
+        ->except(['show'])
+        ->parameters(['history' => 'history_uuid'])
+        ->names([
+            'index' => 'administrator.history-rf.list',
+            'create' => 'administrator.history-rf.create',
+            'store' => 'administrator.history-rf.store',
+            'edit' => 'administrator.history-rf.edit',
+            'update' => 'administrator.history-rf.update',
+            'destroy' => 'administrator.history-rf.destroy',
+        ]);
+
+    // administrator history route search
+    Route::get('/administrator/history-rf/search', [AdministratorHistoryController::class, 'search'])->name('administrator.history-rf.search');
+    // administrator history konfirmasi
+    Route::get('/administrator/history-rf/{uuid}/konfirmasi', [AdministratorHistoryController::class, 'konfirmasi'])->name('administrator.history-rf.konfirmasi');
+
+    // administrator team tanpa show, create, store, destroy
+    Route::resource('/administrator/team', AdministratorTeamController::class)
+        ->except(['show', 'create', 'store', 'destroy'])
+        ->parameters(['team' => 'uuid'])
+        ->names([
+            'index' => 'administrator.team.list',
+            'edit' => 'administrator.team.edit',
+            'update' => 'administrator.team.update',
+        ]);
+
+    // administrator team route search
+    Route::get('/administrator/team/search', [AdministratorTeamController::class, 'search'])->name('administrator.team.search');
+
+    // administrator gallery tanpa show
+    Route::resource('/administrator/gallery', AdministratorGalleryController::class)
+        ->except(['show'])
+        ->parameters(['gallery' => 'gallery_uuid'])
+        ->names([
+            'index' => 'administrator.gallery.list',
+            'create' => 'administrator.gallery.create',
+            'store' => 'administrator.gallery.store',
+            'edit' => 'administrator.gallery.edit',
+            'update' => 'administrator.gallery.update',
+            'destroy' => 'administrator.gallery.destroy',
+        ]);
+    // administrator gallery route search
+    Route::get('/administrator/gallery/search', [AdministratorGalleryController::class, 'search'])->name('administrator.gallery.search');
+    // administrator gallery konfirmasi
+    Route::get('/administrator/gallery/{uuid}/konfirmasi', [AdministratorGalleryController::class, 'konfirmasi'])->name('administrator.gallery.konfirmasi');
+
+    // administrator broadcast tanpa show, edit, destroy, update
+    Route::resource('/administrator/broadcast', AdministratorBroadcastController::class)
+        ->except(['show', 'edit', 'destroy', 'update'])
+        ->parameters(['broadcast' => 'broadcast_uuid'])
+        ->names([
+            'index' => 'administrator.broadcast.history',
+            'create' => 'administrator.broadcast.create',
+            'store' => 'administrator.broadcast.store',
+        ]);
+    // administrator broadcast email terdaftar
+    Route::get('/administrator/broadcast/email', [AdministratorBroadcastController::class, 'email'])->name('administrator.broadcast.email');
+    // administrator broadcast route search history broadcast
+    Route::get('/administrator/broadcast/search', [AdministratorBroadcastController::class, 'search'])->name('administrator.broadcast.search');
+    // administrator broadcast route search daftar email
+    Route::get('/administrator/broadcast/searchmail', [AdministratorBroadcastController::class, 'searchMail'])->name('administrator.broadcast.searchmail');
+
+    // administrator request member
+    Route::get('/administrator/request-member', [AdministratorRequestController::class, 'index'])->name('administrator.request-member.list');
+    // administrator request-member route search
+    Route::get('/administrator/request-member/search', [AdministratorRequestController::class, 'search'])->name('administrator.request-member.search');
+    // administrator request-member route change-status
+    Route::patch('/administrator/request-member/{uuid}/change-status', [AdministratorRequestController::class, 'changeStatus'])->name('administrator.request-member.changeStatus');
+
+    // administrator member tanpa show, create, store, destroy
+    Route::resource('/administrator/member', AdministratorMemberController::class)
+        ->except(['show', 'create', 'store', 'destroy'])
+        ->parameters(['member' => 'uuid'])
+        ->names([
+            'index' => 'administrator.member.list',
+            'edit' => 'administrator.member.edit',
+            'update' => 'administrator.member.update',
+        ]);
+    // administrator member route search
+    Route::get('/administrator/member/search', [AdministratorMemberController::class, 'search'])->name('administrator.member.search');
+    // administrator member route change-status
+    Route::patch('/administrator/member/{uuid}/change-status', [AdministratorMemberController::class, 'changeStatus'])->name('administrator.member.changeStatus');
+
+    // administrator pengguna tanpa show
+    Route::resource('/administrator/pengguna', AdministratorPenggunaController::class)
+        ->except(['show'])
+        ->parameters(['pengguna' => 'uuid'])
+        ->names([
+            'index' => 'administrator.pengguna.list',
+            'create' => 'administrator.pengguna.create',
+            'store' => 'administrator.pengguna.store',
+            'edit' => 'administrator.pengguna.edit',
+            'update' => 'administrator.pengguna.update',
+            'destroy' => 'administrator.pengguna.destroy',
+        ]);
+    // administrator pengguna rute untuk konfirmasi penghapusan pengguna
+    Route::get('/administrator/pengguna/{uuid}/konfirmasi', [AdministratorPenggunaController::class, 'konfirmasi'])->name('administrator.pengguna.konfirmasi');
+    // Rute untuk menampilkan profil pengguna
+    Route::get('/administrator/pengguna/profil', [AdministratorPenggunaController::class, 'profil'])->name('administrator.pengguna.profil');
+    // Rute untuk memperbarui profil pengguna
+    Route::post('/administrator/pengguna/updateprofil', [AdministratorPenggunaController::class, 'updateProfil'])->name('administrator.pengguna.updateprofil');
+    // administrator pengguna route search
+    Route::get('/administrator/pengguna/search', [AdministratorPenggunaController::class, 'search'])->name('administrator.pengguna.search');
+
+    // administrator profil
+    // Route untuk menampilkan profil pengguna yang sedang login
+    Route::get('/administrator/profil/list', [AdministratorPenggunaController::class, 'profil'])->name('administrator.profil.list');
+    // Route untuk memperbarui profil pengguna
+    Route::put('/administrator/profil/profil/{uuid}', [AdministratorPenggunaController::class, 'updateProfil'])->name('administrator.profil.update');
+});
 
 // GUild Leader
 Route::group(['middleware' => 'auth.guildleader'], function () {

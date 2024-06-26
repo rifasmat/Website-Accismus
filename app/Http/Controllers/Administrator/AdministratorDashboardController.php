@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use App\Models\About;
@@ -11,7 +11,7 @@ use App\Models\History;
 use App\Models\Broadcast;
 use App\Models\User;
 
-class HumasDashboardController extends Controller
+class AdministratorDashboardController extends Controller
 {
     public function index()
     {
@@ -46,7 +46,7 @@ class HumasDashboardController extends Controller
         $totalPengguna = User::count();
 
         return view(
-            'humas.dashboard.list',
+            'administrator.dashboard.list',
             compact(
                 'totalInformasi',
                 'totalAbout',

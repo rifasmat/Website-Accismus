@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,18 +10,18 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class HumasPenggunaController extends Controller
+class AdministratorPenggunaController extends Controller
 {
 
     public function index()
     {
         $users = User::orderBy('created_at', 'desc')->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
-        return view('humas.pengguna.list', compact('users'));
+        return view('administrator.pengguna.list', compact('users'));
     }
 
     public function create()
     {
-        return view('humas.pengguna.create');
+        return view('administrator.pengguna.create');
     }
 
     public function store(Request $request)
@@ -79,7 +79,7 @@ class HumasPenggunaController extends Controller
             'user_role' => $request->role,
         ]);
 
-        return redirect()->route('humas.pengguna.list');
+        return redirect()->route('administrator.pengguna.list');
     }
 
     public function edit($uuid)
@@ -88,7 +88,7 @@ class HumasPenggunaController extends Controller
         $user = User::where('uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
-        return view('humas.pengguna.edit', compact('user'));
+        return view('administrator.pengguna.edit', compact('user'));
     }
 
     public function update(Request $request, $uuid)
@@ -143,7 +143,7 @@ class HumasPenggunaController extends Controller
         $user->save();
 
         // Redirect ke halaman pengguna dengan pesan sukses
-        return redirect()->route('humas.pengguna.list')->with('success', 'Pengguna berhasil diperbarui.');
+        return redirect()->route('administrator.pengguna.list')->with('success', 'Pengguna berhasil diperbarui.');
     }
 
     public function konfirmasi($uuid)
@@ -154,7 +154,7 @@ class HumasPenggunaController extends Controller
         $user = User::where('uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
-        return view('humas.pengguna.konfirmasi', compact('user'));
+        return view('administrator.pengguna.konfirmasi', compact('user'));
     }
 
     public function destroy($uuid)
@@ -170,7 +170,7 @@ class HumasPenggunaController extends Controller
         // Hapus data pengguna dari database
         $user->delete();
 
-        return redirect()->route('humas.pengguna.list')->with('success', 'Pengguna Berhasil Dihapus.');
+        return redirect()->route('administrator.pengguna.list')->with('success', 'Pengguna Berhasil Dihapus.');
     }
 
     public function search(Request $request)
@@ -182,13 +182,13 @@ class HumasPenggunaController extends Controller
             ->orWhere('user_email', 'LIKE', "%{$search}%")
             ->get();
 
-        return view('humas.pengguna.search', compact('users'));
+        return view('administrator.pengguna.search', compact('users'));
     }
 
     public function profil()
     {
         $user = Auth::user(); // menmgambil data pengguna yang sedang login
-        return view('humas.profil.list', compact('user'));
+        return view('administrator.profil.list', compact('user'));
     }
 
     public function updateProfil(Request $request, $uuid)
@@ -243,6 +243,6 @@ class HumasPenggunaController extends Controller
         $user->save();
 
         // Redirect ke halaman profil dengan pesan sukses
-        return redirect()->route('humas.profil.list')->with('success', 'Profil berhasil diperbarui.');
+        return redirect()->route('administrator.profil.list')->with('success', 'Profil berhasil diperbarui.');
     }
 }

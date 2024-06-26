@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 
-class HumasRequestController extends Controller
+class AdministratorRequestController extends Controller
 {
     public function index()
     {
         $users = User::where('user_role', 'Guest')->paginate(10);
 
-        return view('humas.request-member.list', compact('users'));
+        return view('administrator.request-member.list', compact('users'));
     }
 
     public function search(Request $request)
@@ -29,7 +29,7 @@ class HumasRequestController extends Controller
             })
             ->get();
 
-        return view('humas.request-member.search', compact('users'));
+        return view('administrator.request-member.search', compact('users'));
     }
 
     public function changeStatus($uuid)
@@ -38,7 +38,7 @@ class HumasRequestController extends Controller
         $user->user_role = 'Member';
         $user->save();
 
-        return redirect()->route('humas.member.list')
+        return redirect()->route('administrator.member.list')
             ->with('changeStatus', "{$user->user_nama} Sudah Menjadi Member.");
     }
 }

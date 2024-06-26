@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use App\Models\Gallery;
 use App\Models\History;
 use App\Models\User;
 
-class HumasHomeController extends Controller
+class AdministratorHomeController extends Controller
 {
     public function index()
     {
@@ -41,6 +41,6 @@ class HumasHomeController extends Controller
             });
 
         // Kembalikan data ke tampilan
-        return view('humas.home', compact('informasi', 'about', 'benefits', 'gallery', 'history', 'users'));
+        return view('administrator.home', compact('informasi', 'about', 'benefits', 'gallery', 'history', 'users'));
     }
 }

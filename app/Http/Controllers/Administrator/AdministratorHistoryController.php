@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,18 +8,18 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\History;
 use Illuminate\Support\Str;
 
-class HumasHistoryController extends Controller
+class AdministratorHistoryController extends Controller
 {
     public function index()
     {
         $history = History::orderBy('created_at', 'desc')->paginate(9); // Menampilkan 9 history rf per halaman dengan urutan terbaru
-        return view('humas.history-rf.list', compact('history'));
+        return view('administrator.history-rf.list', compact('history'));
     }
 
 
     public function create()
     {
-        return view('humas.history-rf.create');
+        return view('administrator.history-rf.create');
     }
 
     public function search(Request $request)
@@ -30,7 +30,7 @@ class HumasHistoryController extends Controller
             ->orWhere('history_tahun', 'LIKE', "%{$search}%")
             ->get();
 
-        return view('humas.history-rf.search', compact('history'));
+        return view('administrator.history-rf.search', compact('history'));
     }
 
     public function store(Request $request)
@@ -65,7 +65,7 @@ class HumasHistoryController extends Controller
             'history_uuid' => (string) Str::uuid(),
         ]);
 
-        return redirect()->route('humas.history-rf.list');
+        return redirect()->route('administrator.history-rf.list');
     }
 
     public function edit($uuid)
@@ -74,7 +74,7 @@ class HumasHistoryController extends Controller
         $history = History::where('history_uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
-        return view('humas.history-rf.edit', compact('history'));
+        return view('administrator.history-rf.edit', compact('history'));
     }
 
     public function update(Request $request, $id)
@@ -112,7 +112,7 @@ class HumasHistoryController extends Controller
         // Simpan perubahan
         $history->save();
 
-        return redirect()->route('humas.history-rf.list');
+        return redirect()->route('administrator.history-rf.list');
     }
 
     public function konfirmasi($uuid)
@@ -123,7 +123,7 @@ class HumasHistoryController extends Controller
         $history = History::where('history_uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
-        return view('humas.history-rf.konfirmasi', compact('history'));
+        return view('administrator.history-rf.konfirmasi', compact('history'));
     }
 
     public function destroy($uuid)
@@ -139,6 +139,6 @@ class HumasHistoryController extends Controller
         // Hapus data history dari database
         $history->delete();
 
-        return redirect()->route('humas.history-rf.list')->with('success', 'Foto Berhasil Dihapus.');
+        return redirect()->route('administrator.history-rf.list')->with('success', 'Foto Berhasil Dihapus.');
     }
 }

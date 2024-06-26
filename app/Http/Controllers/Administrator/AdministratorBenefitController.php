@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,13 +8,13 @@ use App\Models\Benefit;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class HumasBenefitController extends Controller
+class AdministratorBenefitController extends Controller
 {
     public function index()
     {
         $benefit = Benefit::first();
         if ($benefit) {
-            return view('humas.benefit.list', compact('benefit'));
+            return view('administrator.benefit.list', compact('benefit'));
         }
     }
 
@@ -58,6 +58,6 @@ class HumasBenefitController extends Controller
             $benefit->update($data);
         }
 
-        return redirect()->route('humas.benefit.list');
+        return redirect()->route('administrator.benefit.list');
     }
 }

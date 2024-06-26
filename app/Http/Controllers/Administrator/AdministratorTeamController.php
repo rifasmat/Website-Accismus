@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class HumasTeamController extends Controller
+class AdministratorTeamController extends Controller
 {
     public function index()
     {
@@ -18,7 +18,7 @@ class HumasTeamController extends Controller
             ->orderByRaw("FIELD(user_role, 'Guild Leader', 'Humas', 'Senate', 'Moderator')")
             ->paginate(10);
 
-        return view('humas.team.list', compact('users'));
+        return view('administrator.team.list', compact('users'));
     }
 
     public function search(Request $request)
@@ -34,7 +34,7 @@ class HumasTeamController extends Controller
             })
             ->get();
 
-        return view('humas.team.search', compact('users'));
+        return view('administrator.team.search', compact('users'));
     }
 
     public function edit($uuid)
@@ -43,7 +43,7 @@ class HumasTeamController extends Controller
         $user = User::where('uuid', $uuid)->firstOrFail();
 
         // Arahkan dan kirimkan datanya ke view
-        return view('humas.team.edit', compact('user'));
+        return view('administrator.team.edit', compact('user'));
     }
 
     public function update(Request $request, $id)
@@ -112,6 +112,6 @@ class HumasTeamController extends Controller
         // Simpan perubahan
         $user->save();
 
-        return redirect()->route('humas.team.list');
+        return redirect()->route('administrator.team.list');
     }
 }

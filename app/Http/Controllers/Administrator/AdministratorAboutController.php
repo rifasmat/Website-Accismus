@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,13 +8,13 @@ use App\Models\About;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class HumasAboutController extends Controller
+class AdministratorAboutController extends Controller
 {
     public function index()
     {
         $about = About::first();
         if ($about) {
-            return view('humas.about.list', compact('about'));
+            return view('administrator.about.list', compact('about'));
         }
     }
 
@@ -58,6 +58,6 @@ class HumasAboutController extends Controller
             $about->update($data);
         }
 
-        return redirect()->route('humas.about.list');
+        return redirect()->route('administrator.about.list');
     }
 }

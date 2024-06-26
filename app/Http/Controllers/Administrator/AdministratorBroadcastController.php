@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Humas;
+namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Broadcast;
@@ -13,17 +13,17 @@ use Illuminate\Support\Str;
 use Exception;
 use Carbon\Carbon;
 
-class HumasBroadcastController extends Controller
+class AdministratorBroadcastController extends Controller
 {
     public function index()
     {
         $broadcasts = Broadcast::orderBy('created_at', 'desc')->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
-        return view('humas.broadcast.history', compact('broadcasts'));
+        return view('administrator.broadcast.history', compact('broadcasts'));
     }
 
     public function create()
     {
-        return view('humas.broadcast.create');
+        return view('administrator.broadcast.create');
     }
 
     public function search(Request $request)
@@ -35,7 +35,7 @@ class HumasBroadcastController extends Controller
             ->orWhere('broadcast_tanggal', 'LIKE', "%{$search}%")
             ->get();
 
-        return view('humas.broadcast.search', compact('broadcasts'));
+        return view('administrator.broadcast.search', compact('broadcasts'));
     }
 
     public function searchMail(Request $request)
@@ -47,7 +47,7 @@ class HumasBroadcastController extends Controller
             ->orWhere('user_email', 'LIKE', "%{$search}%")
             ->get();
 
-        return view('humas.broadcast.searchmail', compact('users'));
+        return view('administrator.broadcast.searchmail', compact('users'));
     }
 
     public function store(Request $request)
@@ -101,12 +101,12 @@ class HumasBroadcastController extends Controller
         // Simpan data broadcast ke dalam database
         $broadcast->save();
 
-        return redirect()->route('humas.broadcast.history')->with('success', 'Broadcast Email Berhasil Dikirim.');
+        return redirect()->route('administrator.broadcast.history')->with('success', 'Broadcast Email Berhasil Dikirim.');
     }
 
     public function email()
     {
         $users = User::orderBy('created_at', 'desc')->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
-        return view('humas.broadcast.email', compact('users'));
+        return view('administrator.broadcast.email', compact('users'));
     }
 }
