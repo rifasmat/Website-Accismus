@@ -10,14 +10,38 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-
 class ModeratorPenggunaController extends Controller
 {
 
     public function index()
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
+        $users = User::where('user_role', '!=', 'Administrator')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return view('moderator.pengguna.list', compact('users'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('query');
+
+        $users = User::where('user_role', '!=', 'Administrator')
+            ->where(function ($query) use ($search) {
+                $query->where('user_nama', 'LIKE', "%{$search}%")
+                    ->orWhere('user_username', 'LIKE', "%{$search}%")
+                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+            })
+            ->get();
+
+        $administratorExists = User::where('user_role', 'Administrator')
+            ->where(function ($query) use ($search) {
+                $query->where('user_nama', 'LIKE', "%{$search}%")
+                    ->orWhere('user_username', 'LIKE', "%{$search}%")
+                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+            })
+            ->exists();
+
+        return view('moderator.pengguna.search', compact('users', 'search', 'administratorExists'));
     }
 
     public function profil()

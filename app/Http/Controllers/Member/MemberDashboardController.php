@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
-use App\Models\About;
-use App\Models\Informasi;
-use App\Models\Benefit;
 use App\Models\Gallery;
 use App\Models\History;
 use App\Models\User;
@@ -14,15 +11,6 @@ class MemberDashboardController extends Controller
 {
     public function index()
     {
-        // informasi accismus
-        $totalInformasi = Informasi::count();
-
-        // about accismus
-        $totalAbout = About::count();
-
-        // benefit accismus
-        $totalBenefit = Benefit::count();
-
         // team accismus
         $totalTeam = User::whereIn('user_role', ['Guild Leader', 'Humas', 'Senate', 'Moderator'])->count();
 
@@ -38,9 +26,6 @@ class MemberDashboardController extends Controller
         return view(
             'member.dashboard.list',
             compact(
-                'totalInformasi',
-                'totalAbout',
-                'totalBenefit',
                 'totalTeam',
                 'totalHistory',
                 'totalGallery',

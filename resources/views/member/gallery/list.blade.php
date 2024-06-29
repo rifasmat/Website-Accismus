@@ -27,7 +27,7 @@
         <!-- Search -->
         <form action="{{ route('member.gallery.search') }}" method="GET" class="form-inline mt-3">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+                <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>

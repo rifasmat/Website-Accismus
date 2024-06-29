@@ -28,14 +28,16 @@
         <div class="form-group mt-4">
             <textarea id="text" class="form-control" name="text" rows="10" readonly>{{ old('text', $benefit->benefit_text) }}</textarea>
             @error('text')
-            <div class="alert alert-danger mt-2">
+            <div class="alert alert-danger">
                 {{ $message }}
             </div>
             @enderror
         </div>
-        <div class="mb-3" style="text-align: right;">
-            <input type="hidden" name="foto_old" value="{{ $benefit->benefit_foto }}" readonly>
-            <img id="fotoPreview" src="{{ Storage::url($benefit->benefit_foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 150px; margin-top: 10px;">
+        <div class="mb-3">
+            <div class="input-group" style="display: flex; align-items: center;">
+                <input type="hidden" name="foto_old" value="{{ $benefit->benefit_foto }}" readonly>
+                <img id="fotoPreview" src="{{ Storage::url($benefit->benefit_foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 150px; margin-left: 10px;">
+            </div>
             @error('foto')
             <div class="alert alert-danger mt-2">
                 {{ $message }}

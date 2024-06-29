@@ -27,7 +27,7 @@
         <!-- Search -->
         <form action="{{ route('administrator.team.search') }}" method="GET" class="form-inline mt-3">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+                <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
@@ -66,7 +66,7 @@
                     <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Team" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
-                    @if($user->uuid !== Auth::user()->uuid)
+                    @if($user->uuid !== Auth::user()->uuid && !in_array($user->user_role, ['Administrator', 'Guild Leader']))
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a href="{{ route('administrator.team.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
                     </div>

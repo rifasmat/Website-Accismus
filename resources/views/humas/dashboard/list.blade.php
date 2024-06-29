@@ -68,7 +68,7 @@
         <div class="card-body">
           <h5 class="card-title">History RF Accismus</h5>
           <p class="card-text">{{ $totalHistory }}</p>
-          <a href="{{ route('guildleader.history-rf.list') }}" class="btn btn-primary">Lihat</a>
+          <a href="{{ route('humas.history-rf.list') }}" class="btn btn-primary">Lihat</a>
         </div>
       </div>
     </div>

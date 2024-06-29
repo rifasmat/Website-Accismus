@@ -13,27 +13,6 @@
     <hr>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('member.informasi.list') }}">
-        <i class="bi bi-info-circle"></i>
-        <span>Informasi</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('member.about.list') }}">
-        <i class="bi bi-display"></i>
-        <span>About</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('member.benefit.list') }}">
-        <i class="bi bi-box2-heart"></i>
-        <span>Benefit</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('member.history-rf.list') }}">
         <i class="bi bi-aspect-ratio"></i>
         <span>History RF</span>
@@ -53,8 +32,6 @@
         <span>Gallery</span>
       </a>
     </li>
-
-    <hr>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('member.member.list') }}">

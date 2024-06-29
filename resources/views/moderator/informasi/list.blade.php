@@ -34,7 +34,7 @@
         </div>
         <div class="form-group mt-3">
             <label for="rf"><b>Sekarang Berada Di RF</b></label>
-            <input type="text" class="form-control" name="rf" id="rf" autocomplete="off" value="{{ old('rf', $informasi->informasi_rf) }}">
+            <input type="text" class="form-control" name="rf" id="rf" autocomplete="off" value="{{ old('rf', $informasi->informasi_rf) }}" readonly>
             @error('rf')
             <p style="color: red;">{{ $message }}</p>
             @enderror

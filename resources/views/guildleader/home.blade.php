@@ -179,7 +179,7 @@
                 <img src="{{ Storage::url($user->user_foto) }}" class="img-fluid" style="width: 250px; height: 250px;">
               </div>
               <div class="member-info">
-                <h4>{{ $user->user_username }} - {{ $user->user_nama }}</h4>
+                <h4>{{ $user->user_username }}</h4>
                 <span>{{ $user->user_role }}</span>
               </div>
             </div>

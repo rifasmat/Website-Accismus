@@ -1,4 +1,4 @@
-@extends('member.layouts.template')
+@extends('guest.layouts.template')
 
 @section('content')
 
@@ -8,32 +8,26 @@
 </div>
 @endif
 
-@if(session('changeStatus'))
-<div class="alert alert-success text-center">
-    {{ session('changeStatus') }}
-</div>
-@endif
-
 <div class="pagetitle">
-    <h1>Guest Accismus</h1>
+    <h1>Team Accismus</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('member.dashboard.list') }}">Home</a></li>
-            <li class="breadcrumb-item active">Guest</li>
+            <li class="breadcrumb-item"><a href="{{ route('guest.dashboard.list') }}">Home</a></li>
+            <li class="breadcrumb-item active">Team</li>
         </ol>
     </nav>
 </div>
 
 <div class="text-center mb-2">
-    <h2>Daftar Request Member Accismus</h2>
+    <h2>Daftar Team Accismus</h2>
 </div>
 
 <div class="container">
     <div class="mb-2">
         <!-- Search -->
-        <form action="{{ route('member.request-member.search') }}" method="GET" class="form-inline mt-3">
+        <form action="{{ route('guest.team.search') }}" method="GET" class="form-inline mt-3">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+                <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
@@ -42,7 +36,7 @@
     </div>
 
     @if($users->isEmpty())
-    <div class="alert alert-info mt-3 text-center">Belum Ada Request Member</div>
+    <div class="alert alert-info mt-3 text-center">Data Team Belum Ada</div>
     @else
     <table class="table">
         <thead class="text-center">
@@ -55,7 +49,6 @@
                 <th scope="col">Discord</th>
                 <th scope="col">Role</th>
                 <th scope="col">Foto</th>
-                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -69,18 +62,7 @@
                 <td>{{ $user->user_discord }}</td>
                 <td>{{ $user->user_role }}</td>
                 <td>
-                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Guest" class="img-thumbnail" style="width: 100px; height: 100px;">
-                </td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <form action="{{ route('member.request-member.changeStatus', $user->uuid) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="btn btn-success btn-sm mr-1">
-                                <i class="bi bi-check" style="color: #fff;"></i>
-                            </button>
-                        </form>
-                    </div>
+                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Team" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
             </tr>
             @endforeach

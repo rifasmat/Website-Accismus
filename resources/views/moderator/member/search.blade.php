@@ -16,7 +16,7 @@
     <!-- Search -->
     <form action="{{ route('moderator.member.search') }}" method="GET" class="form-inline mt-3">
         <div class="input-group">
-            <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+            <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;" value="{{ old('query', $search) }}">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Search</button>
                 <a href="{{ route('moderator.member.list') }}">
@@ -29,6 +29,8 @@
     @if(isset($users))
     @if($users->isEmpty())
     <div class="alert alert-danger mt-3 text-center">Member tidak ditemukan.</div>
+    @elseif(isset($administratorExists) && $administratorExists)
+    <div class="alert alert-danger mt-3 text-center">Member tidak ditemukan.</div>
     @else
     <table class="table mt-3">
         <thead class="text-center">
@@ -36,7 +38,6 @@
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Username</th>
-                <th scope="col">Email</th>
                 <th scope="col">Whatsapp</th>
                 <th scope="col">Discord</th>
                 <th scope="col">Role</th>
@@ -50,16 +51,15 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $user->user_nama }}</td>
                 <td>{{ $user->user_username }}</td>
-                <td>{{ $user->user_email }}</td>
                 <td>{{ $user->user_wa }}</td>
                 <td>{{ $user->user_discord }}</td>
                 <td>{{ $user->user_role }}</td>
                 <td>
-                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Member" class="img-thumbnail" style="width: 100px; height: 100px;">
+                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Pengguna" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
-                    @if($user->uuid !== Auth::user()->uuid && !in_array($user->user_role, [ 'Administrator', 'Guild Leader', 'Humas', 'Senate', 'Moderator']))
-                    <form action="{{ route('humas.member.changeStatus', $user->uuid) }}" method="POST" class="d-inline">
+                    @if($user->uuid !== Auth::user()->uuid && !in_array($user->user_role, ['Administrator', 'Guild Leader', 'Humas', 'Senate']))
+                    <form action="{{ route('moderator.member.changeStatus', $user->uuid) }}" method="POST" class="d-inline">
                         @csrf
                         @method('PATCH')
                         <button type="submit" class="btn btn-danger btn-sm mr-1">

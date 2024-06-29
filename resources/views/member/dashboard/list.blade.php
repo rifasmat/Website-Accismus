@@ -14,42 +14,6 @@
 <section class="section dashboard">
   <div class="row">
 
-    <!-- Total Informasi -->
-    <div class="col-lg-4 col-md-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <h5 class="card-title">Informasi Accismus</h5>
-          <p class="card-text">{{ $totalInformasi }}</p>
-          <a href="{{ route('member.informasi.list') }}" class="btn btn-primary">Lihat</a>
-        </div>
-      </div>
-    </div>
-    <!-- End Informasi -->
-
-    <!-- Total About -->
-    <div class="col-lg-4 col-md-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <h5 class="card-title">About Accismus</h5>
-          <p class="card-text">{{ $totalAbout }}</p>
-          <a href="{{ route('member.about.list') }}" class="btn btn-primary">Lihat</a>
-        </div>
-      </div>
-    </div>
-    <!-- End About -->
-
-    <!-- Total Benefit -->
-    <div class="col-lg-4 col-md-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <h5 class="card-title">Benefit Accismus</h5>
-          <p class="card-text">{{ $totalBenefit }}</p>
-          <a href="{{ route('member.benefit.list') }}" class="btn btn-primary">Lihat</a>
-        </div>
-      </div>
-    </div>
-    <!-- End Benefit -->
-
     <!-- Total Team -->
     <div class="col-lg-4 col-md-6">
       <div class="card text-center">

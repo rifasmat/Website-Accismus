@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Controllers\Guest;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\User;
+
+class GuestTeamController extends Controller
+{
+    public function index()
+    {
+        $includedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
+        $users = User::whereIn('user_role', $includedRoles)
+            ->orderByRaw("FIELD(user_role, 'Guild Leader', 'Humas', 'Senate', 'Moderator')")
+            ->paginate(10);
+
+        return view('guest.team.list', compact('users'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('query');
+
+        $allowedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
+
+        $users = User::whereIn('user_role', $allowedRoles)
+            ->where(function ($query) use ($search) {
+                $query->where('user_nama', 'LIKE', "%{$search}%")
+                    ->orWhere('user_username', 'LIKE', "%{$search}%")
+                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+            })
+            ->get();
+
+        $administratorExists = User::where('user_role', 'Administrator')
+            ->where(function ($query) use ($search) {
+                $query->where('user_nama', 'LIKE', "%{$search}%")
+                    ->orWhere('user_username', 'LIKE', "%{$search}%")
+                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+            })
+            ->exists();
+
+        return view('guest.team.search', compact('users', 'search', 'administratorExists'));
+    }
+}

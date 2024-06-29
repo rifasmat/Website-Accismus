@@ -16,7 +16,7 @@ class MemberHistoryController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
+        $search = $request->input('query');
 
         $history = History::where('history_rf', 'LIKE', "%{$search}%")
             ->orWhere('history_tahun', 'LIKE', "%{$search}%")

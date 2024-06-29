@@ -20,17 +20,22 @@ class MemberMemberController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
-        $includedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator', 'Member'];
+        $search = $request->input('query');
 
-        $users = User::whereIn('user_role', $includedRoles)
+        $users = User::where('user_role', '!=', 'Administrator')
             ->where(function ($query) use ($search) {
                 $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                    ->orWhere('user_username', 'LIKE', "%{$search}%");
             })
             ->get();
 
-        return view('member.member.search', compact('users'));
+        $administratorExists = User::where('user_role', 'Administrator')
+            ->where(function ($query) use ($search) {
+                $query->where('user_nama', 'LIKE', "%{$search}%")
+                    ->orWhere('user_username', 'LIKE', "%{$search}%");
+            })
+            ->exists();
+
+        return view('member.member.search', compact('users', 'search', 'administratorExists'));
     }
 }

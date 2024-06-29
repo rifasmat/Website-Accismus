@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\History;
 
-
 class ModeratorHistoryController extends Controller
 {
     public function index()
@@ -17,7 +16,7 @@ class ModeratorHistoryController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
+        $search = $request->input('query');
 
         $history = History::where('history_rf', 'LIKE', "%{$search}%")
             ->orWhere('history_tahun', 'LIKE', "%{$search}%")

@@ -23,10 +23,11 @@ class GuildLeaderTeamController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
-        $includedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
+        $search = $request->input('query');
 
-        $users = User::whereIn('user_role', $includedRoles)
+        $allowedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
+
+        $users = User::whereIn('user_role', $allowedRoles)
             ->where(function ($query) use ($search) {
                 $query->where('user_nama', 'LIKE', "%{$search}%")
                     ->orWhere('user_username', 'LIKE', "%{$search}%")
@@ -34,7 +35,15 @@ class GuildLeaderTeamController extends Controller
             })
             ->get();
 
-        return view('guildleader.team.search', compact('users'));
+        $administratorExists = User::where('user_role', 'Administrator')
+            ->where(function ($query) use ($search) {
+                $query->where('user_nama', 'LIKE', "%{$search}%")
+                    ->orWhere('user_username', 'LIKE', "%{$search}%")
+                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+            })
+            ->exists();
+
+        return view('guildleader.team.search', compact('users', 'search', 'administratorExists'));
     }
 
     public function edit($uuid)

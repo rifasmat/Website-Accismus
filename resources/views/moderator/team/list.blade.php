@@ -27,7 +27,7 @@
         <!-- Search -->
         <form action="{{ route('moderator.team.search') }}" method="GET" class="form-inline mt-3">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+                <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
@@ -44,11 +44,11 @@
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Username</th>
-                <th scope="col">Email</th>
                 <th scope="col">Whatsapp</th>
                 <th scope="col">Discord</th>
                 <th scope="col">Role</th>
                 <th scope="col">Foto</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -57,12 +57,18 @@
                 <td>{{ $index + 1 + ($users->currentPage() - 1) * $users->perPage() }}</td>
                 <td>{{ $user->user_nama }}</td>
                 <td>{{ $user->user_username }}</td>
-                <td>{{ $user->user_email }}</td>
                 <td>{{ $user->user_wa }}</td>
                 <td>{{ $user->user_discord }}</td>
                 <td>{{ $user->user_role }}</td>
                 <td>
                     <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Team" class="img-thumbnail" style="width: 100px; height: 100px;">
+                </td>
+                <td>
+                    @if($user->uuid !== Auth::user()->uuid && !in_array($user->user_role, ['Administrator', 'Guild Leader', 'Humas', 'Senate']))
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="{{ route('moderator.team.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
+                    </div>
+                    @endif
                 </td>
             </tr>
             @endforeach

@@ -1,4 +1,4 @@
-@extends('member.layouts.template')
+@extends('guest.layouts.template')
 
 @section('content')
 
@@ -9,17 +9,17 @@
 @endif
 
 <div class="text-center mb-2">
-    <h2>Pencarian Guest Accismus</h2>
+    <h2>Pencarian Team Accismus</h2>
 </div>
 
 <div class="container">
     <!-- Search -->
-    <form action="{{ route('member.request-member.search') }}" method="GET" class="form-inline mt-3">
+    <form action="{{ route('guest.team.search') }}" method="GET" class="form-inline mt-3">
         <div class="input-group">
             <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Search</button>
-                <a href="{{ route('member.request-member.list') }}">
+                <a href="{{ route('guest.team.list') }}">
                     <button type="button" class="btn btn-danger">Kembali</button>
                 </a>
             </div>
@@ -28,7 +28,7 @@
 
     @if(isset($users))
     @if($users->isEmpty())
-    <div class="alert alert-danger mt-3 text-center">Guest tidak ditemukan.</div>
+    <div class="alert alert-danger mt-3 text-center">Team tidak ditemukan.</div>
     @else
     <table class="table mt-3">
         <thead class="text-center">
@@ -41,7 +41,6 @@
                 <th scope="col">Discord</th>
                 <th scope="col">Role</th>
                 <th scope="col">Foto</th>
-                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -55,18 +54,7 @@
                 <td>{{ $user->user_discord }}</td>
                 <td>{{ $user->user_role }}</td>
                 <td>
-                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Guest" class="img-thumbnail" style="width: 100px; height: 100px;">
-                </td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <form action="{{ route('member.request-member.changeStatus', $user->uuid) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="btn btn-success btn-sm mr-1">
-                                <i class="bi bi-check" style="color: #fff;"></i>
-                            </button>
-                        </form>
-                    </div>
+                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Team" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
             </tr>
             @endforeach

@@ -33,9 +33,11 @@
             </div>
             @enderror
         </div>
-        <div class="mb-3" style="text-align: right;">
-            <input type="hidden" name="foto_old" value="{{ $about->about_foto }}" readonly>
-            <img id="fotoPreview" src="{{ Storage::url($about->about_foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 150px; margin-top: 10px;">
+        <div class="mb-3">
+            <div class="input-group" style="display: flex; align-items: center;">
+                <input type="hidden" name="foto_old" value="{{ $about->about_foto }}" readonly>
+                <img id="fotoPreview" src="{{ Storage::url($about->about_foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 150px; margin-left: 10px;">
+            </div>
             @error('foto')
             <div class="alert alert-danger mt-2">
                 {{ $message }}

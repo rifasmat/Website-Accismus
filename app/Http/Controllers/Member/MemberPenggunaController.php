@@ -12,30 +12,6 @@ use Illuminate\Support\Str;
 
 class MemberPenggunaController extends Controller
 {
-
-    public function index()
-    {
-        $users = User::orderBy('created_at', 'desc')->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
-        return view('member.pengguna.list', compact('users'));
-    }
-
-    public function create()
-    {
-        return view('member.pengguna.create');
-    }
-
-    public function search(Request $request)
-    {
-        $search = $request->input('search');
-
-        $users = User::where('user_nama', 'LIKE', "%{$search}%")
-            ->orWhere('user_username', 'LIKE', "%{$search}%")
-            ->orWhere('user_email', 'LIKE', "%{$search}%")
-            ->get();
-
-        return view('member.pengguna.search', compact('users'));
-    }
-
     public function profil()
     {
         $user = Auth::user(); // menmgambil data pengguna yang sedang login

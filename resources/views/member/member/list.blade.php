@@ -33,7 +33,7 @@
         <!-- Search -->
         <form action="{{ route('member.member.search') }}" method="GET" class="form-inline mt-3">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+                <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
@@ -50,7 +50,6 @@
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Username</th>
-                <th scope="col">Email</th>
                 <th scope="col">Whatsapp</th>
                 <th scope="col">Discord</th>
                 <th scope="col">Role</th>
@@ -63,7 +62,6 @@
                 <td>{{ $index + 1 + ($users->currentPage() - 1) * $users->perPage() }}</td>
                 <td>{{ $user->user_nama }}</td>
                 <td>{{ $user->user_username }}</td>
-                <td>{{ $user->user_email }}</td>
                 <td>{{ $user->user_wa }}</td>
                 <td>{{ $user->user_discord }}</td>
                 <td>{{ $user->user_role }}</td>

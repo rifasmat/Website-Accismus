@@ -61,8 +61,8 @@ class GuildLeaderBroadcastController extends Controller
             'text.required' => 'Pesan tidak boleh kosong.',
         ]);
 
-        // Ambil semua email pengguna
-        $penerimaEmails = User::pluck('user_email')->toArray();
+        // Ambil semua email pengguna kecuali yang memiliki user_role 'Guest'
+        $penerimaEmails = User::where('user_role', '!=', 'Guest')->pluck('user_email')->toArray();
         $broadcastPenerima = implode(',', $penerimaEmails);
 
         // Ambil pengguna yang sedang login
@@ -106,7 +106,11 @@ class GuildLeaderBroadcastController extends Controller
 
     public function email()
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
+        // Ambil semua pengguna kecuali yang memiliki user_role 'Guest'
+        $users = User::where('user_role', '!=', 'Guest')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
+
         return view('guildleader.broadcast.email', compact('users'));
     }
 }

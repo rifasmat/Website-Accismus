@@ -58,9 +58,11 @@
                     <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Team" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
+                    @if($user->user_role !== 'Administrator' && $user->uuid !== Auth::user()->uuid)
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a href="{{ route('guildleader.team.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
                     </div>
+                    @endif
                 </td>
             </tr>
             @endforeach

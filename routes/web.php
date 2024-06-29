@@ -70,20 +70,28 @@ use App\Http\Controllers\Moderator\ModeratorTeamController;
 use App\Http\Controllers\Moderator\ModeratorAboutController;
 use App\Http\Controllers\Moderator\ModeratorGalleryController;
 use App\Http\Controllers\Moderator\ModeratorMemberController;
-use App\Http\Controllers\Moderator\ModeratorRequestController;
 use App\Http\Controllers\Moderator\ModeratorPenggunaController;
+use App\Http\Controllers\Moderator\ModeratorRequestController;
 
 // Member
 use App\Http\Controllers\Member\MemberHomeController;
 use App\Http\Controllers\Member\MemberDashboardController;
-use App\Http\Controllers\Member\MemberInformasiController;
-use App\Http\Controllers\Member\MemberBenefitController;
 use App\Http\Controllers\Member\MemberHistoryController;
 use App\Http\Controllers\Member\MemberTeamController;
-use App\Http\Controllers\Member\MemberAboutController;
 use App\Http\Controllers\Member\MemberGalleryController;
 use App\Http\Controllers\Member\MemberMemberController;
 use App\Http\Controllers\Member\MemberPenggunaController;
+
+// Guest
+use App\Http\Controllers\Guest\GuestHomeController;
+use App\Http\Controllers\Guest\GuestDashboardController;
+use App\Http\Controllers\Guest\GuestHistoryController;
+use App\Http\Controllers\Guest\GuestTeamController;
+use App\Http\Controllers\Guest\GuestGalleryController;
+use App\Http\Controllers\Guest\GuestMemberController;
+use App\Http\Controllers\Guest\GuestPenggunaController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -96,23 +104,26 @@ use App\Http\Controllers\Member\MemberPenggunaController;
 |
 */
 
-
-
 // Halaman Home
 Route::get('/', [HomeController::class, 'index']);
 
 // Halaman Login
-Route::get('/home/login', [HomeController::class, 'login'])->name('login');
+Route::get('login', [HomeController::class, 'login'])->name('login');
 // Proses Login
-Route::post('/home/processLogin', [HomeController::class, 'processLogin'])->name('processLogin');
+Route::post('processLogin', [HomeController::class, 'processLogin'])->name('processLogin');
 
 // Halaman Register
-Route::get('/home/register', [HomeController::class, 'register'])->name('register');
+Route::get('register', [HomeController::class, 'register'])->name('register');
 // Proses Register
-Route::post('/home/processRegister', [HomeController::class, 'processRegister'])->name('processRegister');
+Route::post('processRegister', [HomeController::class, 'processRegister'])->name('processRegister');
 
 // Logout
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
+
+// Route untuk nemapilkan 404 notfound
+Route::get('/not-found', function () {
+    return view('errors.404');
+});
 
 // Administrator
 Route::group(['middleware' => 'auth.administrator'], function () {
@@ -250,13 +261,10 @@ Route::group(['middleware' => 'auth.administrator'], function () {
     Route::put('/administrator/profil/profil/{uuid}', [AdministratorPenggunaController::class, 'updateProfil'])->name('administrator.profil.update');
 });
 
-// GUild Leader
+// Guild Leader
 Route::group(['middleware' => 'auth.guildleader'], function () {
     // guild leader Home
     Route::get('/guildleader/home', [GuildLeaderHomeController::class, 'index'])->name('guildleader.home');
-
-    // guild leader dashboard
-    Route::get('/guildleader/dashboard/list', [GuildLeaderDashboardController::class, 'index'])->name('guildleader.dashboard.list');
 
     // guild leader dashboard
     Route::get('/guildleader/dashboard/list', [GuildLeaderDashboardController::class, 'index'])->name('guildleader.dashboard.list');
@@ -268,12 +276,12 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
 
     // guild leader about
     Route::get('/guildleader/about', [GuildLeaderAboutController::class, 'index'])->name('guildleader.about.list');
-    // guil dleader about update edit
+    // guild leader about update edit
     Route::put('/guildleader/about/{uuid}', [GuildLeaderAboutController::class, 'update'])->name('guildleader.about.update');
 
     // guild leader benefit
     Route::get('/guildleader/benefit', [GuildLeaderBenefitController::class, 'index'])->name('guildleader.benefit.list');
-    // guildleader benefit update edit
+    // guild leader benefit update edit
     Route::put('/guildleader/benefit/{uuid}', [GuildLeaderBenefitController::class, 'update'])->name('guildleader.benefit.update');
 
     // guild leader history tanpa show
@@ -321,7 +329,7 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
         ]);
     // guild leader gallery route search
     Route::get('/guildleader/gallery/search', [GuildLeaderGalleryController::class, 'search'])->name('guildleader.gallery.search');
-    // guildleader gallery konfirmasi
+    // guild leader gallery konfirmasi
     Route::get('/guildleader/gallery/{uuid}/konfirmasi', [GuildLeaderGalleryController::class, 'konfirmasi'])->name('guildleader.gallery.konfirmasi');
 
     // guild leader broadcast tanpa show, edit, destroy, update
@@ -379,16 +387,15 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
     Route::get('/guildleader/pengguna/profil', [GuildLeaderPenggunaController::class, 'profil'])->name('guildleader.pengguna.profil');
     // Rute untuk memperbarui profil pengguna
     Route::post('/guildleader/pengguna/updateprofil', [GuildLeaderPenggunaController::class, 'updateProfil'])->name('guildleader.pengguna.updateprofil');
-    // guild leader pengguna route search
+    // guildleader pengguna route search
     Route::get('/guildleader/pengguna/search', [GuildLeaderPenggunaController::class, 'search'])->name('guildleader.pengguna.search');
 
     // guild leader profil
     // Route untuk menampilkan profil pengguna yang sedang login
     Route::get('/guildleader/profil/list', [GuildLeaderPenggunaController::class, 'profil'])->name('guildleader.profil.list');
     // Route untuk memperbarui profil pengguna
-    Route::put('/guildleader/profil/profil/{uuid}', [GuildLeaderPenggunaController::class, 'updateProfil'])->name('guildleader.profil.update');
+    Route::put('/guildleader/profil/profil/{uuid}', [GuildLeaderPenggunaController::class, 'updateProfil'])->name('humas.profil.update');
 });
-
 
 // Humas
 Route::group(['middleware' => 'auth.humas'], function () {
@@ -663,7 +670,7 @@ Route::group(['middleware' => 'auth.moderator'], function () {
     // moderator benefit
     Route::get('/moderator/benefit', [ModeratorBenefitController::class, 'index'])->name('moderator.benefit.list');
 
-    // moderator history rf
+    // moderator history 
     Route::get('/moderator/history-rf', [ModeratorHistoryController::class, 'index'])->name('moderator.history-rf.list');
     // moderator history route search
     Route::get('/moderator/history-rf/search', [ModeratorHistoryController::class, 'search'])->name('moderator.history-rf.search');
@@ -673,7 +680,7 @@ Route::group(['middleware' => 'auth.moderator'], function () {
     // moderator team route search
     Route::get('/moderator/team/search', [ModeratorTeamController::class, 'search'])->name('moderator.team.search');
 
-    // moderator gallery 
+    // moderator gallery
     Route::get('/moderator/gallery', [ModeratorGalleryController::class, 'index'])->name('moderator.gallery.list');
     // moderator gallery route search
     Route::get('/moderator/gallery/search', [ModeratorGalleryController::class, 'search'])->name('moderator.gallery.search');
@@ -685,19 +692,19 @@ Route::group(['middleware' => 'auth.moderator'], function () {
     // moderator request-member route change-status
     Route::patch('/moderator/request-member/{uuid}/change-status', [ModeratorRequestController::class, 'changeStatus'])->name('moderator.request-member.changeStatus');
 
-    // moderator member tanpa show, create, store, destroy
-    Route::resource('/moderator/member', ModeratorMemberController::class)
-        ->except(['show', 'create', 'store', 'destroy'])
-        ->parameters(['member' => 'uuid'])
-        ->names([
-            'index' => 'moderator.member.list',
-            'edit' => 'moderator.member.edit',
-            'update' => 'moderator.member.update',
-        ]);
+    // moderator member
+    Route::get('/moderator/member', [ModeratorMemberController::class, 'index'])->name('moderator.member.list');
     // moderator member route search
     Route::get('/moderator/member/search', [ModeratorMemberController::class, 'search'])->name('moderator.member.search');
     // moderator member route change-status
     Route::patch('/moderator/member/{uuid}/change-status', [ModeratorMemberController::class, 'changeStatus'])->name('moderator.member.changeStatus');
+
+    // Rute untuk menampilkan profil pengguna
+    Route::get('/moderator/pengguna/profil', [ModeratorPenggunaController::class, 'profil'])->name('moderator.pengguna.profil');
+    // Rute untuk memperbarui profil pengguna
+    Route::post('/moderator/pengguna/updateprofil', [ModeratorPenggunaController::class, 'updateProfil'])->name('moderator.pengguna.updateprofil');
+    // moderator pengguna route search
+    Route::get('/moderator/pengguna/search', [ModeratorPenggunaController::class, 'search'])->name('moderator.pengguna.search');
 
     // moderator profil
     // Route untuk menampilkan profil pengguna yang sedang login
@@ -714,22 +721,13 @@ Route::group(['middleware' => 'auth.member'], function () {
     // member dashboard
     Route::get('/member/dashboard/list', [MemberDashboardController::class, 'index'])->name('member.dashboard.list');
 
-    // member informasi
-    Route::get('/member/informasi', [MemberInformasiController::class, 'index'])->name('member.informasi.list');
-
-    // member about
-    Route::get('/member/about', [MemberAboutController::class, 'index'])->name('member.about.list');
-
-    // member benefit
-    Route::get('/member/benefit', [MemberBenefitController::class, 'index'])->name('member.benefit.list');
-
-    // member history rf
+    // member history 
     Route::get('/member/history-rf', [MemberHistoryController::class, 'index'])->name('member.history-rf.list');
     // member history route search
     Route::get('/member/history-rf/search', [MemberHistoryController::class, 'search'])->name('member.history-rf.search');
 
-    // member team 
-    Route::get('/member/team', [MemberTeamController::class, 'index'])->name('member.team.list');
+    // member team
+    Route::get('/member/team/list', [MemberTeamController::class, 'index'])->name('member.team.list');
     // member team route search
     Route::get('/member/team/search', [MemberTeamController::class, 'search'])->name('member.team.search');
 
@@ -738,23 +736,49 @@ Route::group(['middleware' => 'auth.member'], function () {
     // member gallery route search
     Route::get('/member/gallery/search', [MemberGalleryController::class, 'search'])->name('member.gallery.search');
 
-    // member member tanpa show, create, store, destroy
-    Route::resource('/member/member', MemberMemberController::class)
-        ->except(['show', 'create', 'store', 'destroy'])
-        ->parameters(['member' => 'uuid'])
-        ->names([
-            'index' => 'member.member.list',
-            'edit' => 'member.member.edit',
-            'update' => 'member.member.update',
-        ]);
+    // member list
+    Route::get('/member/member/list', [MemberMemberController::class, 'index'])->name('member.member.list');
     // member member route search
     Route::get('/member/member/search', [MemberMemberController::class, 'search'])->name('member.member.search');
-    // member member route change-status
-    Route::patch('/member/member/{uuid}/change-status', [MemberMemberController::class, 'changeStatus'])->name('member.member.changeStatus');
 
     // member profil
     // Route untuk menampilkan profil pengguna yang sedang login
     Route::get('/member/profil/list', [MemberPenggunaController::class, 'profil'])->name('member.profil.list');
     // Route untuk memperbarui profil pengguna
     Route::put('/member/profil/profil/{uuid}', [MemberPenggunaController::class, 'updateProfil'])->name('member.profil.update');
+});
+
+// Guest
+Route::group(['middleware' => 'auth.guest'], function () {
+    // guest Home
+    Route::get('/guest/home', [GuestHomeController::class, 'index'])->name('guest.home');
+
+    // guest dashboard
+    Route::get('/guest/dashboard/list', [GuestDashboardController::class, 'index'])->name('guest.dashboard.list');
+
+    // guest history 
+    Route::get('/guest/history-rf', [GuestHistoryController::class, 'index'])->name('guest.history-rf.list');
+    // guest history route search
+    Route::get('/guest/history-rf/search', [GuestHistoryController::class, 'search'])->name('guest.history-rf.search');
+
+    // guest team
+    Route::get('/guest/team/list', [GuestTeamController::class, 'index'])->name('guest.team.list');
+    // guest team route search
+    Route::get('/guest/team/search', [GuestTeamController::class, 'search'])->name('guest.team.search');
+
+    // guest gallery 
+    Route::get('/guest/gallery', [GuestGalleryController::class, 'index'])->name('guest.gallery.list');
+    // guest gallery route search
+    Route::get('/guest/gallery/search', [GuestGalleryController::class, 'search'])->name('guest.gallery.search');
+
+    // guest list
+    Route::get('/guest/guest/list', [GuestMemberController::class, 'index'])->name('guest.member.list');
+    // guest guest route search
+    Route::get('/guest/guest/search', [GuestMemberController::class, 'search'])->name('guest.member.search');
+
+    // guest profil
+    // Route untuk menampilkan profil pengguna yang sedang login
+    Route::get('/guest/profil/list', [GuestPenggunaController::class, 'profil'])->name('guest.profil.list');
+    // Route untuk memperbarui profil pengguna
+    Route::put('/guest/profil/profil/{uuid}', [GuestPenggunaController::class, 'updateProfil'])->name('guest.profil.update');
 });

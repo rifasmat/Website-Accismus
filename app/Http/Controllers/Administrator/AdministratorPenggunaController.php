@@ -15,7 +15,9 @@ class AdministratorPenggunaController extends Controller
 
     public function index()
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
+        $users = User::orderBy('created_at', 'desc')
+            ->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
+
         return view('administrator.pengguna.list', compact('users'));
     }
 
@@ -175,14 +177,15 @@ class AdministratorPenggunaController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
+        $search = $request->input('query');
 
-        $users = User::where('user_nama', 'LIKE', "%{$search}%")
-            ->orWhere('user_username', 'LIKE', "%{$search}%")
-            ->orWhere('user_email', 'LIKE', "%{$search}%")
-            ->get();
+        $users = User::where(function ($query) use ($search) {
+            $query->where('user_nama', 'LIKE', "%{$search}%")
+                ->orWhere('user_username', 'LIKE', "%{$search}%")
+                ->orWhere('user_email', 'LIKE', "%{$search}%");
+        })->get();
 
-        return view('administrator.pengguna.search', compact('users'));
+        return view('administrator.pengguna.search', compact('users', 'search'));
     }
 
     public function profil()

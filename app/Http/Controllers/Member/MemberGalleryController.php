@@ -16,7 +16,7 @@ class MemberGalleryController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
+        $search = $request->input('query');
 
         $gallery = Gallery::where('gallery_judul', 'LIKE', "%{$search}%")
             ->orWhere('gallery_rf', 'LIKE', "%{$search}%")

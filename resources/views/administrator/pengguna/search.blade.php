@@ -16,7 +16,7 @@
     <!-- Search -->
     <form action="{{ route('administrator.pengguna.search') }}" method="GET" class="form-inline mt-3">
         <div class="input-group">
-            <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;">
+            <input type="text" name="query" class="form-control" autocomplete="off" placeholder="Search..." style="max-width: 300px;" value="{{ old('query', $search) }}">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Search</button>
                 <a href="{{ route('administrator.pengguna.list') }}">
@@ -58,12 +58,15 @@
                     <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Pengguna" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
+                    @if($user->uuid !== Auth::user()->uuid && $user->user_role !== 'Administrator')
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a href="{{ route('administrator.pengguna.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
-                        <form method="GET" action="{{ route('administrator.pengguna.konfirmasi', $user->uuid) }}" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
                     </div>
+                    <form method="GET" action="{{ route('administrator.pengguna.konfirmasi', $user->uuid) }}" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

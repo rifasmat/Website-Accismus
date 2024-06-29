@@ -89,18 +89,20 @@ class HomeController extends Controller
 
         // Arahkan user ke dashboard sesuai role
         switch ($user->user_role) {
-            case 'Humas':
-                return redirect('/humas/dashboard/list');
+            case 'Administrator':
+                return redirect('/administrator/home');
             case 'Guild Leader':
-                return redirect('/guildleader/dashboard/list');
+                return redirect('/guildleader/home');
+            case 'Humas':
+                return redirect('/humas/home');
             case 'Senate':
-                return redirect('/senate/dashboard/list');
+                return redirect('/senate/home');
             case 'Moderator':
-                return redirect('/moderator/dashboard/list');
+                return redirect('/moderator/home');
             case 'Member':
-                return redirect('/member/dashboard/list');
+                return redirect('/member/home');
             case 'Guest':
-                return redirect('/guest/dashboard/list');
+                return redirect('/guest/home');
             default:
                 return redirect('/');
         }

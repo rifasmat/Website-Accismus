@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Moderator;
 use App\Http\Controllers\Controller;
 use App\Models\Benefit;
 
-
 class ModeratorBenefitController extends Controller
 {
     public function index()
