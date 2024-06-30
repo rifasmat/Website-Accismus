@@ -110,6 +110,66 @@
     </div>
     <!-- End Pengguna -->
 
+    <!-- Total Administrator -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Administrator</h5>
+          <p class="card-text">{{ $totalAdministrator }}</p>
+          <a href="#" class="btn btn-primary">Lihat</a>
+        </div>
+      </div>
+    </div>
+    <!-- End Administrator -->
+
+    <!-- Total Guild Leader -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Guild Leader</h5>
+          <p class="card-text">{{ $totalGuildLeader }}</p>
+          <a href="{{ route('administrator.team.list') }}" class="btn btn-primary">Lihat</a>
+        </div>
+      </div>
+    </div>
+    <!-- End Guild Leader -->
+
+    <!-- Total Humas -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Humas</h5>
+          <p class="card-text">{{ $totalHumas }}</p>
+          <a href="{{ route('administrator.team.list') }}" class="btn btn-primary">Lihat</a>
+        </div>
+      </div>
+    </div>
+    <!-- End Humas -->
+
+    <!-- Total Senate -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Senate</h5>
+          <p class="card-text">{{ $totalSenate }}</p>
+          <a href="{{ route('administrator.team.list') }}" class="btn btn-primary">Lihat</a>
+        </div>
+      </div>
+    </div>
+    <!-- End Senate -->
+
+    <!-- Total Moderator -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Moderator</h5>
+          <p class="card-text">{{ $totalModerator }}</p>
+          <a href="{{ route('administrator.team.list') }}" class="btn btn-primary">Lihat</a>
+        </div>
+      </div>
+    </div>
+    <!-- End Moderator -->
+
     <!-- Total Member -->
     <div class="col-lg-4 col-md-6">
       <div class="card text-center">

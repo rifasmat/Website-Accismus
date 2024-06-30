@@ -33,6 +33,12 @@
 
 <body>
 
+  @if(session('success'))
+  <div class="alert alert-success text-center">
+    {{ session('success') }}
+  </div>
+  @endif
+
   <main>
     <div class="container">
 
@@ -55,35 +61,35 @@
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login </h5>
                   </div>
-
                   <form class="row g-3 needs-validation" method="POST" action="{{ route('processLogin') }}" novalidate>
                     @csrf
                     <div class="col-12">
                       <label for="yourusernameemail" class="form-label">Username/Email</label>
-                      <input type="text" name="usernameemail" class="form-control" id="yourusernameemail" required autocomplete="off">
+                      <input type="text" name="usernameemail" class="form-control" id="yourusernameemail" placeholder="Enter Email/Username" required autocomplete="off">
                       <div class="invalid-feedback">Masukan Username/Email</div>
                       @error('usernameemail')
                       <div class="text-danger text-center">{{ $message }}</div>
                       @enderror
                     </div>
-
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" name="password" class="form-control" id="yourPassword" placeholder="Enter Password" required>
                       <div class="invalid-feedback">Please enter your password!</div>
                       @error('password')
                       <div class="text-danger text-center">{{ $message }}</div>
                       @enderror
                     </div>
-
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
-                    <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="{{ route('register') }}">Create an account</a></p>
+                    <div class="col-12 text-center">
+                      <span>
+                        <a href="{{ route('register') }}" class="small mb-0">Create an account</a>
+                        <span>|</span>
+                        <a href="{{ route('forgot-password') }}" class="small mb-0">Forgot Password</a>
+                      </span>
                     </div>
                   </form>
-
                 </div>
               </div>
 

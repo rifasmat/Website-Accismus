@@ -163,8 +163,8 @@ class HomeController extends Controller
             'user_role' => $request->role,
         ]);
 
-        // Arahkan user ke halaman dashboard atau halaman lain yang diinginkan
-        return redirect('/user/dashboard')->with('success', 'Registrasi berhasil! Anda telah login.');
+        // Arahkan user ke halaman guest/home dan tampilkan pesan sukses
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login untuk melanjutkan.');
     }
 
     public function logout()

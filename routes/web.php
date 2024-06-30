@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // Home Controller
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\ForgotPasswordController;
 
 // Administrator
 use App\Http\Controllers\Administrator\AdministratorHomeController;
@@ -91,8 +92,6 @@ use App\Http\Controllers\Guest\GuestGalleryController;
 use App\Http\Controllers\Guest\GuestMemberController;
 use App\Http\Controllers\Guest\GuestPenggunaController;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -106,6 +105,9 @@ use App\Http\Controllers\Guest\GuestPenggunaController;
 
 // Halaman Home
 Route::get('/', [HomeController::class, 'index']);
+
+// Halaman Forgot Password
+Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password');
 
 // Halaman Login
 Route::get('login', [HomeController::class, 'login'])->name('login');

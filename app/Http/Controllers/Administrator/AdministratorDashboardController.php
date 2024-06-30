@@ -45,6 +45,21 @@ class AdministratorDashboardController extends Controller
         // pengguna accismus
         $totalPengguna = User::count();
 
+        // Administrator accismus
+        $totalAdministrator = User::where('user_role', 'Administrator')->count();
+
+        // guild leader accismus
+        $totalGuildLeader = User::where('user_role', 'Guild Leader')->count();
+
+        // humas accismus
+        $totalHumas = User::where('user_role', 'Humas')->count();
+
+        // senate accismus
+        $totalSenate = User::where('user_role', 'Senate')->count();
+
+        // moderator accismus
+        $totalModerator = User::where('user_role', 'Moderator')->count();
+
         return view(
             'administrator.dashboard.list',
             compact(
@@ -56,8 +71,13 @@ class AdministratorDashboardController extends Controller
                 'totalGallery',
                 'totalBroadcast',
                 'totalPengguna',
+                'totalAdministrator',
+                'totalHumas',
+                'totalSenate',
+                'totalModerator',
                 'totalMember',
                 'totalGuest',
+                'totalGuildLeader'
             )
         );
     }
