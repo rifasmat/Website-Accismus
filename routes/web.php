@@ -9,10 +9,6 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
-// Reset Password
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-
 // Administrator
 use App\Http\Controllers\Administrator\AdministratorHomeController;
 use App\Http\Controllers\Administrator\AdministratorDashboardController;
@@ -112,15 +108,6 @@ use App\Http\Controllers\Guest\GuestPenggunaController;
 
 // Halaman Home
 Route::get('/', [HomeController::class, 'index']);
-
-// Halaman Forgot Password
-Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-// Prosess send link to emai;
-Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-// Halaman reset password
-Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-// prosess perubahan password baru
-Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Halaman Login
 Route::get('login', [LoginController::class, 'login'])->name('login');
