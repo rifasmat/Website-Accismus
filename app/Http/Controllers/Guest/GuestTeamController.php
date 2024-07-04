@@ -11,8 +11,8 @@ class GuestTeamController extends Controller
     public function index()
     {
         $includedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
-        $users = User::whereIn('user_role', $includedRoles)
-            ->orderByRaw("FIELD(user_role, 'Guild Leader', 'Humas', 'Senate', 'Moderator')")
+        $users = User::whereIn('role', $includedRoles)
+            ->orderByRaw("FIELD(role, 'Guild Leader', 'Humas', 'Senate', 'Moderator')")
             ->paginate(10);
 
         return view('guest.team.list', compact('users'));
@@ -24,19 +24,19 @@ class GuestTeamController extends Controller
 
         $allowedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
 
-        $users = User::whereIn('user_role', $allowedRoles)
+        $users = User::whereIn('role', $allowedRoles)
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->get();
 
-        $administratorExists = User::where('user_role', 'Administrator')
+        $administratorExists = User::where('role', 'Administrator')
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->exists();
 

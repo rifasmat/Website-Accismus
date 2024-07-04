@@ -14,8 +14,8 @@ class AdministratorTeamController extends Controller
     public function index()
     {
         $includedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
-        $users = User::whereIn('user_role', $includedRoles)
-            ->orderByRaw("FIELD(user_role, 'Guild Leader', 'Humas', 'Senate', 'Moderator')")
+        $users = User::whereIn('role', $includedRoles)
+            ->orderByRaw("FIELD(role, 'Guild Leader', 'Humas', 'Senate', 'Moderator')")
             ->paginate(10);
 
         return view('administrator.team.list', compact('users'));
@@ -27,19 +27,19 @@ class AdministratorTeamController extends Controller
 
         $allowedRoles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
 
-        $users = User::whereIn('user_role', $allowedRoles)
+        $users = User::whereIn('role', $allowedRoles)
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->get();
 
-        $administratorExists = User::where('user_role', 'Administrator')
+        $administratorExists = User::where('role', 'Administrator')
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->exists();
 
@@ -63,8 +63,8 @@ class AdministratorTeamController extends Controller
         // Validasi data
         $request->validate([
             'nama' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,user_username,' . $id,
-            'email' => 'required|string|email|max:255|unique:users,user_email,' . $id,
+            'username' => 'required|string|max:255|unique:users,username,' . $id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|min:5',
             'wa' => 'nullable|string|max:20',
             'discord' => 'nullable|string|max:255',
@@ -87,18 +87,18 @@ class AdministratorTeamController extends Controller
         ]);
 
         // Simpan data role team sebelumnya
-        $oldRole = $user->user_role;
+        $oldRole = $user->role;
 
         // Update data team
-        $user->user_nama = $request->nama;
-        $user->user_username = $request->username;
-        $user->user_email = $request->email;
-        $user->user_wa = $request->wa;
-        $user->user_discord = $request->discord;
+        $user->nama = $request->nama;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->wa = $request->wa;
+        $user->discord = $request->discord;
 
         // Periksa apakah team mengubah role
-        if ($request->filled('role') && $request->role !== $user->user_role) {
-            $user->user_role = $request->role;
+        if ($request->filled('role') && $request->role !== $user->role) {
+            $user->role = $request->role;
         }
 
         // Jika ada password baru, update password
@@ -113,9 +113,9 @@ class AdministratorTeamController extends Controller
             // Simpan file ke direktori 'team'
             $fotoPath = $request->file('foto')->storeAs('pengguna', $fileName, 'public');
             // Hapus foto lama jika ada
-            Storage::disk('public')->delete($user->user_foto);
+            Storage::disk('public')->delete($user->foto);
             // Update path foto
-            $user->user_foto = $fotoPath;
+            $user->foto = $fotoPath;
         }
 
         // Simpan perubahan

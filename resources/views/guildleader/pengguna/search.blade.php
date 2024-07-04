@@ -50,17 +50,17 @@
             @foreach($users as $index => $user)
             <tr class="text-center">
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $user->user_nama }}</td>
-                <td>{{ $user->user_username }}</td>
-                <td>{{ $user->user_email }}</td>
-                <td>{{ $user->user_wa }}</td>
-                <td>{{ $user->user_discord }}</td>
-                <td>{{ $user->user_role }}</td>
+                <td>{{ $user->nama }}</td>
+                <td>{{ $user->username }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->wa }}</td>
+                <td>{{ $user->discord }}</td>
+                <td>{{ $user->role }}</td>
                 <td>
-                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Pengguna" class="img-thumbnail" style="width: 100px; height: 100px;">
+                    <img src="{{ Storage::url($user->foto) }}" alt="Foto Pengguna" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
                 <td>
-                    @if($user->user_role !== 'Administrator' && $user->uuid !== Auth::user()->uuid)
+                    @if($user->role !== 'Administrator' && $user->uuid !== Auth::user()->uuid)
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a href="{{ route('guildleader.pengguna.edit', $user->uuid) }}" class="btn btn-warning btn-sm mr-1">Edit</a>
                     </div>

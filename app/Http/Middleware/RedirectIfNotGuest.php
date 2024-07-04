@@ -17,7 +17,7 @@ class RedirectIfNotGuest
     public function handle($request, Closure $next)
     {
         // Periksa apakah pengguna memiliki peran 'Guest'
-        if (!$request->user() || $request->user()->user_role !== 'Guest') {
+        if (!$request->user() || $request->user()->role !== 'Guest') {
             return redirect('/');
         }
 

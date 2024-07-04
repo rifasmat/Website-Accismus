@@ -11,7 +11,7 @@ class GuildLeaderRequestController extends Controller
 {
     public function index()
     {
-        $users = User::where('user_role', 'Guest')->paginate(10);
+        $users = User::where('role', 'Guest')->paginate(10);
 
         return view('guildleader.request-member.list', compact('users'));
     }
@@ -21,11 +21,11 @@ class GuildLeaderRequestController extends Controller
         $search = $request->input('search');
         $includedRoles = ['Guest'];
 
-        $users = User::whereIn('user_role', $includedRoles)
+        $users = User::whereIn('role', $includedRoles)
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->get();
 
@@ -35,10 +35,10 @@ class GuildLeaderRequestController extends Controller
     public function changeStatus($uuid)
     {
         $user = User::where('uuid', $uuid)->firstOrFail();
-        $user->user_role = 'Member';
+        $user->role = 'Member';
         $user->save();
 
         return redirect()->route('guildleader.member.list')
-            ->with('changeStatus', "{$user->user_nama} Sudah Menjadi Member.");
+            ->with('changeStatus', "{$user->nama} Sudah Menjadi Member.");
     }
 }

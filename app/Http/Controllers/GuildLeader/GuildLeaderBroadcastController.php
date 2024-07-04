@@ -42,9 +42,9 @@ class GuildLeaderBroadcastController extends Controller
     {
         $search = $request->input('search');
 
-        $users = User::where('user_nama', 'LIKE', "%{$search}%")
-            ->orWhere('user_username', 'LIKE', "%{$search}%")
-            ->orWhere('user_email', 'LIKE', "%{$search}%")
+        $users = User::where('nama', 'LIKE', "%{$search}%")
+            ->orWhere('username', 'LIKE', "%{$search}%")
+            ->orWhere('email', 'LIKE', "%{$search}%")
             ->get();
 
         return view('guildleader.broadcast.searchmail', compact('users'));
@@ -61,8 +61,8 @@ class GuildLeaderBroadcastController extends Controller
             'text.required' => 'Pesan tidak boleh kosong.',
         ]);
 
-        // Ambil semua email pengguna kecuali yang memiliki user_role 'Guest'
-        $penerimaEmails = User::where('user_role', '!=', 'Guest')->pluck('user_email')->toArray();
+        // Ambil semua email pengguna kecuali yang memiliki role 'Guest'
+        $penerimaEmails = User::where('role', '!=', 'Guest')->pluck('email')->toArray();
         $broadcastPenerima = implode(',', $penerimaEmails);
 
         // Ambil pengguna yang sedang login
@@ -79,7 +79,7 @@ class GuildLeaderBroadcastController extends Controller
             'broadcast_subject' => $request->subject,
             'broadcast_pesan' => $cleanText,  // Sanitasi teks pesan
             'broadcast_tanggal' => now()->toDateTimeString(),
-            'broadcast_sentby' => $user->user_nama, // Isi dengan nama pengguna yang sedang login
+            'broadcast_sentby' => $user->nama, // Isi dengan nama pengguna yang sedang login
         ]);
 
         try {
@@ -106,8 +106,8 @@ class GuildLeaderBroadcastController extends Controller
 
     public function email()
     {
-        // Ambil semua pengguna kecuali yang memiliki user_role 'Guest'
-        $users = User::where('user_role', '!=', 'Guest')
+        // Ambil semua pengguna kecuali yang memiliki role 'Guest'
+        $users = User::where('role', '!=', 'Guest')
             ->orderBy('created_at', 'desc')
             ->paginate(10); // Menampilkan 10 data halaman dengan urutan terbaru
 

@@ -34,10 +34,10 @@ class HumasHomeController extends Controller
         $roles = ['Guild Leader', 'Humas', 'Senate', 'Moderator'];
 
         // Ambil data users dan urutkan berdasarkan urutan peran
-        $users = User::whereIn('user_role', $roles)
+        $users = User::whereIn('role', $roles)
             ->get()
             ->sortBy(function ($user) use ($roles) {
-                return array_search($user->user_role, $roles);
+                return array_search($user->role, $roles);
             });
 
         // Kembalikan data ke tampilan

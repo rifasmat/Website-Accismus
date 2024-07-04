@@ -24,7 +24,7 @@ class ModeratorDashboardController extends Controller
         $totalBenefit = Benefit::count();
 
         // team accismus
-        $totalTeam = User::whereIn('user_role', ['Guild Leader', 'Humas', 'Senate', 'Moderator'])->count();
+        $totalTeam = User::whereIn('role', ['Guild Leader', 'Humas', 'Senate', 'Moderator'])->count();
 
         // history rf accismus
         $totalHistory = History::count();
@@ -33,10 +33,10 @@ class ModeratorDashboardController extends Controller
         $totalGallery = Gallery::count();
 
         // member accismus
-        $totalMember = User::whereIn('user_role', ['Member'])->count();
+        $totalMember = User::whereIn('role', ['Member'])->count();
 
         // guest accismus
-        $totalGuest = User::whereIn('user_role', ['Guest'])->count();
+        $totalGuest = User::whereIn('role', ['Guest'])->count();
 
         return view(
             'moderator.dashboard.list',

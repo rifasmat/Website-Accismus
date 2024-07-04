@@ -17,7 +17,7 @@ class RedirectIfNotSenate
     public function handle($request, Closure $next)
     {
         // Periksa apakah pengguna memiliki peran 'Senate'
-        if (!$request->user() || $request->user()->user_role !== 'Senate') {
+        if (!$request->user() || $request->user()->role !== 'Senate') {
             return redirect('/');
         }
 

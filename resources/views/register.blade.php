@@ -122,7 +122,7 @@
                       <span>
                         <a href="{{ route('login') }}" class="small mb-0">Login</a>
                         <span>|</span>
-                        <a href="{{ route('forgot-password') }}" class="small mb-0">Forget Password</a>
+                        <a href="{{ route('password.request') }}" class="small mb-0">Forget Password</a>
                       </span>
                     </div>
                   </form>

@@ -17,7 +17,7 @@ class RedirectIfNotHumas
     public function handle($request, Closure $next)
     {
         // Periksa apakah pengguna memiliki peran 'Humas'
-        if (!$request->user() || $request->user()->user_role !== 'Humas') {
+        if (!$request->user() || $request->user()->role !== 'Humas') {
             return redirect('/');
         }
 

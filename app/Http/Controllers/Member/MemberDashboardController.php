@@ -12,7 +12,7 @@ class MemberDashboardController extends Controller
     public function index()
     {
         // team accismus
-        $totalTeam = User::whereIn('user_role', ['Guild Leader', 'Humas', 'Senate', 'Moderator'])->count();
+        $totalTeam = User::whereIn('role', ['Guild Leader', 'Humas', 'Senate', 'Moderator'])->count();
 
         // history rf accismus
         $totalHistory = History::count();
@@ -21,7 +21,7 @@ class MemberDashboardController extends Controller
         $totalGallery = Gallery::count();
 
         // member accismus
-        $totalMember = User::whereIn('user_role', ['Member'])->count();
+        $totalMember = User::whereIn('role', ['Member'])->count();
 
         return view(
             'member.dashboard.list',

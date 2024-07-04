@@ -175,11 +175,11 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="100">
               <div class="member-img">
-                <img src="{{ Storage::url($user->user_foto) }}" class="img-fluid" style="width: 250px; height: 250px;">
+                <img src="{{ Storage::url($user->foto) }}" class="img-fluid" style="width: 250px; height: 250px;">
               </div>
               <div class="member-info">
-                <h4>{{ $user->user_username }}</h4>
-                <span>{{ $user->user_role }}</span>
+                <h4>{{ $user->username }}</h4>
+                <span>{{ $user->role }}</span>
               </div>
             </div>
           </div>

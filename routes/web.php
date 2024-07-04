@@ -4,7 +4,14 @@ use Illuminate\Support\Facades\Route;
 
 // Home Controller
 use App\Http\Controllers\Home\HomeController;
-use App\Http\Controllers\Home\ForgotPasswordController;
+
+// Login Controller
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+
+// Reset Password
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 // Administrator
 use App\Http\Controllers\Administrator\AdministratorHomeController;
@@ -107,17 +114,23 @@ use App\Http\Controllers\Guest\GuestPenggunaController;
 Route::get('/', [HomeController::class, 'index']);
 
 // Halaman Forgot Password
-Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password');
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+// Prosess send link to emai;
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+// Halaman reset password
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+// prosess perubahan password baru
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Halaman Login
-Route::get('login', [HomeController::class, 'login'])->name('login');
+Route::get('login', [LoginController::class, 'login'])->name('login');
 // Proses Login
-Route::post('processLogin', [HomeController::class, 'processLogin'])->name('processLogin');
+Route::post('processLogin', [LoginController::class, 'processLogin'])->name('processLogin');
 
 // Halaman Register
-Route::get('register', [HomeController::class, 'register'])->name('register');
+Route::get('register', [RegisterController::class, 'register'])->name('register');
 // Proses Register
-Route::post('processRegister', [HomeController::class, 'processRegister'])->name('processRegister');
+Route::post('processRegister', [RegisterController::class, 'processRegister'])->name('processRegister');
 
 // Logout
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
@@ -396,7 +409,7 @@ Route::group(['middleware' => 'auth.guildleader'], function () {
     // Route untuk menampilkan profil pengguna yang sedang login
     Route::get('/guildleader/profil/list', [GuildLeaderPenggunaController::class, 'profil'])->name('guildleader.profil.list');
     // Route untuk memperbarui profil pengguna
-    Route::put('/guildleader/profil/profil/{uuid}', [GuildLeaderPenggunaController::class, 'updateProfil'])->name('humas.profil.update');
+    Route::put('/guildleader/profil/profil/{uuid}', [GuildLeaderPenggunaController::class, 'updateProfil'])->name('guildleader.profil.update');
 });
 
 // Humas

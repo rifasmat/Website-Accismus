@@ -20,35 +20,35 @@
         @method('PUT')
         <div class="form-group mt-3">
             <label for="nama"><b>Nama</b></label>
-            <input type="text" class="form-control" name="nama" id="nama" autocomplete="off" value="{{ old('nama', $user->user_nama) }}">
+            <input type="text" class="form-control" name="nama" id="nama" autocomplete="off" value="{{ old('nama', $user->nama) }}">
             @error('nama')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="username"><b>Username</b></label>
-            <input type="text" class="form-control" name="username" id="username" autocomplete="off" value="{{ old('username', $user->user_username) }}">
+            <input type="text" class="form-control" name="username" id="username" autocomplete="off" value="{{ old('username', $user->username) }}">
             @error('username')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="email"><b>Email</b></label>
-            <input type="text" class="form-control" name="email" id="email" autocomplete="off" value="{{ old('email', $user->user_email) }}">
+            <input type="text" class="form-control" name="email" id="email" autocomplete="off" value="{{ old('email', $user->email) }}">
             @error('email')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="wa"><b>Nomer Whatsapp</b></label>
-            <input type="text" class="form-control" name="wa" id="wa" autocomplete="off" value="{{ old('wa', $user->user_wa) }}">
+            <input type="text" class="form-control" name="wa" id="wa" autocomplete="off" value="{{ old('wa', $user->wa) }}">
             @error('wa')
             <p style="color: red;">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="discord"><b>Discord</b></label>
-            <input type="text" class="form-control" name="discord" id="discord" autocomplete="off" value="{{ old('discord', $user->user_discord) }}">
+            <input type="text" class="form-control" name="discord" id="discord" autocomplete="off" value="{{ old('discord', $user->discord) }}">
             @error('discord')
             <p style="color: red;">{{ $message }}</p>
             @enderror
@@ -58,7 +58,7 @@
             <select class="form-control" name="role" id="role">
                 @php
                 $roles = ['Administrator', 'Guild Leader', 'Humas', 'Senate', 'Moderator', 'Member', 'Guest'];
-                $userRole = $user->user_role;
+                $userRole = $user->role;
                 @endphp
                 <option value="{{ $userRole }}">{{ $userRole }}</option>
                 @foreach($roles as $role)
@@ -82,8 +82,8 @@
         <div class="mb-3">
             <div class="input-group" style="display: flex; align-items: center;">
                 <input type="file" class="form-control" id="foto" name="foto" style="flex: 1;" onchange="previewImage()">
-                <input type="hidden" name="foto_old" value="{{ $user->user_foto }}">
-                <img id="fotoPreview" src="{{ Storage::url($user->user_foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 150px; margin-left: 10px;">
+                <input type="hidden" name="foto_old" value="{{ $user->foto }}">
+                <img id="fotoPreview" src="{{ Storage::url($user->foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 150px; margin-left: 10px;">
             </div>
             @error('foto')
             <div class="alert alert-danger mt-2">

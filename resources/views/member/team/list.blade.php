@@ -54,13 +54,13 @@
             @foreach($users as $index => $user)
             <tr class="text-center">
                 <td>{{ $index + 1 + ($users->currentPage() - 1) * $users->perPage() }}</td>
-                <td>{{ $user->user_nama }}</td>
-                <td>{{ $user->user_username }}</td>
-                <td>{{ $user->user_wa }}</td>
-                <td>{{ $user->user_discord }}</td>
-                <td>{{ $user->user_role }}</td>
+                <td>{{ $user->nama }}</td>
+                <td>{{ $user->username }}</td>
+                <td>{{ $user->wa }}</td>
+                <td>{{ $user->discord }}</td>
+                <td>{{ $user->role }}</td>
                 <td>
-                    <img src="{{ Storage::url($user->user_foto) }}" alt="Foto Team" class="img-thumbnail" style="width: 100px; height: 100px;">
+                    <img src="{{ Storage::url($user->foto) }}" alt="Foto Team" class="img-thumbnail" style="width: 100px; height: 100px;">
                 </td>
             </tr>
             @endforeach

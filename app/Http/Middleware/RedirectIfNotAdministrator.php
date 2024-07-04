@@ -17,7 +17,7 @@ class RedirectIfNotAdministrator
     public function handle($request, Closure $next)
     {
         // Periksa apakah pengguna memiliki peran 'Administrator'
-        if (!$request->user() || $request->user()->user_role !== 'Administrator') {
+        if (!$request->user() || $request->user()->role !== 'Administrator') {
             return redirect('/');
         }
 

@@ -25,7 +25,7 @@ class AdministratorDashboardController extends Controller
         $totalBenefit = Benefit::count();
 
         // team accismus
-        $totalTeam = User::whereIn('user_role', ['Guild Leader', 'Humas', 'Senate', 'Moderator'])->count();
+        $totalTeam = User::whereIn('role', ['Guild Leader', 'Humas', 'Senate', 'Moderator'])->count();
 
         // history rf accismus
         $totalHistory = History::count();
@@ -37,28 +37,28 @@ class AdministratorDashboardController extends Controller
         $totalBroadcast = Broadcast::count();
 
         // member accismus
-        $totalMember = User::whereIn('user_role', ['Member'])->count();
+        $totalMember = User::whereIn('role', ['Member'])->count();
 
         // guest accismus
-        $totalGuest = User::whereIn('user_role', ['Guest'])->count();
+        $totalGuest = User::whereIn('role', ['Guest'])->count();
 
         // pengguna accismus
         $totalPengguna = User::count();
 
         // Administrator accismus
-        $totalAdministrator = User::where('user_role', 'Administrator')->count();
+        $totalAdministrator = User::where('role', 'Administrator')->count();
 
         // guild leader accismus
-        $totalGuildLeader = User::where('user_role', 'Guild Leader')->count();
+        $totalGuildLeader = User::where('role', 'Guild Leader')->count();
 
         // humas accismus
-        $totalHumas = User::where('user_role', 'Humas')->count();
+        $totalHumas = User::where('role', 'Humas')->count();
 
         // senate accismus
-        $totalSenate = User::where('user_role', 'Senate')->count();
+        $totalSenate = User::where('role', 'Senate')->count();
 
         // moderator accismus
-        $totalModerator = User::where('user_role', 'Moderator')->count();
+        $totalModerator = User::where('role', 'Moderator')->count();
 
         return view(
             'administrator.dashboard.list',

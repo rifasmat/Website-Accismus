@@ -11,8 +11,8 @@ class SenateMemberController extends Controller
     public function index()
     {
         $includedRoles = ['Member', 'Moderator', 'Senate', 'Humas', 'Guild Leader'];
-        $users = User::whereIn('user_role', $includedRoles)
-            ->orderByRaw("FIELD(user_role, 'Member', 'Moderator', 'Senate', 'Humas', 'Guild Leader')")
+        $users = User::whereIn('role', $includedRoles)
+            ->orderByRaw("FIELD(role, 'Member', 'Moderator', 'Senate', 'Humas', 'Guild Leader')")
             ->paginate(10);
 
         return view('senate.member.list', compact('users'));
@@ -22,19 +22,19 @@ class SenateMemberController extends Controller
     {
         $search = $request->input('query');
 
-        $users = User::where('user_role', '!=', 'Administrator')
+        $users = User::where('role', '!=', 'Administrator')
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->get();
 
-        $administratorExists = User::where('user_role', 'Administrator')
+        $administratorExists = User::where('role', 'Administrator')
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->exists();
 
@@ -44,10 +44,10 @@ class SenateMemberController extends Controller
     public function changeStatus($uuid)
     {
         $user = User::where('uuid', $uuid)->firstOrFail();
-        $user->user_role = 'Guest';
+        $user->role = 'Guest';
         $user->save();
 
         return redirect()->route('senate.request-member.list')
-            ->with('changeStatus', "{$user->user_nama} Sudah Kembali Menjadi Guest.");
+            ->with('changeStatus', "{$user->nama} Sudah Kembali Menjadi Guest.");
     }
 }

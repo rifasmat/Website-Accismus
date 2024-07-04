@@ -17,7 +17,7 @@ class RedirectIfNotModerator
     public function handle($request, Closure $next)
     {
         // Periksa apakah pengguna memiliki peran 'Moderator'
-        if (!$request->user() || $request->user()->user_role !== 'Moderator') {
+        if (!$request->user() || $request->user()->role !== 'Moderator') {
             return redirect('/');
         }
 

@@ -19,14 +19,14 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'user_nama',
-        'user_username',
-        'user_email',
+        'nama',
+        'username',
+        'email',
         'password',
-        'user_wa',
-        'user_discord',
-        'user_foto',
-        'user_role',
+        'wa',
+        'discord',
+        'foto',
+        'role',
         'uuid'
     ];
 

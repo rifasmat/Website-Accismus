@@ -17,7 +17,7 @@ class RedirectIfNotGuildLeader
     public function handle($request, Closure $next)
     {
         // Periksa apakah pengguna memiliki peran 'Guild Leader'
-        if (!$request->user() || $request->user()->user_role !== 'Guild Leader') {
+        if (!$request->user() || $request->user()->role !== 'Guild Leader') {
             return redirect('/');
         }
 

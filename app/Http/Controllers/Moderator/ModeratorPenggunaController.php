@@ -15,7 +15,7 @@ class ModeratorPenggunaController extends Controller
 
     public function index()
     {
-        $users = User::where('user_role', '!=', 'Administrator')
+        $users = User::where('role', '!=', 'Administrator')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         return view('moderator.pengguna.list', compact('users'));
@@ -25,19 +25,19 @@ class ModeratorPenggunaController extends Controller
     {
         $search = $request->input('query');
 
-        $users = User::where('user_role', '!=', 'Administrator')
+        $users = User::where('role', '!=', 'Administrator')
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->get();
 
-        $administratorExists = User::where('user_role', 'Administrator')
+        $administratorExists = User::where('role', 'Administrator')
             ->where(function ($query) use ($search) {
-                $query->where('user_nama', 'LIKE', "%{$search}%")
-                    ->orWhere('user_username', 'LIKE', "%{$search}%")
-                    ->orWhere('user_email', 'LIKE', "%{$search}%");
+                $query->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
             })
             ->exists();
 
@@ -52,14 +52,14 @@ class ModeratorPenggunaController extends Controller
 
     public function updateProfil(Request $request, $uuid)
     {
-        // Ambil data pengguna berdasarkan user_uuid
+        // Ambil data pengguna berdasarkan uuid
         $user = User::where('uuid', $uuid)->firstOrFail();
 
         // Validasi input
         $request->validate([
             'nama' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,user_username,' . $user->id,
-            'email' => 'required|string|email|max:255|unique:users,user_email,' . $user->id,
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'wa' => 'nullable|string|max:20',
             'discord' => 'nullable|string|max:255',
             'password' => 'nullable|string|min:5',
@@ -79,11 +79,11 @@ class ModeratorPenggunaController extends Controller
         ]);
 
         // Update data pengguna
-        $user->user_nama = $request->nama;
-        $user->user_username = $request->username;
-        $user->user_email = $request->email;
-        $user->user_wa = $request->wa;
-        $user->user_discord = $request->discord;
+        $user->nama = $request->nama;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->wa = $request->wa;
+        $user->discord = $request->discord;
 
         // Jika ada password baru, update password
         if ($request->filled('password')) {
@@ -94,8 +94,8 @@ class ModeratorPenggunaController extends Controller
         if ($request->hasFile('foto')) {
             $fileName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
             $fotoPath = $request->file('foto')->storeAs('pengguna', $fileName, 'public');
-            Storage::disk('public')->delete($user->user_foto);
-            $user->user_foto = $fotoPath;
+            Storage::disk('public')->delete($user->foto);
+            $user->foto = $fotoPath;
         }
 
         // Simpan perubahan data pengguna

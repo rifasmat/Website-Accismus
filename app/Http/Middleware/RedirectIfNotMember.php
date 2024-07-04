@@ -17,7 +17,7 @@ class RedirectIfNotMember
     public function handle($request, Closure $next)
     {
         // Periksa apakah pengguna memiliki peran 'Member'
-        if (!$request->user() || $request->user()->user_role !== 'Member') {
+        if (!$request->user() || $request->user()->role !== 'Member') {
             return redirect('/');
         }
 

@@ -86,7 +86,7 @@
                       <span>
                         <a href="{{ route('register') }}" class="small mb-0">Create an account</a>
                         <span>|</span>
-                        <a href="{{ route('forgot-password') }}" class="small mb-0">Forgot Password</a>
+                        <a href="{{ route('password.request') }}" class="small mb-0">Forgot Password</a>
                       </span>
                     </div>
                   </form>
