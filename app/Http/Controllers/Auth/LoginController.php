@@ -25,14 +25,15 @@ class LoginController extends Controller
             return back()->withErrors(['usernameemail' => 'Username/Email atau password tidak boleh kosong']);
         }
 
-        // Cek apakah username/email ada di database
-        $user = User::where('email', $usernameOrEmail)
-            ->orWhere('username', $usernameOrEmail)
-            ->first();
+        // case-insensitive
+        $user = User::where(function ($query) use ($usernameOrEmail) {
+            $query->whereRaw('LOWER(email) = ?', [strtolower($usernameOrEmail)])
+                ->orWhereRaw('LOWER(username) = ?', [strtolower($usernameOrEmail)]);
+        })->first();
 
         if (!$user) {
             // Jika username/email tidak ditemukan
-            return back()->withErrors(['usernameemail' => 'Username/Email Salah']);
+            return back()->withErrors(['usernameemail' => 'Username/Email Tidak Terdaftar']);
         }
 
         // Cek apakah password benar
