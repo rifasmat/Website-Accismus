@@ -85,6 +85,8 @@
                     <div class="col-12 text-center">
                       <span>
                         <a href="{{ route('register') }}" class="small mb-0">Create an account</a>
+                        <span>|</span>
+                        <a href="{{ route('password.request') }}" class="small mb-0">Forgot Password</a>
                       </span>
                     </div>
                   </form>

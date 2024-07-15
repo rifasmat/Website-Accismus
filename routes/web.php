@@ -8,6 +8,8 @@ use App\Http\Controllers\Home\HomeController;
 // Login Controller
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 // Administrator
 use App\Http\Controllers\Administrator\AdministratorHomeController;
@@ -118,6 +120,14 @@ Route::post('processLogin', [LoginController::class, 'processLogin'])->name('pro
 Route::get('register', [RegisterController::class, 'register'])->name('register');
 // Proses Register
 Route::post('processRegister', [RegisterController::class, 'processRegister'])->name('processRegister');
+
+// forgot password
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// reset password
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Logout
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
