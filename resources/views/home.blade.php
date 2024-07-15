@@ -6,8 +6,9 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Accismus Community</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <meta content="Accismus community merupakan komunitsa RF Online private server yang terbentuk pada januari 2024" name="description">
+  <meta property="og:url" content="{{ url()->current() }}">
+  <meta property="og:image" content="{{ Storage::url('accismus/accismus.jpeg') }}">
 
   <!-- Google Fonts  -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
