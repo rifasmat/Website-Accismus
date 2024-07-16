@@ -29,6 +29,17 @@
   <!-- Template Main CSS File -->
   <link href="{{ asset('assets/backend/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/backend/css/custom.css') }}" rel="stylesheet">
+
+  <!-- trix -->
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+  <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+
+  <!-- menghilangkan upload file dari trix -->s
+  <style>
+    trix-toolbar [data-trix-button-group="file-tools"] {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -138,14 +149,6 @@
   <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
   <!-- SweetAlert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <!-- Tools Text Area -->
-  <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-
-  <!-- Menampilan tools text -->
-  <script>
-    CKEDITOR.replace('text');
-  </script>
 
 </body>
 

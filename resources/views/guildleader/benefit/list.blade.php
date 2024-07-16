@@ -26,9 +26,10 @@
             @enderror
         </div>
         <div class="form-group mt-4">
-            <textarea id="text" class="form-control" name="text" rows="10">{{ old('text', $benefit->benefit_text) }}</textarea>
+            <input id="text" type="hidden" name="text" value="{{ old('text', $benefit->benefit_text) }}">
+            <trix-editor input="text" style="height: 200px;"></trix-editor>
             @error('text')
-            <div class="alert alert-danger">
+            <div class="alert alert-danger mt-2">
                 {{ $message }}
             </div>
             @enderror
