@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Accismus Community</title>
-  <meta content="Accismus community merupakan komunitsa RF Online private server yang terbentuk pada januari 2024" name="description">
+  <meta content="Accismus community adalah komunitsa RF Online private server yang berdiri pada tanggal 13 Januari 2024, Accismus Community memiliki tujuan untuk membuat komunitas yang positif dengan menerapkan unsur kekeluargaan" name="description">
   <meta property="og:url" content="{{ url()->current() }}">
   <meta property="og:image" content="{{ Storage::url('accismus/accismus.jpeg') }}">
 
