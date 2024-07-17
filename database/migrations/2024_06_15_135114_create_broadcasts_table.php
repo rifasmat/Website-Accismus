@@ -19,7 +19,7 @@ class CreateBroadcastsTable extends Migration
             $table->string('broadcast_sentby');
             $table->string('broadcast_pengirim_email');
             $table->string('broadcast_subject');
-            $table->string('broadcast_penerima');
+            $table->text('broadcast_penerima');
             $table->text('broadcast_pesan');
             $table->string('broadcast_tanggal');
             $table->string('broadcast_status');
