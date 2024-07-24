@@ -135,10 +135,20 @@ class HumasPenggunaController extends Controller
 
         // Jika ada file foto yang diupload, simpan file baru dan hapus file lama
         if ($request->hasFile('foto')) {
+            // Hapus file lama jika ada
+            if ($user->foto) {
+                Storage::disk('public')->delete($user->foto);
+            }
+
+            // Simpan file baru
             $fileName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
             $fotoPath = $request->file('foto')->storeAs('pengguna', $fileName, 'public');
-            Storage::disk('public')->delete($user->foto);
             $user->foto = $fotoPath;
+        }
+
+        // Update role jika ada di request, jika tidak ada, gunakan role saat ini
+        if ($request->filled('role')) {
+            $user->role = $request->role;
         }
 
         // Simpan perubahan data pengguna
